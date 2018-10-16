@@ -165,7 +165,7 @@ __C.ROOT_DIR = osp.abspath(osp.join(osp.dirname(__file__), '..', '..'))
 
 __C.DATASET = AttrDict()
 # name of the dataset
-__C.DATASET.DATASET = 'voc'
+__C.DATASET.DATASET = 'coco'
 # path of the dataset
 __C.DATASET.DATASET_DIR = osp.abspath(osp.join(__C.ROOT_DIR, 'data'))
 # train set scope
