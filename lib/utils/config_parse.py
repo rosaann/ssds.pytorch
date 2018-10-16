@@ -169,7 +169,7 @@ __C.DATASET.DATASET = 'coco'
 # path of the dataset
 __C.DATASET.DATASET_DIR = osp.abspath(osp.join(__C.ROOT_DIR, 'data'))
 # train set scope
-__C.DATASET.TRAIN_SETS = [('2014', 'trainval'), ('2014', 'trainval')]
+__C.DATASET.TRAIN_SETS = [('2014', 'train'), ('2014', 'train')]
 # test set scope
 __C.DATASET.TEST_SETS = [('2014', 'test')]
 # image expand probability during train
