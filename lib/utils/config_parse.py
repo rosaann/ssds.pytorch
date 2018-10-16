@@ -169,9 +169,9 @@ __C.DATASET.DATASET = 'voc'
 # path of the dataset
 __C.DATASET.DATASET_DIR = osp.abspath(osp.join(__C.ROOT_DIR, 'data'))
 # train set scope
-__C.DATASET.TRAIN_SETS = [('2007', 'trainval'), ('2012', 'trainval')]
+__C.DATASET.TRAIN_SETS = [('2014', 'trainval'), ('2014', 'trainval')]
 # test set scope
-__C.DATASET.TEST_SETS = [('2007', 'test')]
+__C.DATASET.TEST_SETS = [('2014', 'test')]
 # image expand probability during train
 __C.DATASET.PROB = 0.6
 # image size
