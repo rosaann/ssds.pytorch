@@ -29,7 +29,7 @@ def parse_args():
 
     if len(sys.argv) == 1:
         parser.print_help()
-        sys.exit(1)
+     #   sys.exit(1)
 
     args = parser.parse_args()
     return args
