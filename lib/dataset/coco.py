@@ -56,6 +56,7 @@ class COCODetection(data.Dataset):
             data_name = (self._view_map[coco_name]
                         if coco_name in self._view_map
                         else coco_name)
+            print('coco_name:',coco_name)
             annofile = self._get_ann_file(coco_name)
             _COCO = COCO(annofile)
             self._COCO = _COCO
