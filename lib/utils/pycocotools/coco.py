@@ -235,7 +235,7 @@ class COCO:
         :param ids (int array)       : integer ids specifying img
         :return: imgs (object array) : loaded img objects
         """
-        print("ids ",ids)
+       # print("ids ",ids)
         if _isArrayLike(ids):
             return [self.imgs[id] for id in ids]
         elif type(ids) == int:
