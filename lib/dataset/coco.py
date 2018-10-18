@@ -67,6 +67,7 @@ class COCODetection(data.Dataset):
             print('cats ', cats)
             self._classes = tuple(['__background__'] + [c['name'] for c in cats])
             self.num_classes = len(self._classes)
+            print('class ', self._classes)
             self._class_to_ind = dict(zip(self._classes, range(self.num_classes)))
             self._class_to_coco_cat_id = dict(zip([c['name'] for c in cats],
                                                   _COCO.getCatIds()))
@@ -93,7 +94,7 @@ class COCODetection(data.Dataset):
        # file_name = ('COCO_' + name + '_' +
        #               str(index).zfill(12) + '.jpg')
         # change Example image path for index=119993 to images/train2017/000000119993.jpg
-        file_name = (str(index).zfill(12) + '.jpg')
+        file_name = (str(index).zfill(12) + '')
         image_path = os.path.join(self.root, 
                               name, file_name)
         assert os.path.exists(image_path), \
