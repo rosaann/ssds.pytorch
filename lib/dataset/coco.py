@@ -64,6 +64,7 @@ class COCODetection(data.Dataset):
             self._COCO = _COCO
             self.coco_name = coco_name
             cats = _COCO.loadCats(_COCO.getCatIds())
+            print('cats ', cats)
             self._classes = tuple(['__background__'] + [c['name'] for c in cats])
             self.num_classes = len(self._classes)
             self._class_to_ind = dict(zip(self._classes, range(self.num_classes)))
