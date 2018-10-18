@@ -78,7 +78,7 @@ class COCODetection(data.Dataset):
             # self.ids.extend(indexes)
             # self.data_len.append(len(indexes))
             # self.data_name.append(data_name)
-            self.ids.extend(self._load_coco_img_path(coco_name, indexes))
+            self.ids.extend(self._load_coco_img_path(coco_name, _COCO.getImgFilenames()))
             if image_set.find('test') != -1:
                 print('test set will not load annotations!')
             else:
