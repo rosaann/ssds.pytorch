@@ -186,7 +186,8 @@ class COCO:
         :return: ids (int array)  : integer array of img ids
         '''
         if True:
-            return self.dataset['images']['id']
+            imgs = self.dataset['images']
+            print('imgs ', imgs)
         imgIds = imgIds if _isArrayLike(imgIds) else [imgIds]
         catIds = catIds if _isArrayLike(catIds) else [catIds]
 
