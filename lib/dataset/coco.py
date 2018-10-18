@@ -70,6 +70,7 @@ class COCODetection(data.Dataset):
                                                   _COCO.getCatIds()))
             indexes = _COCO.getImgIds()
             self.image_indexes = indexes
+            print('index ', indexes)
             # seems it will reduce the speed during the training.
             # self.ids.extend(indexes)
             # self.data_len.append(len(indexes))
