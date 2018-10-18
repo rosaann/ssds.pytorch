@@ -91,7 +91,7 @@ class COCODetection(data.Dataset):
                       str(index).zfill(12) + '.jpg')
         # change Example image path for index=119993 to images/train2017/000000119993.jpg
         #file_name = (str(index).zfill(12) + '.jpg')
-        image_path = os.path.join(self.root, 'images',
+        image_path = os.path.join(self.root, 
                               name, file_name)
         assert os.path.exists(image_path), \
                 'Path does not exist: {}'.format(image_path)
