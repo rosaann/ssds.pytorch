@@ -187,7 +187,9 @@ class COCO:
         '''
         if True:
             imgs = self.dataset['images']
-            print('imgs ', imgs)
+            img_file = [imgInfo['file_name'] for imgInfo in imgs]
+            #print('imgs ', imgs)
+            return img_file
         imgIds = imgIds if _isArrayLike(imgIds) else [imgIds]
         catIds = catIds if _isArrayLike(catIds) else [catIds]
 
