@@ -46,7 +46,8 @@ class Solver(object):
         self.detector = Detect(cfg.POST_PROCESS, self.priors)
 
         # Utilize GPUs for computation
-        self.use_gpu = torch.cuda.is_available()
+       # self.use_gpu = torch.cuda.is_available()
+        self.use_gpu = False
         if self.use_gpu:
             print('Utilize GPUs for computation')
             print('Number of GPU available', torch.cuda.device_count())
