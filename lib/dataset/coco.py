@@ -87,10 +87,10 @@ class COCODetection(data.Dataset):
         """
         # Example image path for index=119993:
         #   images/train2014/COCO_train2014_000000119993.jpg
-        file_name = ('COCO_' + name + '_' +
-                      str(index).zfill(12) + '.jpg')
+       # file_name = ('COCO_' + name + '_' +
+       #               str(index).zfill(12) + '.jpg')
         # change Example image path for index=119993 to images/train2017/000000119993.jpg
-        #file_name = (str(index).zfill(12) + '.jpg')
+        file_name = (str(index).zfill(12) + '.jpg')
         image_path = os.path.join(self.root, 
                               name, file_name)
         assert os.path.exists(image_path), \
@@ -101,9 +101,9 @@ class COCODetection(data.Dataset):
     def _get_ann_file(self, name):
         prefix = 'instances' if name.find('test') == -1 \
                 else 'image_info'
-        return os.path.join(self.root, 'annotations',
-                        prefix + '_' + name + '.json')
-
+        #return os.path.join(self.root, 'annotations',
+        #                prefix + '_' + name + '.json')
+        return os.path.join(self.root, 'annotations/instances_ships_train2018.json')
 
     def _load_coco_annotations(self, coco_name, indexes, _COCO):
         cache_file=os.path.join(self.cache_path,coco_name+'_gt_roidb.pkl')
@@ -128,7 +128,7 @@ class COCODetection(data.Dataset):
                 img_path = pickle.load(fid)
             print('{} img path loaded from {}'.format(coco_name,cache_file))
             return img_path
-
+        coco_name='ship_train_v2'
         print('parsing img path for {}'.format(coco_name))
         img_path = [self.image_path_from_index(coco_name, index)
                     for index in indexes]
