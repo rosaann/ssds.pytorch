@@ -177,7 +177,10 @@ class COCO:
              
         ids = [cat['id'] for cat in cats]
         return ids
-
+    def getImgFilenames(self):
+        imgs = self.dataset['images']
+        img_files = [imgInfo['file_name'] for imgInfo in imgs]
+        return img_files
     def getImgIds(self, imgIds=[], catIds=[]):
         '''
         Get img ids that satisfy given filter conditions.
