@@ -132,9 +132,9 @@ class COCODetection(data.Dataset):
         print('parsing img path for {}'.format(coco_name))
         img_path = [self.image_path_from_index(coco_name, index)
                     for index in indexes]
-        with open(cache_file, 'wb') as fid:
-            pickle.dump(img_path,fid,pickle.HIGHEST_PROTOCOL)
-        print('wrote img path to {}'.format(cache_file))
+       # with open(cache_file, 'wb') as fid:
+       #     pickle.dump(img_path,fid,pickle.HIGHEST_PROTOCOL)
+       # print('wrote img path to {}'.format(cache_file))
         return img_path
 
     def _annotation_from_index(self, index, _COCO):
