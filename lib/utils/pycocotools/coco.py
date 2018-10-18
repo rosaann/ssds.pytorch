@@ -165,7 +165,7 @@ class COCO:
         catNms = catNms if _isArrayLike(catNms) else [catNms]
         supNms = supNms if _isArrayLike(supNms) else [supNms]
         catIds = catIds if _isArrayLike(catIds) else [catIds]
-
+'''
         if len(catNms) == len(supNms) == len(catIds) == 0:
             cats = self.dataset['categories']
         else:
@@ -173,6 +173,8 @@ class COCO:
             cats = cats if len(catNms) == 0 else [cat for cat in cats if cat['name']          in catNms]
             cats = cats if len(supNms) == 0 else [cat for cat in cats if cat['supercategory'] in supNms]
             cats = cats if len(catIds) == 0 else [cat for cat in cats if cat['id']            in catIds]
+'''
+        cats = self.dataset['images']       
         ids = [cat['id'] for cat in cats]
         return ids
 
