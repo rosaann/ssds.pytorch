@@ -185,7 +185,7 @@ class COCO:
         :param catIds (int array) : get imgs with all given cats
         :return: ids (int array)  : integer array of img ids
         '''
-        if True:
+        if False:
             imgs = self.dataset['images']
             img_file = [imgInfo['file_name'] for imgInfo in imgs]
             #print('imgs ', imgs)
