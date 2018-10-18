@@ -116,9 +116,9 @@ class COCODetection(data.Dataset):
         print('parsing gt roidb for {}'.format(coco_name))
         gt_roidb = [self._annotation_from_index(index, _COCO)
                     for index in indexes]
-        with open(cache_file, 'wb') as fid:
-            pickle.dump(gt_roidb,fid,pickle.HIGHEST_PROTOCOL)
-        print('wrote gt roidb to {}'.format(cache_file))
+      #  with open(cache_file, 'wb') as fid:
+      #      pickle.dump(gt_roidb,fid,pickle.HIGHEST_PROTOCOL)
+      #  print('wrote gt roidb to {}'.format(cache_file))
         return gt_roidb
 
     def _load_coco_img_path(self, coco_name, indexes):
