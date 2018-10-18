@@ -35,7 +35,7 @@ class Solver(object):
         # Load data
         print('===> Loading data')
         self.train_loader = load_data(cfg.DATASET, 'train') if 'train' in cfg.PHASE else None
-        self.eval_loader = load_data(cfg.DATASET, 'eval') if 'eval' in cfg.PHASE else None
+     #   self.eval_loader = load_data(cfg.DATASET, 'eval') if 'eval' in cfg.PHASE else None
      #   self.test_loader = load_data(cfg.DATASET, 'test') if 'test' in cfg.PHASE else None
         self.visualize_loader = load_data(cfg.DATASET, 'visualize') if 'visualize' in cfg.PHASE else None
 
