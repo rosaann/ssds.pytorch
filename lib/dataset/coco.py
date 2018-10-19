@@ -13,7 +13,7 @@ import uuid
 from lib.utils.pycocotools.coco import COCO
 from lib.utils.pycocotools.cocoeval import COCOeval
 from lib.utils.pycocotools import mask as COCOmask
-
+from torchvision import datasets, models, transforms
 
 class COCODetection(data.Dataset):
 
@@ -39,7 +39,11 @@ class COCODetection(data.Dataset):
         self.cache_path = os.path.join(self.root, 'cache')
         self.image_set = image_sets
         self.preproc = preproc
-        print('transform ', target_transform)
+        target_transform = transforms.Compose([
+        transforms.RandomResizedCrop(300),
+        transforms.ToTensor(),
+        
+    ]),
         self.target_transform = target_transform
         self.name = dataset_name
         self.ids = list()
