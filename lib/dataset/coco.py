@@ -39,11 +39,9 @@ class COCODetection(data.Dataset):
         self.cache_path = os.path.join(self.root, 'cache')
         self.image_set = image_sets
         self.preproc = preproc
-        target_transform = transforms.Compose([
-        transforms.RandomResizedCrop(300),
-        transforms.ToTensor(),
+        target_transform = transforms.RandomResizedCrop(300)
         
-    ]),
+    
         self.target_transform = target_transform
         self.name = dataset_name
         self.ids = list()
