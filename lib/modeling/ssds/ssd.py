@@ -58,6 +58,8 @@ class SSD(nn.Module):
         sources, loc, conf = [list() for _ in range(3)]
 
         # apply bases layers and cache source layer outputs
+        
+        print('this feature ', self.feature_layer)
         for k in range(len(self.base)):
             x = self.base[k](x)
             if k in self.feature_layer:
