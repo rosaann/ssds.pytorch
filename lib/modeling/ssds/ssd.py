@@ -61,6 +61,7 @@ class SSD(nn.Module):
         
         print('this feature ', self.feature_layer)
         for k in range(len(self.base)):
+            print('k ', k)
             x = self.base[k](x)
             if k in self.feature_layer:
                 if len(sources) == 0:
