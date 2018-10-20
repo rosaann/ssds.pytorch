@@ -53,7 +53,7 @@ __C.MODEL.HALF_PRECISION = True
 __C.MODEL.IMAGE_SIZE = [300, 300]
 
 # number of the class for the model
-__C.MODEL.NUM_CLASSES = 21
+__C.MODEL.NUM_CLASSES = 1
 
 # FEATURE_LAYER to extract the proposed bounding box, 
 # the first dimension is the feature layer/type, 
