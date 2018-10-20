@@ -56,7 +56,9 @@ class MultiBoxLoss(nn.Module):
         priors = self.priors
         # priors = priors[:loc_data.size(1), :]
         num_priors = (priors.size(0))
+        print('num_priors ', num_priors)
         num_classes = self.num_classes
+        print('num_classes ', num_classes)
 
         # match priors (default boxes) and ground truth boxes
         loc_t = torch.Tensor(num, num_priors, 4)
