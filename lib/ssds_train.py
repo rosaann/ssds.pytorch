@@ -58,7 +58,7 @@ class Solver(object):
                  self.model = torch.nn.DataParallel(self.model).module
         device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
         device = torch.device("cpu")
-        self.model = self.model.to(device)
+        #self.model = self.model.to(device)
         # Print the model architecture and parameters
         print('Model architectures:\n{}\n'.format(self.model))
 
