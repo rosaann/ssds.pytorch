@@ -70,4 +70,5 @@ def create_model(cfg):
                     scale=cfg.SIZES, archor_stride=cfg.STEPS, clip=cfg.CLIP)
     # priors = Variable(priorbox.forward(), volatile=True)
 
+    print('priorbox ',priorbox)
     return model, priorbox
