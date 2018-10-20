@@ -93,10 +93,10 @@ class MultiBoxLoss(nn.Module):
         #print('batch_conf ', batch_conf)
         loss_c = log_sum_exp(batch_conf) - batch_conf.gather(1, conf_t_v)#zz 下一句从别地考的
         #loss_c = log_sum_exp (batch_conf) - batch_conf.gather (0, conf_t.view (-1, 1))
-        loss_c = loss_c.view(pos.size()[0], pos.size()[1]) #add line 
 
-        loss_c[pos] = 0 # filter out pos boxes for now
         loss_c = loss_c.view(num, -1)
+        loss_c[pos] = 0 # filter out pos boxes for now
+        
         _,loss_idx = loss_c.sort(1, descending=True)
         _,idx_rank = loss_idx.sort(1)
         num_pos = pos.long().sum(1,keepdim=True) #new sum needs to keep the same dim
