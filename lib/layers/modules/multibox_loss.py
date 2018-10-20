@@ -91,13 +91,14 @@ class MultiBoxLoss(nn.Module):
         #np.set_printoptions(threshold=np.inf)
         #print('conf_t  ',np.array( conf_t_v))
         #print('batch_conf ', batch_conf)
-        loss_c = log_sum_exp(batch_conf) - batch_conf.gather(1, conf_t_v)
+        #loss_c = log_sum_exp(batch_conf) - batch_conf.gather(1, conf_t_v)#zz 下一句从别地考的
+        loss_c = log_sum_exp (batch_conf) - batch_conf.gather (0, conf_t.view (-1, 1))
         np.set_printoptions(threshold=20)
         # Hard Negative Mining
         print('loss_c size ', loss_c.size(0))
        # print('pos  ', pos)
 
-        loss_c[pos.view(1,-1)] = 0 # filter out pos boxes for now
+        loss_c[pos] = 0 # filter out pos boxes for now
         loss_c = loss_c.view(num, -1)
         _,loss_idx = loss_c.sort(1, descending=True)
         _,idx_rank = loss_idx.sort(1)
