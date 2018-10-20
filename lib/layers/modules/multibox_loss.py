@@ -95,7 +95,7 @@ class MultiBoxLoss(nn.Module):
         np.set_printoptions(threshold=20)
         # Hard Negative Mining
         print('loss_c size ', loss_c.size(0))
-        print('pos size ', pos.size(0))
+        print('pos  ', pos)
 
         loss_c[pos] = 0 # filter out pos boxes for now
         loss_c = loss_c.view(num, -1)
