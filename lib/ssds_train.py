@@ -69,7 +69,7 @@ class Solver(object):
         # print trainable scope
         print('Trainable scope: {}'.format(cfg.TRAIN.TRAINABLE_SCOPE))
         trainable_param = self.trainable_param(cfg.TRAIN.TRAINABLE_SCOPE)
-        print('trainable_param ', trainable_param)
+       # print('trainable_param ', trainable_param)
         self.optimizer = self.configure_optimizer(trainable_param, cfg.TRAIN.OPTIMIZER)
         self.exp_lr_scheduler = self.configure_lr_scheduler(self.optimizer, cfg.TRAIN.LR_SCHEDULER)
         self.max_epochs = cfg.TRAIN.MAX_EPOCHS

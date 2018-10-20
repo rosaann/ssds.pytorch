@@ -64,6 +64,7 @@ class SSD(nn.Module):
            # print('k ', k)
             x = self.base[k](x)
             if k in self.feature_layer:
+                print('source append herer k ', k)
                 if len(sources) == 0:
                     s = self.norm(x)
                     sources.append(s)
@@ -76,6 +77,7 @@ class SSD(nn.Module):
             x = F.relu(v(x), inplace=True)
             # TODO:lite is different in here, should be changed
             if k % 2 == 1:
+                print('source append herer 2-- k ', k)
                 sources.append(x)
         
         if phase == 'feature':
@@ -83,6 +85,7 @@ class SSD(nn.Module):
 
         # apply multibox head to source layers
         for (x, l, c) in zip(sources, self.loc, self.conf):
+            print('xxxxx -- x size ', sources.size())
             loc.append(l(x).permute(0, 2, 3, 1).contiguous())
             conf.append(c(x).permute(0, 2, 3, 1).contiguous())
         loc = torch.cat([o.view(o.size(0), -1) for o in loc], 1)
