@@ -87,8 +87,8 @@ class MultiBoxLoss(nn.Module):
         #np.set_printoptions(threshold=np.inf)
         #print('conf_t  ',np.array( conf_t_v))
         #print('batch_conf ', batch_conf)
-        print('batch_conf size ', batch_conf.size(0))
-        print('conf_t_v size ', conf_t_v.size(0))
+        print('batch_conf size ', batch_conf.shape)
+        print('conf_t_v size ', conf_t_v.shape)
 
         loss_c = log_sum_exp(batch_conf) - batch_conf.gather(1, conf_t_v)
         #loss_c = log_sum_exp (batch_conf) - batch_conf.gather (0, conf_t.view (-1, 1))#zz 
