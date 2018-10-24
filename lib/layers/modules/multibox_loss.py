@@ -53,7 +53,7 @@ class MultiBoxLoss(nn.Module):
         """
         loc_data, conf_data = predictions
         num = loc_data.size(0)
-        print('loc_data ',loc_data.shape, ' conf_data ', conf_data.shape, 'num ', num)
+        print('loc_data ',loc_data.shape, ' conf_data ', conf_data.shape, 'targets ',targets.shape, 'num ', num)
         priors = self.priors
         # priors = priors[:loc_data.size(1), :]
         num_priors = (priors.size(0))
