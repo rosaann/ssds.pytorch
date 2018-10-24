@@ -86,7 +86,7 @@ __C.TRAIN.CHECKPOINTS_EPOCHS = 5
 # The number of max iters
 __C.TRAIN.MAX_EPOCHS = 50
 # Minibatch size
-__C.TRAIN.BATCH_SIZE = 8
+__C.TRAIN.BATCH_SIZE = 6
 # trainable scope and resuming scope
 __C.TRAIN.TRAINABLE_SCOPE = 'base,extras,norm,loc,conf'
 __C.TRAIN.RESUME_SCOPE = ''
