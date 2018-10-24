@@ -59,12 +59,12 @@ class SSD(nn.Module):
 
         # apply bases layers and cache source layer outputs
         
-        print('this feature ', self.feature_layer)
+       # print('this feature ', self.feature_layer)
         for k in range(len(self.base)):
            # print('k ', k)
             x = self.base[k](x)
             if k in self.feature_layer:
-                print('source append herer k ', k)
+              #  print('source append herer k ', k)
                 if len(sources) == 0:
                     s = self.norm(x)
                     sources.append(s)
@@ -77,7 +77,7 @@ class SSD(nn.Module):
             x = F.relu(v(x), inplace=True)
             # TODO:lite is different in here, should be changed
             if k % 2 == 1:
-                print('source append herer 2-- k ', k)
+           #     print('source append herer 2-- k ', k)
                 sources.append(x)
         
         if phase == 'feature':

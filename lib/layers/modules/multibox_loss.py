@@ -53,13 +53,13 @@ class MultiBoxLoss(nn.Module):
         """
         loc_data, conf_data = predictions
         num = loc_data.size(0)
-        print('loc_data ',loc_data.shape, ' conf_data ', conf_data.shape, 'targets ',len(targets), 'num ', num)
+       # print('loc_data ',loc_data.shape, ' conf_data ', conf_data.shape, 'targets ',len(targets), 'num ', num)
         priors = self.priors
         # priors = priors[:loc_data.size(1), :]
         num_priors = (priors.size(0))
-        print('num_priors ', num_priors)
+       # print('num_priors ', num_priors)
         num_classes = self.num_classes
-        print('num_classes ', num_classes)
+      #  print('num_classes ', num_classes)
 
         # match priors (default boxes) and ground truth boxes
         loc_t = torch.Tensor(num, num_priors, 4)
@@ -78,7 +78,7 @@ class MultiBoxLoss(nn.Module):
 
         pos = conf_t > 0
         # num_pos = pos.sum()
-        print('conf_t size ', conf_t.shape)
+      #  print('conf_t size ', conf_t.shape)
         
         # Compute max conf across batch for hard negative mining
         batch_conf = conf_data.view(-1, self.num_classes)
@@ -86,14 +86,14 @@ class MultiBoxLoss(nn.Module):
         conf_t_v = conf_t.view(-1,1)
         #conf_t_v = conf_t.view(-1,num_priors)#zl
         
-        print('batch_conf size ', batch_conf.shape)
-        print('conf_t_v size ', conf_t_v.shape)
+      #  print('batch_conf size ', batch_conf.shape)
+      #  print('conf_t_v size ', conf_t_v.shape)
 
         loss_c = log_sum_exp(batch_conf) - batch_conf.gather(1, conf_t_v)
         #loss_c = log_sum_exp (batch_conf) - batch_conf.gather (0, conf_t.view (-1, 1))#zz 
         
-        print('loss_c ', loss_c.shape)
-        print('pos ', pos.shape)
+      #  print('loss_c ', loss_c.shape)
+      #  print('pos ', pos.shape)
         loss_c[pos.view(-1,1)] = 0 # filter out pos boxes for now
         loss_c = loss_c.view(num, -1)
         ###
