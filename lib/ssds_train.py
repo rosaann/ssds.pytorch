@@ -24,6 +24,8 @@ from lib.dataset.dataset_factory import load_data
 from lib.utils.config_parse import cfg
 from lib.utils.eval_utils import *
 from lib.utils.visualize_utils import *
+import torchvision
+import torchvision.transforms as transform
 
 class Solver(object):
     """
@@ -36,7 +38,11 @@ class Solver(object):
         print('===> Loading data')
         self.train_loader = load_data(cfg.DATASET, 'train') if 'train' in cfg.PHASE else None
         #self.eval_loader = load_data(cfg.DATASET, 'eval') if 'eval' in cfg.PHASE else None
-        self.test_loader = load_data(cfg.DATASET, 'test') if 'test' in cfg.PHASE else None
+        
+        test_image_dir = os.path.join('./data/', 'ship_test_v2')
+        test_set = torchvision.datasets.ImageFolder(test_image_dir, transform=transform['train'])
+        self.test_loader = torch.utils.data.DataLoader(test_set,batch_size=cfg.TEST_BATCH_SIZE,shuffle=True,num_workers=cfg.NUM_WORKERS)
+        #self.test_loader = load_data(cfg.DATASET, 'test') if 'test' in cfg.PHASE else None
         self.visualize_loader = load_data(cfg.DATASET, 'visualize') if 'visualize' in cfg.PHASE else None
 
         # Build model
