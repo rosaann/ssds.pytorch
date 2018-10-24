@@ -77,7 +77,7 @@ class MultiBoxLoss(nn.Module):
 
         pos = conf_t > 0
         # num_pos = pos.sum()
-        print('conf_t size ', conf_t.size(0))
+        print('conf_t size ', conf_t.shape)
         
         # Compute max conf across batch for hard negative mining
        # batch_conf = conf_data.view(-1, self.num_classes)
