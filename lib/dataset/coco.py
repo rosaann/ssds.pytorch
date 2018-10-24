@@ -55,6 +55,7 @@ class COCODetection(data.Dataset):
         # self.data_name = list()
         # self.data_len = list()
         for (year, image_set) in image_sets:
+            self.image_set = image_set
             coco_name = image_set+year
             data_name = (self._view_map[coco_name]
                         if coco_name in self._view_map
@@ -136,6 +137,8 @@ class COCODetection(data.Dataset):
             print('{} img path loaded from {}'.format(coco_name,cache_file))
             return img_path
         coco_name='ship_train_v2'
+        if self.image_set.find('test') != -1:
+            coco_name='ship_test_v2'
         print('parsing img path for {}'.format(coco_name))
         img_path = [self.image_path_from_index(coco_name, index)
                     for index in indexes]
