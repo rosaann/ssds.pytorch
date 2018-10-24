@@ -91,6 +91,9 @@ class MultiBoxLoss(nn.Module):
 
         loss_c = log_sum_exp(batch_conf) - batch_conf.gather(1, conf_t_v)
         #loss_c = log_sum_exp (batch_conf) - batch_conf.gather (0, conf_t.view (-1, 1))#zz 
+        
+        print('loss_c ', loss_c.shape)
+        print('pos ', pos.shape)
         loss_c[pos] = 0 # filter out pos boxes for now
         loss_c = loss_c.view(num, -1)
         ###
