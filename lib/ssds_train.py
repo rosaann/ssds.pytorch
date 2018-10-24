@@ -484,44 +484,44 @@ class Solver(object):
         empty_array = np.transpose(np.array([[],[],[],[],[]]),(1,0))
 
         _t = Timer()
+        i = 0
+        for data_bench in iter(data_loader):
+            for img in data_bench:
+                scale = [img.shape[1], img.shape[0], img.shape[1], img.shape[0]]
+                if use_gpu:
+                    images = Variable(dataset.preproc(img)[0].unsqueeze(0).cuda(), volatile=True)
+                else:
+                    images = Variable(dataset.preproc(img)[0].unsqueeze(0), volatile=True)
 
-        for i in iter(range((num_images))):
-            img = dataset.pull_image(i)
-            scale = [img.shape[1], img.shape[0], img.shape[1], img.shape[0]]
-            if use_gpu:
-                images = Variable(dataset.preproc(img)[0].unsqueeze(0).cuda(), volatile=True)
-            else:
-                images = Variable(dataset.preproc(img)[0].unsqueeze(0), volatile=True)
-
-            _t.tic()
+                _t.tic()
             # forward
-            out = model(images, phase='eval')
+                out = model(images, phase='eval')
 
             # detect
-            detections = detector.forward(out)
+                detections = detector.forward(out)
 
-            time = _t.toc()
+                time = _t.toc()
 
             # TODO: make it smart:
-            for j in range(1, num_classes):
-                cls_dets = list()
-                for det in detections[0][j]:
-                    if det[0] > 0:
-                        d = det.cpu().numpy()
-                        score, box = d[0], d[1:]
-                        box *= scale
-                        box = np.append(box, score)
-                        cls_dets.append(box)
-                if len(cls_dets) == 0:
-                    cls_dets = empty_array
-                all_boxes[j][i] = np.array(cls_dets)
-
+                for j in range(1, num_classes):
+                    cls_dets = list()
+                    for det in detections[0][j]:
+                        if det[0] > 0:
+                            d = det.cpu().numpy()
+                            score, box = d[0], d[1:]
+                            box *= scale
+                            box = np.append(box, score)
+                            cls_dets.append(box)
+                    if len(cls_dets) == 0:
+                        cls_dets = empty_array
+                    all_boxes[j][i] = np.array(cls_dets)
+                i += 1
             # log per iter
-            log = '\r==>Test: || {iters:d}/{epoch_size:d} in {time:.3f}s [{prograss}]\r'.format(
+                log = '\r==>Test: || {iters:d}/{epoch_size:d} in {time:.3f}s [{prograss}]\r'.format(
                     prograss='#'*int(round(10*i/num_images)) + '-'*int(round(10*(1-i/num_images))), iters=i, epoch_size=num_images,
                     time=time)
-            sys.stdout.write(log)
-            sys.stdout.flush()
+                sys.stdout.write(log)
+                sys.stdout.flush()
 
         # write result to pkl
         with open(os.path.join(output_dir, 'detections.pkl'), 'wb') as f:
