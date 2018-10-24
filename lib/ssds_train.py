@@ -36,8 +36,10 @@ class Solver(object):
 
         # Load data
         print('===> Loading data')
-        #self.train_loader = load_data(cfg.DATASET, 'train') if 'train' in cfg.PHASE else None
-       # self.eval_loader = load_data(cfg.DATASET, 'eval') if 'eval' in cfg.PHASE else None
+        self.ifTrain = False
+        if self.ifTrain:
+            self.train_loader = load_data(cfg.DATASET, 'train') if 'train' in cfg.PHASE else None
+            self.eval_loader = load_data(cfg.DATASET, 'eval') if 'eval' in cfg.PHASE else None
         
         test_image_dir = os.path.join('./data/', 'ship_test_v2')
         test_set = torchvision.datasets.ImageFolder(test_image_dir)
@@ -258,10 +260,10 @@ class Solver(object):
                 if self.cfg.TEST.TEST_SCOPE[0] <= epoch <= self.cfg.TEST.TEST_SCOPE[1]:
                     sys.stdout.write('\rEpoch {epoch:d}/{max_epochs:d}:\n'.format(epoch=epoch, max_epochs=self.cfg.TEST.TEST_SCOPE[1]))
                     self.resume_checkpoint(resume_checkpoint)
-                    if 'eval' in cfg.PHASE:
-                        self.eval_epoch(self.model, self.eval_loader, self.detector, self.criterion, self.writer, epoch, self.use_gpu)
-                    if 'test' in cfg.PHASE:
-                        self.test_epoch(self.model, self.test_loader, self.detector, self.output_dir , self.use_gpu)
+                    #if 'eval' in cfg.PHASE:
+                    #    self.eval_epoch(self.model, self.eval_loader, self.detector, self.criterion, self.writer, epoch, self.use_gpu)
+                    #if 'test' in cfg.PHASE:
+                    self.test_epoch(self.model, self.test_loader, self.detector, self.output_dir , self.use_gpu)
                     if 'visualize' in cfg.PHASE:
                         self.visualize_epoch(self.model, self.visualize_loader, self.priorbox, self.writer, epoch,  self.use_gpu)
         else:
