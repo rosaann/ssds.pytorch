@@ -53,7 +53,7 @@ __C.MODEL.HALF_PRECISION = True
 __C.MODEL.IMAGE_SIZE = [768, 768]
 
 # number of the class for the model
-__C.MODEL.NUM_CLASSES = 1
+__C.MODEL.NUM_CLASSES = 21
 
 # FEATURE_LAYER to extract the proposed bounding box, 
 # the first dimension is the feature layer/type, 
@@ -86,7 +86,7 @@ __C.TRAIN.CHECKPOINTS_EPOCHS = 5
 # The number of max iters
 __C.TRAIN.MAX_EPOCHS = 50
 # Minibatch size
-__C.TRAIN.BATCH_SIZE = 2
+__C.TRAIN.BATCH_SIZE = 4
 # trainable scope and resuming scope
 __C.TRAIN.TRAINABLE_SCOPE = 'base,extras,norm,loc,conf'
 __C.TRAIN.RESUME_SCOPE = ''
