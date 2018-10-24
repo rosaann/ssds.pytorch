@@ -36,8 +36,8 @@ class Solver(object):
 
         # Load data
         print('===> Loading data')
-        self.train_loader = load_data(cfg.DATASET, 'train') if 'train' in cfg.PHASE else None
-        #self.eval_loader = load_data(cfg.DATASET, 'eval') if 'eval' in cfg.PHASE else None
+        #self.train_loader = load_data(cfg.DATASET, 'train') if 'train' in cfg.PHASE else None
+       # self.eval_loader = load_data(cfg.DATASET, 'eval') if 'eval' in cfg.PHASE else None
         
         test_image_dir = os.path.join('./data/', 'ship_test_v2')
         test_set = torchvision.datasets.ImageFolder(test_image_dir, transform=transform['train'])
