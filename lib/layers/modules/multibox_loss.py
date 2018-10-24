@@ -94,7 +94,7 @@ class MultiBoxLoss(nn.Module):
         
         print('loss_c ', loss_c.shape)
         print('pos ', pos.shape)
-        loss_c[pos] = 0 # filter out pos boxes for now
+        loss_c[pos.view(-1,1)] = 0 # filter out pos boxes for now
         loss_c = loss_c.view(num, -1)
         ###
         
