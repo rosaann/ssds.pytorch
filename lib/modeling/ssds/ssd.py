@@ -98,8 +98,8 @@ class SSD(nn.Module):
         else:
             output = (
                 loc.view(loc.size(0), -1, 4),
-             #   conf.view(conf.size(0), -1, self.num_classes),
-                conf
+                conf.view(conf.size(0), -1, self.num_classes),
+              #  conf
             )
         return output
 
