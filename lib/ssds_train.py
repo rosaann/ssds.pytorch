@@ -26,6 +26,7 @@ from lib.utils.eval_utils import *
 from lib.utils.visualize_utils import *
 import torchvision
 import torchvision.transforms as transform
+import matplotlib.pyplot as plt
 
 class Solver(object):
     """
@@ -507,7 +508,8 @@ class Solver(object):
 
                 time = _t.toc()
 
-            # TODO: make it smart:
+                fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 5))
+                ax2.imshow(images[ 0])
                 print('detections ', detections.shape)
                 for j in range(1, num_classes):
                     cls_dets = list()
@@ -521,6 +523,7 @@ class Solver(object):
                     if len(cls_dets) == 0:
                         cls_dets = empty_array
                     all_boxes[j][i] = np.array(cls_dets)
+                    return
                 i += 1
             # log per iter
                 log = '\r==>Test: || {iters:d}/{epoch_size:d} in {time:.3f}s [{prograss}]\r'.format(
