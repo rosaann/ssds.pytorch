@@ -490,7 +490,7 @@ class Solver(object):
         device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
         for img, labels in data_loader:
         #    for img in data_bench:
-                print('img shape ', img.shape)
+              #  print('img shape ', img.shape)
                 scale = [img.shape[1], img.shape[0], img.shape[1], img.shape[0]]
                 if use_gpu:
                     #images = Variable(dataset.preproc(img)[0].unsqueeze(0).cuda(), volatile=True)
@@ -508,6 +508,7 @@ class Solver(object):
                 time = _t.toc()
 
             # TODO: make it smart:
+                print('detections ', detections.shape)
                 for j in range(1, num_classes):
                     cls_dets = list()
                     for det in detections[0][j]:
