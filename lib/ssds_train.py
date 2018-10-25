@@ -512,7 +512,7 @@ class Solver(object):
 
                 
                 print('detections ', detections.shape)
-                for im in len(img):
+                for im in img:
                   for j in range(1, num_classes):
                       cls_dets = list()
                       for det in detections[im][j]:
@@ -522,7 +522,7 @@ class Solver(object):
                             box *= scale
                             box = np.append(box, score)
                             cls_dets.append(box)
-                            vis.images(img[im], win=1, opts={'title': 'Reals'})
+                            vis.images(im, win=1, opts={'title': 'Reals'})
                             print('box ', box)
                             print('score ', score)
                             return
