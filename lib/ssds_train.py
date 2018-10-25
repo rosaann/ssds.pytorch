@@ -510,22 +510,27 @@ class Solver(object):
 
                 time = _t.toc()
 
-                vis.images(img[3], win=1, opts={'title': 'Reals'})
+                
                 print('detections ', detections.shape)
-                for j in range(1, num_classes):
-                    cls_dets = list()
-                    for det in detections[0][j]:
-                        if det[0] > 0:
+                for im in len(img):
+                  for j in range(1, num_classes):
+                      cls_dets = list()
+                      for det in detections[im][j]:
+                          if det[0] > 0:
                             d = det.cpu().numpy()
                             score, box = d[0], d[1:]
                             box *= scale
                             box = np.append(box, score)
                             cls_dets.append(box)
-                    if len(cls_dets) == 0:
+                            vis.images(img[im], win=1, opts={'title': 'Reals'})
+                            print('box ', box)
+                            print('score ', score)
+                            return
+                      if len(cls_dets) == 0:
                         cls_dets = empty_array
-                    all_boxes[j][i] = np.array(cls_dets)
-                    return
-                i += 1
+                      all_boxes[j][i] = np.array(cls_dets)
+                    
+                  i += 1
             # log per iter
                 log = '\r==>Test: || {iters:d}/{epoch_size:d} in {time:.3f}s [{prograss}]\r'.format(
                     prograss='#'*int(round(10*i/num_images)) + '-'*int(round(10*(1-i/num_images))), iters=i, epoch_size=num_images,
