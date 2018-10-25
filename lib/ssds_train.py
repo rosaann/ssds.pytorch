@@ -33,22 +33,22 @@ class Solver(object):
     """
     A wrapper class for the training process
     """
-    def __init__(self):
+    def __init__(self, ifTrain = True):
         self.cfg = cfg
 
         # Load data
         print('===> Loading data')
-        self.ifTrain = False
+        self.ifTrain = ifTrain
         if self.ifTrain:
             self.train_loader = load_data(cfg.DATASET, 'train') if 'train' in cfg.PHASE else None
             self.eval_loader = load_data(cfg.DATASET, 'eval') if 'eval' in cfg.PHASE else None
+        else:
+            test_image_dir = os.path.join('./data/', 'ship_test_v2')
+            transforms = transform.Compose([transform.ToTensor()])
+            test_set = torchvision.datasets.ImageFolder(test_image_dir, transform = transforms)
         
-        test_image_dir = os.path.join('./data/', 'ship_test_v2')
-        transforms = transform.Compose([transform.ToTensor()])
-        test_set = torchvision.datasets.ImageFolder(test_image_dir, transform = transforms)
-        
-        self.test_loader = torch.utils.data.DataLoader(test_set,batch_size=4,shuffle=True,num_workers=8)
-        #self.test_loader = load_data(cfg.DATASET, 'test') if 'test' in cfg.PHASE else None
+            self.test_loader = torch.utils.data.DataLoader(test_set,batch_size=4,shuffle=True,num_workers=8)
+            #self.test_loader = load_data(cfg.DATASET, 'test') if 'test' in cfg.PHASE else None
         self.visualize_loader = load_data(cfg.DATASET, 'visualize') if 'visualize' in cfg.PHASE else None
 
         # Build model
@@ -247,8 +247,8 @@ class Solver(object):
                 self.exp_lr_scheduler.step(epoch-warm_up)
             if 'train' in cfg.PHASE:
                 self.train_epoch(self.model, self.train_loader, self.optimizer, self.criterion, self.writer, epoch, self.use_gpu)
-            if 'eval' in cfg.PHASE:
-                self.eval_epoch(self.model, self.eval_loader, self.detector, self.criterion, self.writer, epoch, self.use_gpu)
+        #    if 'eval' in cfg.PHASE:
+        #        self.eval_epoch(self.model, self.eval_loader, self.detector, self.criterion, self.writer, epoch, self.use_gpu)
             if 'test' in cfg.PHASE:
                 self.test_epoch(self.model, self.test_loader, self.detector, self.output_dir, self.use_gpu)
             if 'visualize' in cfg.PHASE:
@@ -284,13 +284,14 @@ class Solver(object):
     def train_epoch(self, model, data_loader, optimizer, criterion, writer, epoch, use_gpu):
         model.train()
 
-        epoch_size = len(data_loader)
+        epoch_size = int( len(data_loader) / self.cfg.BATCH_SIZE)
         batch_iterator = iter(data_loader)
 
         loc_loss = 0
         conf_loss = 0
         _t = Timer()
 
+        train_end = int( epoch_size * 0.7);
         for iteration in iter(range((epoch_size))):
             images, targets = next(batch_iterator)
             if use_gpu:
@@ -299,48 +300,98 @@ class Solver(object):
             else:
                 images = Variable(images)
                 targets = [Variable(anno, volatile=True) for anno in targets]
-            _t.tic()
-            # forward
-            out = model(images, phase='train')
+            if iteration <= train_end:
+                #train:
+                _t.tic()
+                # forward
+                out = model(images, phase='train')
 
-            # backprop
-            optimizer.zero_grad()
-            loss_l, loss_c = criterion(out, targets)
+                # backprop
+                optimizer.zero_grad()
+                loss_l, loss_c = criterion(out, targets)
 
-            # some bugs in coco train2017. maybe the annonation bug.
-            if loss_l.data[0] == float("Inf"):
-                continue
+                # some bugs in coco train2017. maybe the annonation bug.
+                if loss_l.data[0] == float("Inf"):
+                    continue
 
-            loss = loss_l + loss_c
-            loss.backward()
-            optimizer.step()
+                loss = loss_l + loss_c
+                loss.backward()
+                optimizer.step()
 
-            time = _t.toc()
-            loc_loss += loss_l.data[0]
-            conf_loss += loss_c.data[0]
+                time = _t.toc()
+                loc_loss += loss_l.data[0]
+                conf_loss += loss_c.data[0]
 
-            # log per iter
-            log = '\r==>Train: || {iters:d}/{epoch_size:d} in {time:.3f}s [{prograss}] || loc_loss: {loc_loss:.4f} cls_loss: {cls_loss:.4f}\r'.format(
+                # log per iter
+                log = '\r==>Train: || {iters:d}/{epoch_size:d} in {time:.3f}s [{prograss}] || loc_loss: {loc_loss:.4f} cls_loss: {cls_loss:.4f}\r'.format(
                     prograss='#'*int(round(10*iteration/epoch_size)) + '-'*int(round(10*(1-iteration/epoch_size))), iters=iteration, epoch_size=epoch_size,
                     time=time, loc_loss=loss_l.data[0], cls_loss=loss_c.data[0])
 
-            sys.stdout.write(log)
-            sys.stdout.flush()
+                sys.stdout.write(log)
+                sys.stdout.flush()
+                
+                if iteration == train_end:
+                    # log per epoch
+                    sys.stdout.write('\r')
+                    sys.stdout.flush()
+                    lr = optimizer.param_groups[0]['lr']
+                    log = '\r==>Train: || Total_time: {time:.3f}s || loc_loss: {loc_loss:.4f} conf_loss: {conf_loss:.4f} || lr: {lr:.6f}\n'.format(lr=lr,
+                        time=_t.total_time, loc_loss=loc_loss/epoch_size, conf_loss=conf_loss/epoch_size)
+                    sys.stdout.write(log)
+                    sys.stdout.flush()
 
-        # log per epoch
-        sys.stdout.write('\r')
-        sys.stdout.flush()
-        lr = optimizer.param_groups[0]['lr']
-        log = '\r==>Train: || Total_time: {time:.3f}s || loc_loss: {loc_loss:.4f} conf_loss: {conf_loss:.4f} || lr: {lr:.6f}\n'.format(lr=lr,
-                time=_t.total_time, loc_loss=loc_loss/epoch_size, conf_loss=conf_loss/epoch_size)
-        sys.stdout.write(log)
-        sys.stdout.flush()
+                    # log for tensorboard
+                    writer.add_scalar('Train/loc_loss', loc_loss/epoch_size, epoch)
+                    writer.add_scalar('Train/conf_loss', conf_loss/epoch_size, epoch)
+                    writer.add_scalar('Train/lr', lr, epoch)
+                    
+                    loc_loss = 0
+                    conf_loss = 0
+            if iteration > train_end:
+                #eval:
+                out = model(images, phase='train')
 
-        # log for tensorboard
-        writer.add_scalar('Train/loc_loss', loc_loss/epoch_size, epoch)
-        writer.add_scalar('Train/conf_loss', conf_loss/epoch_size, epoch)
-        writer.add_scalar('Train/lr', lr, epoch)
+                # loss
+                loss_l, loss_c = criterion(out, targets)
 
+                out = (out[0], model.softmax(out[1].view(-1, model.num_classes)))
+
+                # detect
+                detections = detector.forward(out)
+
+                time = _t.toc()
+
+                # evals
+                label, score, npos, gt_label = cal_tp_fp(detections, targets, label, score, npos, gt_label)
+                size = cal_size(detections, targets, size)
+                loc_loss += loss_l.data[0]
+                conf_loss += loss_c.data[0]
+
+                # log per iter
+                log = '\r==>Eval: || {iters:d}/{epoch_size:d} in {time:.3f}s [{prograss}] || loc_loss: {loc_loss:.4f} cls_loss: {cls_loss:.4f}\r'.format(
+                    prograss='#'*int(round(10*iteration/epoch_size)) + '-'*int(round(10*(1-iteration/epoch_size))), iters=iteration, epoch_size=epoch_size,
+                    time=time, loc_loss=loss_l.data[0], cls_loss=loss_c.data[0])
+
+                sys.stdout.write(log)
+                sys.stdout.flush()
+                if train_end == (epoch_size - 1):
+                    # eval mAP
+                    prec, rec, ap = cal_pr(label, score, npos)
+
+                    # log per epoch
+                    sys.stdout.write('\r')
+                    sys.stdout.flush()
+                    log = '\r==>Eval: || Total_time: {time:.3f}s || loc_loss: {loc_loss:.4f} conf_loss: {conf_loss:.4f} || mAP: {mAP:.6f}\n'.format(mAP=ap,
+                      time=_t.total_time, loc_loss=loc_loss/epoch_size, conf_loss=conf_loss/epoch_size)
+                    sys.stdout.write(log)
+                    sys.stdout.flush()
+
+                    # log for tensorboard
+                    writer.add_scalar('Eval/loc_loss', loc_loss/epoch_size, epoch)
+                    writer.add_scalar('Eval/conf_loss', conf_loss/epoch_size, epoch)
+                    writer.add_scalar('Eval/mAP', ap, epoch)
+                    viz_pr_curve(writer, prec, rec, epoch)
+                    viz_archor_strategy(writer, size, gt_label, epoch)
 
     def eval_epoch(self, model, data_loader, detector, criterion, writer, epoch, use_gpu):
         model.eval()
@@ -628,11 +679,11 @@ class Solver(object):
 
 
 def train_model():
-    s = Solver()
+    s = Solver(ifTrain = True)
     s.train_model()
     return True
 
 def test_model():
-    s = Solver()
+    s = Solver(ifTrain = False)
     s.test_model()
     return True
