@@ -489,6 +489,7 @@ class Solver(object):
         i = 0
         device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
         for data_bench in iter(data_loader):
+            print('data_bench shape ', data_bench.shape)
             for img in data_bench:
                 print('img shape ', img.shape)
                 scale = [img.shape[1], img.shape[0], img.shape[1], img.shape[0]]
