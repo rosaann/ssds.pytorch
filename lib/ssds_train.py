@@ -476,7 +476,7 @@ class Solver(object):
     #     print('Evaluating detections')
     #     data_loader.dataset.evaluate_detections(all_boxes, output_dir)
 
-
+    import visdom
     def test_epoch(self, model, data_loader, detector, output_dir, use_gpu):
         model.eval()
 
@@ -489,6 +489,7 @@ class Solver(object):
         _t = Timer()
         i = 0
         device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+        vis = visdom.Visdom(server="http://localhost", port=8888)
         for img, labels in data_loader:
         #    for img in data_bench:
               #  print('img shape ', img.shape)
@@ -508,8 +509,7 @@ class Solver(object):
 
                 time = _t.toc()
 
-                fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 5))
-                ax2.imshow(img[ 0])
+                vis.images(img[0], win=1, opts={'title': 'Reals'})
                 print('detections ', detections.shape)
                 for j in range(1, num_classes):
                     cls_dets = list()
