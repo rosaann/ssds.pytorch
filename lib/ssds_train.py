@@ -27,6 +27,7 @@ from lib.utils.visualize_utils import *
 import torchvision
 import torchvision.transforms as transform
 import matplotlib.pyplot as plt
+import visdom
 
 class Solver(object):
     """
@@ -476,7 +477,7 @@ class Solver(object):
     #     print('Evaluating detections')
     #     data_loader.dataset.evaluate_detections(all_boxes, output_dir)
 
-    import visdom
+    
     def test_epoch(self, model, data_loader, detector, output_dir, use_gpu):
         model.eval()
 
