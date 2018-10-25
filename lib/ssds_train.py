@@ -487,12 +487,13 @@ class Solver(object):
 
         _t = Timer()
         i = 0
+        device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
         for data_bench in iter(data_loader):
             for img in data_bench:
                 scale = [img.shape[1], img.shape[0], img.shape[1], img.shape[0]]
                 if use_gpu:
                     #images = Variable(dataset.preproc(img)[0].unsqueeze(0).cuda(), volatile=True)
-                    images = Variable(dataset.cuda(), volatile=True)
+                    images = img.to(device)
                 else:
                     images = Variable(dataset.preproc(img)[0].unsqueeze(0), volatile=True)
 
