@@ -509,7 +509,7 @@ class Solver(object):
                 time = _t.toc()
 
                 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 5))
-                ax2.imshow(images[ 0])
+                ax2.imshow(img[ 0])
                 print('detections ', detections.shape)
                 for j in range(1, num_classes):
                     cls_dets = list()
