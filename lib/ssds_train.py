@@ -525,6 +525,7 @@ class Solver(object):
                 log = '\r==>Test: || {iters:d}/{epoch_size:d} in {time:.3f}s [{prograss}]\r'.format(
                     prograss='#'*int(round(10*i/num_images)) + '-'*int(round(10*(1-i/num_images))), iters=i, epoch_size=num_images,
                     time=time)
+                print(log)
                 sys.stdout.write(log)
                 sys.stdout.flush()
 
