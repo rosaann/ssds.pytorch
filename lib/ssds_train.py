@@ -510,7 +510,7 @@ class Solver(object):
 
                 time = _t.toc()
 
-                vis.images(img[0], win=1, opts={'title': 'Reals'})
+                vis.images(img[1], win=1, opts={'title': 'Reals'})
                 print('detections ', detections.shape)
                 for j in range(1, num_classes):
                     cls_dets = list()
