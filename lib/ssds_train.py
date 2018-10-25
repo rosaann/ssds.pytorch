@@ -491,7 +491,8 @@ class Solver(object):
             for img in data_bench:
                 scale = [img.shape[1], img.shape[0], img.shape[1], img.shape[0]]
                 if use_gpu:
-                    images = Variable(dataset.preproc(img)[0].unsqueeze(0).cuda(), volatile=True)
+                    #images = Variable(dataset.preproc(img)[0].unsqueeze(0).cuda(), volatile=True)
+                    images = Variable(dataset.cuda(), volatile=True)
                 else:
                     images = Variable(dataset.preproc(img)[0].unsqueeze(0), volatile=True)
 
