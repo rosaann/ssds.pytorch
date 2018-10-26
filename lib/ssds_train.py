@@ -284,7 +284,7 @@ class Solver(object):
     def train_epoch(self, model, data_loader, optimizer, criterion, writer, epoch, use_gpu):
         model.train()
 
-        epoch_size = int( len(data_loader) / self.cfg.BATCH_SIZE)
+        epoch_size = int( len(data_loader) / self.cfg.DATASET.TRAIN_BATCH_SIZE)
         batch_iterator = iter(data_loader)
 
         loc_loss = 0
