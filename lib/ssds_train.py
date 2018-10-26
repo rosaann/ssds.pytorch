@@ -577,7 +577,7 @@ class Solver(object):
                 
                 print('detections ', detections.shape)
                 for im ,this_img in enumerate( img):
-                  for j in range(1, num_classes):
+                  for j in range(0, num_classes):
                       cls_dets = list()
                       for det in detections[im][j]:
                           if det[0] > 0:
