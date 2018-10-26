@@ -282,7 +282,7 @@ class Solver(object):
 
 
     def train_epoch(self, model, data_loader, optimizer, criterion, writer, epoch, use_gpu):
-        model.train()
+        
 
         epoch_size = int( len(data_loader) / self.cfg.DATASET.TRAIN_BATCH_SIZE)
         batch_iterator = iter(data_loader)
@@ -308,6 +308,7 @@ class Solver(object):
                 images = Variable(images)
                 targets = [Variable(anno, volatile=True) for anno in targets]
             if iteration <= train_end:
+                model.train()
                 #train:
                 _t.tic()
                 # forward
@@ -356,6 +357,7 @@ class Solver(object):
                     conf_loss = 0
             if iteration > train_end:
                 #eval:
+                model.eval()
                 out = model(images, phase='train')
 
                 # loss
