@@ -555,6 +555,8 @@ class Solver(object):
         i = 0
         device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
         vis = visdom.Visdom(server="http://localhost", port=8888)
+        
+        check_i = 0;
         for img, labels in data_loader:
         #    for img in data_bench:
               #  print('img shape ', img.shape)
@@ -576,8 +578,9 @@ class Solver(object):
 
                 
                 print('detections ', detections.shape)
+                
                 for im ,this_img in enumerate( img):
-                  for j in range(0, num_classes):
+                  for j in range(1, num_classes):
                       cls_dets = list()
                       for det in detections[im][j]:
                           if det[0] > 0:
@@ -586,11 +589,13 @@ class Solver(object):
                             box *= scale
                             box = np.append(box, score)
                             cls_dets.append(box)
-                            if score > 0.6:
+                            if score > 0:
                                 vis.images(this_img, win=1, opts={'title': 'Reals'})
                                 print('box ', box)
                                 print('score ', score)
-                                return
+                                if check_i == 0:
+                                    return
+                                check_i += 1
                       if len(cls_dets) == 0:
                         cls_dets = empty_array
                       all_boxes[j][i] = np.array(cls_dets)
