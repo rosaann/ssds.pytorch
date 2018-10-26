@@ -41,7 +41,7 @@ class Solver(object):
         self.ifTrain = ifTrain
         if self.ifTrain:
             self.train_loader = load_data(cfg.DATASET, 'train') if 'train' in cfg.PHASE else None
-            self.eval_loader = load_data(cfg.DATASET, 'eval') if 'eval' in cfg.PHASE else None
+            #self.eval_loader = load_data(cfg.DATASET, 'eval') if 'eval' in cfg.PHASE else None
         else:
             test_image_dir = os.path.join('./data/', 'ship_test_v2')
             transforms = transform.Compose([transform.ToTensor()])
