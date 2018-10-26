@@ -291,7 +291,14 @@ class Solver(object):
         conf_loss = 0
         _t = Timer()
 
-        train_end = int( epoch_size * 0.7);
+        train_end = int( epoch_size * 0.1);
+        ###
+        label = [list() for _ in range(model.num_classes)]
+        gt_label = [list() for _ in range(model.num_classes)]
+        score = [list() for _ in range(model.num_classes)]
+        size = [list() for _ in range(model.num_classes)]
+        npos = [0] * model.num_classes
+        
         for iteration in iter(range((epoch_size))):
             images, targets = next(batch_iterator)
             if use_gpu:
