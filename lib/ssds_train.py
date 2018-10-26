@@ -291,7 +291,7 @@ class Solver(object):
         conf_loss = 0
         _t = Timer()
 
-        train_end = int( epoch_size * 0.9);
+        train_end = int( epoch_size * 0.7);
         ###
         label = [list() for _ in range(model.num_classes)]
         gt_label = [list() for _ in range(model.num_classes)]
@@ -362,6 +362,9 @@ class Solver(object):
 
                 # loss
                 loss_l, loss_c = criterion(out, targets)
+                
+                if loss_l.data[0] == float("Inf"):
+                    continue
 
                 out = (out[0], model.softmax(out[1].view(-1, model.num_classes)))
 
@@ -373,6 +376,7 @@ class Solver(object):
                 # evals
                 label, score, npos, gt_label = cal_tp_fp(detections, targets, label, score, npos, gt_label)
                 size = cal_size(detections, targets, size)
+                
                 loc_loss += loss_l.data[0]
                 conf_loss += loss_c.data[0]
 
