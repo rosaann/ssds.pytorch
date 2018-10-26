@@ -84,7 +84,7 @@ __C.TRAIN = AttrDict()
 __C.TRAIN.CHECKPOINTS_KEPT = 10
 __C.TRAIN.CHECKPOINTS_EPOCHS = 5
 # The number of max iters
-__C.TRAIN.MAX_EPOCHS = 50
+__C.TRAIN.MAX_EPOCHS = 5
 # Minibatch size
 __C.TRAIN.BATCH_SIZE = 6
 # trainable scope and resuming scope

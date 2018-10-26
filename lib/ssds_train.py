@@ -245,14 +245,14 @@ class Solver(object):
             sys.stdout.write('\rEpoch {epoch:d}/{max_epochs:d}:\n'.format(epoch=epoch, max_epochs=self.max_epochs))
             if epoch > warm_up:
                 self.exp_lr_scheduler.step(epoch-warm_up)
-            if 'train' in cfg.PHASE:
-                self.train_epoch(self.model, self.train_loader, self.optimizer, self.criterion, self.writer, epoch, self.use_gpu)
+        #    if 'train' in cfg.PHASE:
+            self.train_epoch(self.model, self.train_loader, self.optimizer, self.criterion, self.writer, epoch, self.use_gpu)
         #    if 'eval' in cfg.PHASE:
         #        self.eval_epoch(self.model, self.eval_loader, self.detector, self.criterion, self.writer, epoch, self.use_gpu)
-            if 'test' in cfg.PHASE:
-                self.test_epoch(self.model, self.test_loader, self.detector, self.output_dir, self.use_gpu)
-            if 'visualize' in cfg.PHASE:
-                self.visualize_epoch(self.model, self.visualize_loader, self.priorbox, self.writer, epoch,  self.use_gpu)
+        #    if 'test' in cfg.PHASE:
+        #        self.test_epoch(self.model, self.test_loader, self.detector, self.output_dir, self.use_gpu)
+        #    if 'visualize' in cfg.PHASE:
+        #    self.visualize_epoch(self.model, self.visualize_loader, self.priorbox, self.writer, epoch,  self.use_gpu)
 
             if epoch % cfg.TRAIN.CHECKPOINTS_EPOCHS == 0:
                 self.save_checkpoints(epoch)
@@ -357,7 +357,7 @@ class Solver(object):
                 out = (out[0], model.softmax(out[1].view(-1, model.num_classes)))
 
                 # detect
-                detections = detector.forward(out)
+                detections = self.detector.forward(out)
 
                 time = _t.toc()
 
