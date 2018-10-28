@@ -103,6 +103,7 @@ def match(threshold, truths, priors, variances, labels, loc_t, conf_t, idx):
         The matched indices corresponding to 1)location and 2)confidence preds.
     """
     # jaccard index
+    print('truths shape before jac ', truths.shape)
     overlaps = jaccard(
         truths,
         point_form(priors)
