@@ -38,7 +38,13 @@ class PriorBox(object):
         mean = []
         # l = 0
         for k, f in enumerate(self.feature_maps):
+            print('k ', k, ' f ', f )
             for i, j in product(range(f[0]), range(f[1])):
+                print('self.steps[k][1] ', self.steps[k][1])
+                print('self.offset[k][1] ', self.offset[k][1])
+                print('self.steps[k][0]  ',self.steps[k][0] )
+                print('self.offset[k][0] ', self.offset[k][0])
+                print('self.scales[k] ', self.scales[k])
                 cx = j * self.steps[k][1] + self.offset[k][1]
                 cy = i * self.steps[k][0] + self.offset[k][0]
                 s_k = self.scales[k]
@@ -59,10 +65,12 @@ class PriorBox(object):
                             mean += [cx, cy, s_k*ar_sqrt, s_k/ar_sqrt]
                             mean += [cx, cy, s_k/ar_sqrt, s_k*ar_sqrt]
                     elif isinstance(ar, list):
+                        print('ar[0 ]',ar[0], ' ar[1] ', ar[1])
                         mean += [cx, cy, s_k*ar[0], s_k*ar[1]]
         #     print(f, self.aspect_ratios[k])
         # assert False
         # back to torch land
+        print('mean len ', len(mean))
         output = torch.Tensor(mean).view(-1, 4)
         if self.clip:
             output.clamp_(max=1, min=0)
