@@ -40,11 +40,12 @@ class PriorBox(object):
         for k, f in enumerate(self.feature_maps):
             print('k ', k, ' f ', f )
             for i, j in product(range(f[0]), range(f[1])):
-                print('self.steps[k][1] ', self.steps[k][1])
-                print('self.offset[k][1] ', self.offset[k][1])
-                print('self.steps[k][0]  ',self.steps[k][0] )
-                print('self.offset[k][0] ', self.offset[k][0])
-                print('self.scales[k] ', self.scales[k])
+                print('i ', i, 'j ' , j)
+                #print('self.steps[k][1] ', self.steps[k][1])
+               # print('self.offset[k][1] ', self.offset[k][1])
+               # print('self.steps[k][0]  ',self.steps[k][0] )
+               # print('self.offset[k][0] ', self.offset[k][0])
+               # print('self.scales[k] ', self.scales[k])
                 cx = j * self.steps[k][1] + self.offset[k][1]
                 cy = i * self.steps[k][0] + self.offset[k][0]
                 s_k = self.scales[k]
