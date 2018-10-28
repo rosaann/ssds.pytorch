@@ -127,7 +127,7 @@ class COCODetection(data.Dataset):
       #  with open(cache_file, 'wb') as fid:
       #      pickle.dump(gt_roidb,fid,pickle.HIGHEST_PROTOCOL)
       #  print('wrote gt roidb to {}'.format(cache_file))
-        print('roidb ', gt_roidb)
+        #print('roidb ', gt_roidb)
         return gt_roidb
 
     def _load_coco_img_path(self, coco_name, indexes):
