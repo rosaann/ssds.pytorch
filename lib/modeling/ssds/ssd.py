@@ -101,7 +101,7 @@ class SSD(nn.Module):
                 conf.view(conf.size(0), -1, self.num_classes),
                 #conf
             )
-        print('out put shape', output.shape)
+        print('out put shape', loc.shape)
         return output
 
 def add_extras(base, feature_layer, mbox, num_classes, version):
