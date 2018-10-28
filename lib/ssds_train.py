@@ -593,7 +593,7 @@ class Solver(object):
                                 vis.images(this_img, win=1, opts={'title': 'Reals'})
                                 print('box ', box)
                                 print('score ', score)
-                                if check_i == 3:
+                                if check_i == 5:
                                     return
                                 check_i += 1
                       if len(cls_dets) == 0:
