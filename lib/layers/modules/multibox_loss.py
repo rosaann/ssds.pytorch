@@ -64,10 +64,12 @@ class MultiBoxLoss(nn.Module):
         # match priors (default boxes) and ground truth boxes
         loc_t = torch.Tensor(num, num_priors, 4)
         conf_t = torch.LongTensor(num, num_priors)
-        print('targets len', len(targets),'-------------------')
+        #print('targets len', len(targets),'-------------------')
         for idx in range(num):
             truths = targets[idx][:,:-1].data
             labels = targets[idx][:,-1].data
+            print('truths ', truths )
+            print('labels ', labels)
             defaults = priors.data
             match(self.threshold,truths,defaults,self.variance,labels,loc_t,conf_t,idx)
         if self.use_gpu:
