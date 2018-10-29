@@ -335,8 +335,8 @@ class Solver(object):
                     prograss='#'*int(round(10*iteration/epoch_size)) + '-'*int(round(10*(1-iteration/epoch_size))), iters=iteration, epoch_size=epoch_size,
                     time=time, loc_loss=loss_l.data[0], cls_loss=loss_c.data[0])
 
-              #  sys.stdout.write(log)
-              #  sys.stdout.flush()
+                sys.stdout.write(log)
+                sys.stdout.flush()
                 
                 if iteration == train_end:
                     # log per epoch
@@ -385,8 +385,8 @@ class Solver(object):
                     prograss='#'*int(round(10*iteration/epoch_size)) + '-'*int(round(10*(1-iteration/epoch_size))), iters=iteration, epoch_size=epoch_size,
                     time=time, loc_loss=loss_l.data[0], cls_loss=loss_c.data[0])
                 #print(log)
-                #sys.stdout.write(log)
-                #sys.stdout.flush()
+                sys.stdout.write(log)
+                sys.stdout.flush()
                 if train_end == (epoch_size - 1):
                     # eval mAP
                     prec, rec, ap = cal_pr(label, score, npos)
@@ -406,7 +406,7 @@ class Solver(object):
                     viz_pr_curve(writer, prec, rec, epoch)
                     viz_archor_strategy(writer, size, gt_label, epoch)
                     
-                self.visualize_epoch(model, images, targets, self.priorbox, writer, epoch, use_gpu)
+                self.visualize_epoch(model, images[0], targets, self.priorbox, writer, epoch, use_gpu)
     
     def test_epoch(self, model, data_loader, detector, output_dir, use_gpu):
         model.eval()
