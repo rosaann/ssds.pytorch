@@ -82,7 +82,7 @@ __C.MODEL.NUM_FUSED = 3
 __C.TRAIN = AttrDict()
 # The number of checkpoints kept, older ones are deleted to save space
 __C.TRAIN.CHECKPOINTS_KEPT = 10
-__C.TRAIN.CHECKPOINTS_EPOCHS = 2
+__C.TRAIN.CHECKPOINTS_EPOCHS = 5
 # The number of max iters
 __C.TRAIN.MAX_EPOCHS = 61
 # Minibatch size
