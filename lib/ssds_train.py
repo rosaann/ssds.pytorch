@@ -589,11 +589,11 @@ class Solver(object):
                             box *= scale
                             box = np.append(box, score)
                             cls_dets.append(box)
-                            if score > 0.2:
+                            if score > 0.5:
                                 vis.images(this_img, win=1, opts={'title': 'Reals'})
                                 print('box ', box)
                                 print('score ', score)
-                                if check_i == 5:
+                                if check_i == 0:
                                     return
                                 check_i += 1
                       if len(cls_dets) == 0:

@@ -53,7 +53,7 @@ class MultiBoxLoss(nn.Module):
         """
         loc_data, conf_data = predictions
         num = loc_data.size(0)
-        print('loc_data ',loc_data.shape, ' conf_data ', conf_data.shape, 'targets ',len(targets), 'num ', num)
+       # print('loc_data ',loc_data.shape, ' conf_data ', conf_data.shape, 'targets ',len(targets), 'num ', num)
         priors = self.priors
         # priors = priors[:loc_data.size(1), :]
         num_priors = (priors.size(0))
@@ -71,7 +71,7 @@ class MultiBoxLoss(nn.Module):
             #print('truths ', truths )
             #print('labels ', labels)
             defaults = priors.data
-            print('defaults shape ',defaults.shape)
+           # print('defaults shape ',defaults.shape)
             match(self.threshold,truths,defaults,self.variance,labels,loc_t,conf_t,idx)
         if self.use_gpu:
             loc_t = loc_t.cuda()

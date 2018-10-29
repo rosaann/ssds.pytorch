@@ -103,21 +103,21 @@ def match(threshold, truths, priors, variances, labels, loc_t, conf_t, idx):
         The matched indices corresponding to 1)location and 2)confidence preds.
     """
     # jaccard index
-    print('truths shape before jac ', truths.shape)
+   # print('truths shape before jac ', truths.shape)
     overlaps = jaccard(
         truths,
         point_form(priors)
     )
-    print('overlaps ', overlaps.shape)
+  #  print('overlaps ', overlaps.shape)
     # (Bipartite Matching)
     # [1,num_objects] best prior for each ground truth
     best_prior_overlap, best_prior_idx = overlaps.max(1, keepdim=True)
-    print('best_prior_overlap ', best_prior_overlap)
-    print('best_prior_idx ', best_prior_idx)
+  #  print('best_prior_overlap ', best_prior_overlap)
+  #  print('best_prior_idx ', best_prior_idx)
     # [1,num_priors] best ground truth for each prior
     best_truth_overlap, best_truth_idx = overlaps.max(0, keepdim=True)
-    print('best_truth_overlap ', best_truth_overlap.shape)
-    print('best_truth_idx ', best_truth_idx.shape)
+ #  print('best_truth_overlap ', best_truth_overlap.shape)
+ #   print('best_truth_idx ', best_truth_idx.shape)
     best_truth_idx.squeeze_(0)
     best_truth_overlap.squeeze_(0)
     best_prior_idx.squeeze_(1)
@@ -131,7 +131,7 @@ def match(threshold, truths, priors, variances, labels, loc_t, conf_t, idx):
     conf = labels[best_truth_idx]          # Shape: [num_priors]
     conf[best_truth_overlap < threshold] = 0  # label as background
     loc = encode(matches, priors, variances)
-    print('this loc shape ', loc.shape)
+ #   print('this loc shape ', loc.shape)
     loc_t[idx] = loc    # [num_priors,4] encoded offsets to learn
     conf_t[idx] = conf  # [num_priors] top class label for each prior
 
