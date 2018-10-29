@@ -406,7 +406,7 @@ class Solver(object):
                     viz_pr_curve(writer, prec, rec, epoch)
                     viz_archor_strategy(writer, size, gt_label, epoch)
                     
-                visualize_epoch(model, images, targets, self.priorbox, writer, epoch, use_gpu)
+                self.visualize_epoch(model, images, targets, self.priorbox, writer, epoch, use_gpu)
     
     def test_epoch(self, model, data_loader, detector, output_dir, use_gpu):
         model.eval()
