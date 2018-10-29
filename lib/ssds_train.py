@@ -301,13 +301,14 @@ class Solver(object):
         
         for iteration in iter(range((epoch_size))):
             images, targets = next(batch_iterator)
-            if use_gpu:
-                images = Variable(images.cuda())
-                targets = [Variable(anno.cuda(), volatile=True) for anno in targets]
-            else:
-                images = Variable(images)
-                targets = [Variable(anno, volatile=True) for anno in targets]
+            
             if iteration <= train_end:
+                if use_gpu:
+                    images = Variable(images.cuda())
+                    targets = [Variable(anno.cuda(), volatile=True) for anno in targets]
+                else:
+                    images = Variable(images)
+                    targets = [Variable(anno, volatile=True) for anno in targets]
                 model.train()
                 #train:
                 _t.tic()
@@ -356,7 +357,14 @@ class Solver(object):
                     loc_loss = 0
                     conf_loss = 0
             if iteration > train_end:
+                self.visualize_epoch(model, images[0], targets[0], self.priorbox, writer, epoch, use_gpu)
                 #eval:
+                if use_gpu:
+                    images = Variable(images.cuda())
+                    targets = [Variable(anno.cuda(), volatile=True) for anno in targets]
+                else:
+                    images = Variable(images)
+                    targets = [Variable(anno, volatile=True) for anno in targets]
                 model.eval()
                 out = model(images, phase='train')
 
@@ -406,7 +414,7 @@ class Solver(object):
                     viz_pr_curve(writer, prec, rec, epoch)
                     viz_archor_strategy(writer, size, gt_label, epoch)
                     
-                self.visualize_epoch(model, images[0], targets, self.priorbox, writer, epoch, use_gpu)
+                
     
     def test_epoch(self, model, data_loader, detector, output_dir, use_gpu):
         model.eval()
