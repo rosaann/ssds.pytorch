@@ -499,7 +499,7 @@ class Solver(object):
         #img_index = random.randint(0, len(data_loader.dataset)-1)
 
         # get img
-        imgIdx = self.train_loader.dataset.idx(idx)
+        imgIdx = self.train_loader.dataset.ids(idx)
         images = self.train_loader.dataset.pull_image(imgIdx)
         anno = self.train_loader.dataset.pull_anno(imgIdx)
 
