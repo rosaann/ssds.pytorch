@@ -215,7 +215,7 @@ class COCODetection(data.Dataset):
 
                     # target = self.target_transform(target, width, height)
         #print(target.shape)
-        print('item ', img)
+        #print('item ', img)
         return img, target
 
     def __len__(self):
