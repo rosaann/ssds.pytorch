@@ -291,7 +291,7 @@ class Solver(object):
         conf_loss = 0
         _t = Timer()
 
-        train_end = int( epoch_size * 0.8);
+        train_end = int( epoch_size * 0.01);
         ###
         label = [list() for _ in range(model.num_classes)]
         gt_label = [list() for _ in range(model.num_classes)]
