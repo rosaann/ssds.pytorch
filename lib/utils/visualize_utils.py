@@ -22,7 +22,8 @@ def images_to_writer(writer, images, prefix='image', names='image', epoch=0,ifCV
         
             writer.add_image('{}/{}'.format(prefix, name), x, epoch)
         else:
-            writer.add_image('{}/{}'.format(prefix, name), image, epoch)
+            x = vutils.make_grid(images.data, normalize=True, scale_each=True)
+            writer.add_image('{}/{}'.format(prefix, name), x, epoch)
 
 
 def to_grayscale(image):
