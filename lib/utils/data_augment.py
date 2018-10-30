@@ -238,12 +238,12 @@ class preproc(object):
 
         if self.writer is not None:
             image_show = draw_bbox(image, boxes)
-            self.writer.add_image('preprocess/input_image', image_show, self.epoch)
+     #       self.writer.add_image('preprocess/input_image', image_show, self.epoch)
 
         image_t, boxes, labels = _crop(image, boxes, labels)
         if self.writer is not None:
             image_show = draw_bbox(image_t, boxes)
-            self.writer.add_image('preprocess/crop_image', image_show, self.epoch)
+     #       self.writer.add_image('preprocess/crop_image', image_show, self.epoch)
 
         image_t = _distort(image_t)
         if self.writer is not None:
