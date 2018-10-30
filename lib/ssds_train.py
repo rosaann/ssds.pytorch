@@ -510,14 +510,14 @@ class Solver(object):
      #   viz_prior_box(writer, priorbox, images, epoch)
 
         # get preproc
-        #preproc = data_loader.dataset.preproc
-        #preproc.add_writer(writer, epoch)
+        preproc = self.train_loader.dataset.preproc
+        preproc.add_writer(writer, epoch)
         # preproc.p = 0.6
 
         # preproc image & visualize preprocess prograss
-        #images = Variable(preproc(image, anno)[0].unsqueeze(0), volatile=True)
-       # if use_gpu:
-       #     images = images.cuda()
+        images = Variable(preproc(images, anno)[0].unsqueeze(0), volatile=True)
+        if use_gpu:
+            images = images.cuda()
 
         # visualize feature map in base and extras
         base_out = viz_module_feature_maps(writer, model.base, images, module_name='base', epoch=epoch)

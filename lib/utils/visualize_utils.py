@@ -82,7 +82,7 @@ def viz_grads(writer, model, feature_maps, target_image, target_mean, module_nam
     images_to_writer(writer, grads_visualization, prefix, names, epoch)
 
 def viz_module_feature_maps(writer, module, input_image, module_name='base', epoch=0, mode='one', prefix='module_feature_maps'):
-    input_image = Variable(input_image.cuda())
+  #  input_image = Variable(input_image.cuda())
     output_image = input_image
     feature_maps = []
 
@@ -99,7 +99,7 @@ def viz_module_feature_maps(writer, module, input_image, module_name='base', epo
 
 
 def viz_module_grads(writer, model, module, input_image, target_image, target_mean, module_name='base', epoch=0, mode='one', prefix='module_grads'):
-    input_image = Variable(input_image.cuda())
+  #  input_image = Variable(input_image.cuda())
     output_image = input_image
     feature_maps = []
 
