@@ -214,8 +214,8 @@ class COCODetection(data.Dataset):
 
                     # target = self.target_transform(target, width, height)
         #print(target.shape)
-        print('item ', index)
-        return img, target, index
+       # print('item ', index)
+        return img, target
 
     def __len__(self):
         return len(self.ids)
