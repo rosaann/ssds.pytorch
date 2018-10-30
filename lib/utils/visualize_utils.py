@@ -157,7 +157,7 @@ def viz_prior_box(writer, prior_box, image=None, epoch=0):
             if archor[0] == archor[1]:
                 cv2.rectangle(image_show, (bbx[0], bbx[1]), (bbx[2], bbx[3]), (0, 255, 0), 1)
 
-       # image_show = Image.fromarray(cv2.cvtColor(image_show,cv2.COLOR_BGR2RGB)) 
+        image_show = Image.fromarray(cv2.cvtColor(image_show,cv2.COLOR_BGR2RGB)) 
         writer.add_image('example_prior_boxs/feature_map_{}'.format(k), image_show, epoch)
 
 
