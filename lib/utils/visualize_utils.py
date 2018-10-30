@@ -10,7 +10,7 @@ def images_to_writer(writer, images, prefix='image', names='image', epoch=0):
     if isinstance(names, str):
         names = [names+'_{}'.format(i) for i in range(len(images))]
 
-    for image, name in zip(images, names):
+    #for image, name in zip(images, names):
        # image_show = Image.fromarray(cv2.cvtColor(image,cv2.COLOR_BGR2RGB)) 
        # writer.add_image('{}/{}'.format(prefix, name), image_show, epoch)
 
