@@ -500,7 +500,7 @@ class Solver(object):
 
         # get img
         print('idx ', idx)
-        imgIdx = self.train_loader.dataset.ids[int(idx)]
+        imgIdx = idx #self.train_loader.dataset.ids[int(idx)]
         images = self.train_loader.dataset.pull_image(imgIdx)
         anno = self.train_loader.dataset.pull_anno(imgIdx)
 
