@@ -210,11 +210,12 @@ class COCODetection(data.Dataset):
 
 
         if self.preproc is not None:
+            print('ddd')
             img, target = self.preproc(img, target)
 
                     # target = self.target_transform(target, width, height)
         #print(target.shape)
-       # print('item ', index)
+        print('item ', img)
         return img, target
 
     def __len__(self):
@@ -232,8 +233,9 @@ class COCODetection(data.Dataset):
             PIL img
         '''
         img_id = self.ids[index]
-        return cv2.imread(img_id, cv2.IMREAD_COLOR)
-
+        img = cv2.imread(img_id, cv2.IMREAD_COLOR)
+        print('pull ', img)
+        return img
 
     def pull_anno(self, index):
         '''Returns the original annotation of image at index

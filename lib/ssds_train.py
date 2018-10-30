@@ -301,7 +301,7 @@ class Solver(object):
         
         for iteration in iter(range((epoch_size))):
             images, targets = next(batch_iterator)
-            print('im ', images)
+           # print('im ', images)
             if iteration > train_end:
                 self.visualize_epoch(model, int(iteration) * int(self.cfg.DATASET.TRAIN_BATCH_SIZE), self.priorbox, writer, epoch, use_gpu)
             if iteration <= train_end:
@@ -503,7 +503,7 @@ class Solver(object):
         print('idx ', idx)
         imgIdx = idx #self.train_loader.dataset.ids[int(idx)]
         images = self.train_loader.dataset.pull_image(imgIdx)
-        print('vi ', images)
+       # print('vi ', images)
         anno = self.train_loader.dataset.pull_anno(imgIdx)
 
         # visualize archor box
