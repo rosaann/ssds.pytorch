@@ -515,7 +515,7 @@ class Solver(object):
         # preproc.p = 0.6
 
         # preproc image & visualize preprocess prograss
-        images = Variable( self.train_loader.preproc(images, anno).unsqueeze(0), volatile=True)
+        images = Variable( preproc(images, anno).unsqueeze(0), volatile=True)
         if use_gpu:
             images = images.cuda()
 
