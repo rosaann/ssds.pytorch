@@ -531,7 +531,8 @@ class Solver(object):
         model.train()
         images.requires_grad = True
         images.volatile=False
-        base_out = viz_module_grads(writer, model, model.base, images, images, preproc.means, module_name='base', epoch=epoch)
+        #base_out = viz_module_grads(writer, model, model.base, images, images, preproc.means, module_name='base', epoch=epoch)
+        base_out = viz_module_grads(writer, model, model.base, images, images, 0.5, module_name='base', epoch=epoch)
 
         # TODO: add more...
 
