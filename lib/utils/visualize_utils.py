@@ -161,7 +161,7 @@ def viz_prior_box(writer, prior_box, image=None, epoch=0):
                 cv2.rectangle(image_show, (bbx[0], bbx[1]), (bbx[2], bbx[3]), (0, 255, 0), 1)
 
         image_show = Image.fromarray(cv2.cvtColor(image_show,cv2.COLOR_BGR2RGB)) 
-        x = vutils.make_grid(image_show.cuda(), normalize=True, scale_each=True)
+        x = vutils.make_grid(tf.Variable( image_show), normalize=True, scale_each=True)
         writer.add_image('example_prior_boxs/feature_map_{}'.format(k),x, epoch)
 
 
