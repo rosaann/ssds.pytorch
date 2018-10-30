@@ -234,10 +234,7 @@ class COCODetection(data.Dataset):
         '''
         img_id = self.ids[index]
         img = cv2.imread(img_id, cv2.IMREAD_COLOR)
-        target = self.annotations[index]
-        if self.preproc is not None:
-            
-            img, target = self.preproc(img, target)
+        
         return img
 
     def pull_anno(self, index):

@@ -510,11 +510,14 @@ class Solver(object):
         viz_prior_box(writer, priorbox, images, epoch)
 
         # get preproc
-        preproc = self.train_loader.dataset.preproc
-        preproc.add_writer(writer, epoch)
+        preproc_ = self.train_loader.dataset.preproc
+       # preproc.add_writer(writer, epoch)
         # preproc.p = 0.6
 
         # preproc image & visualize preprocess prograss
+        if preproc_ is not None:
+            
+            images, target = preproc_(images, anno)
         images = Variable( images.unsqueeze(0), volatile=True)
         if use_gpu:
             images = images.cuda()
