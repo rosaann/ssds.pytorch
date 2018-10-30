@@ -258,12 +258,12 @@ class preproc(object):
         image_t, boxes = _expand(image_t, boxes, self.means, self.p)
         if self.writer is not None:
             image_show = draw_bbox(image_t, boxes)
-            self.writer.add_image('preprocess/expand_image', image_show, self.epoch)
+         #   self.writer.add_image('preprocess/expand_image', image_show, self.epoch)
 
         image_t, boxes = _mirror(image_t, boxes)
         if self.writer is not None:
             image_show = draw_bbox(image_t, boxes)
-            self.writer.add_image('preprocess/mirror_image', image_show, self.epoch)
+        #    self.writer.add_image('preprocess/mirror_image', image_show, self.epoch)
 
         # only write the preprocess step for the first image
         if self.writer is not None:
