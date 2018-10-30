@@ -300,7 +300,7 @@ class Solver(object):
         npos = [0] * model.num_classes
         
         for iteration in iter(range((epoch_size))):
-            images, targets,imgIdx = next(batch_iterator)
+            images, targets, imgIdx = next(batch_iterator)
             if iteration > train_end:
                 self.visualize_epoch(model, imgIdx, targets, self.priorbox, writer, epoch, use_gpu)
             if iteration <= train_end:
