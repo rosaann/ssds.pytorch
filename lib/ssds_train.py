@@ -300,9 +300,9 @@ class Solver(object):
         npos = [0] * model.num_classes
         
         for iteration in iter(range((epoch_size))):
-            images, targets = next(batch_iterator)
+            images, targets,imgIdx = next(batch_iterator)
             if iteration > train_end:
-                self.visualize_epoch(model, images, targets, self.priorbox, writer, epoch, use_gpu)
+                self.visualize_epoch(model, imgIdx, targets, self.priorbox, writer, epoch, use_gpu)
             if iteration <= train_end:
                 if use_gpu:
                     images = Variable(images.cuda())
@@ -493,14 +493,14 @@ class Solver(object):
         data_loader.dataset.evaluate_detections(all_boxes, output_dir)
 
 
-    def visualize_epoch(self, model, images, annos, priorbox, writer, epoch, use_gpu):
+    def visualize_epoch(self, model, imgIdx, annos, priorbox, writer, epoch, use_gpu):
         model.eval()
 
         #img_index = random.randint(0, len(data_loader.dataset)-1)
 
         # get img
-        #image = data_loader.dataset.pull_image(img_index)
-        #anno = data_loader.dataset.pull_anno(img_index)
+        images = data_loader.dataset.pull_image(imgIdx)
+        anno = data_loader.dataset.pull_anno(imgIdx)
 
         # visualize archor box
         viz_prior_box(writer, priorbox, images, epoch)
