@@ -505,7 +505,7 @@ class Solver(object):
         anno = self.train_loader.dataset.pull_anno(imgIdx)
 
         # visualize archor box
-        viz_prior_box(writer, priorbox, images, epoch)
+     #   viz_prior_box(writer, priorbox, images, epoch)
 
         # get preproc
         #preproc = data_loader.dataset.preproc
