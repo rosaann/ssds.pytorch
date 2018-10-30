@@ -291,7 +291,7 @@ class Solver(object):
         conf_loss = 0
         _t = Timer()
 
-        train_end = int( epoch_size * 0.01);
+        train_end = int( epoch_size * 0.8);
         ###
         label = [list() for _ in range(model.num_classes)]
         gt_label = [list() for _ in range(model.num_classes)]
@@ -350,7 +350,7 @@ class Solver(object):
                         time=_t.total_time, loc_loss=loc_loss/epoch_size, conf_loss=conf_loss/epoch_size)
                     sys.stdout.write(log)
                     sys.stdout.flush()
-                    print(log)
+                 #   print(log)
                     # log for tensorboard
                     writer.add_scalar('Train/loc_loss', loc_loss/epoch_size, epoch)
                     writer.add_scalar('Train/conf_loss', conf_loss/epoch_size, epoch)
@@ -500,7 +500,7 @@ class Solver(object):
         #img_index = random.randint(0, len(data_loader.dataset)-1)
 
         # get img
-        print('idx ', idx)
+       # print('idx ', idx)
         imgIdx = idx #self.train_loader.dataset.ids[int(idx)]
         images = self.train_loader.dataset.pull_image(imgIdx)
        # print('vi ', images)
