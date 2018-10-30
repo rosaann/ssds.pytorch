@@ -162,7 +162,7 @@ def viz_prior_box(writer, prior_box, image=None, epoch=0):
 
         image_show = Image.fromarray(cv2.cvtColor(image_show,cv2.COLOR_BGR2RGB)) 
         x = vutils.make_grid(image_show, normalize=True, scale_each=True)
-        writer.add_image('example_prior_boxs/feature_map_{}'.format(k),x, epoch)
+        writer.add_image('example_prior_boxs/feature_map_{}'.format(k),x.cuda(), epoch)
 
 
 def add_pr_curve_raw(writer, tag, precision, recall, epoch=0):
