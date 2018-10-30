@@ -111,10 +111,10 @@ def viz_module_grads(writer, model, module, input_image, target_image, target_me
     return output_image
 
 def viz_prior_box(writer, prior_box, image=None, epoch=0):  
-    if isinstance(image, type(None)):
-        image = np.random.random((prior_box.image_size[0], prior_box.image_size[1], 3))
-    elif isinstance(image, str):
-        image = cv2.imread(image, -1)
+   # if isinstance(image, type(None)):
+   #     image = np.random.random((prior_box.image_size[0], prior_box.image_size[1], 3))
+   # elif isinstance(image, str):
+   #     image = cv2.imread(image, -1)
     print('prior_box.image_size[0] ', prior_box.image_size[0])
     print('prior_box.image_size[1] ', prior_box.image_size[1])
     image = cv2.resize(np.array(image), (prior_box.image_size[0], prior_box.image_size[1]))
