@@ -301,7 +301,8 @@ class Solver(object):
         
         for iteration in iter(range((epoch_size))):
             images, targets = next(batch_iterator)
-            
+            if iteration > train_end:
+                self.visualize_epoch(model, images[0], targets[0], self.priorbox, writer, epoch, use_gpu)
             if iteration <= train_end:
                 if use_gpu:
                     images = Variable(images.cuda())
@@ -357,7 +358,7 @@ class Solver(object):
                     loc_loss = 0
                     conf_loss = 0
             if iteration > train_end:
-                self.visualize_epoch(model, images[0], targets[0], self.priorbox, writer, epoch, use_gpu)
+             #   self.visualize_epoch(model, images[0], targets[0], self.priorbox, writer, epoch, use_gpu)
                 #eval:
                 if use_gpu:
                     images = Variable(images.cuda())
