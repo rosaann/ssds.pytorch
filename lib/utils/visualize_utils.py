@@ -9,17 +9,20 @@ import tensorflow as tf
 import torchvision.utils as vutils
 import torchvision.transforms as transform
 
-def images_to_writer(writer, images, prefix='image', names='image', epoch=0):
+def images_to_writer(writer, images, prefix='image', names='image', epoch=0,ifCVImg=True):
     if isinstance(names, str):
         names = [names+'_{}'.format(i) for i in range(len(images))]
 
     for image, name in zip(images, names):
-        image_show = Image.fromarray(cv2.cvtColor(image,cv2.COLOR_BGR2RGB)) 
+        if ifCVImg:
+            image_show = Image.fromarray(cv2.cvtColor(image,cv2.COLOR_BGR2RGB)) 
         
-        image_show = transform.ToTensor()(image_show)
-        x = vutils.make_grid(image_show.cuda().data, normalize=True, scale_each=True)
+            image_show = transform.ToTensor()(image_show)
+            x = vutils.make_grid(image_show.cuda().data, normalize=True, scale_each=True)
         
-        writer.add_image('{}/{}'.format(prefix, name), x, epoch)
+            writer.add_image('{}/{}'.format(prefix, name), x, epoch)
+        else:
+            writer.add_image('{}/{}'.format(prefix, name), image, epoch)
 
 
 def to_grayscale(image):
@@ -87,7 +90,7 @@ def viz_grads(writer, model, feature_maps, target_image, target_mean, module_nam
         grads_visualization.append(grads.cpu().numpy()+target_mean)
         names.append('{}.{}'.format(module_name, i))
     
-    images_to_writer(writer, grads_visualization, prefix, names, epoch)
+    images_to_writer(writer, grads_visualization, prefix, names, epoch,False)
 
 def viz_module_feature_maps(writer, module, input_image, module_name='base', epoch=0, mode='one', prefix='module_feature_maps'):
   #  input_image = Variable(input_image.cuda())
