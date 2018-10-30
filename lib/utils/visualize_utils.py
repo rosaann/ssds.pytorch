@@ -4,6 +4,7 @@ import numpy as np
 import math
 from itertools import product as product
 from PIL import Image  
+from torch.autograd import Variable
 
 def images_to_writer(writer, images, prefix='image', names='image', epoch=0):
     if isinstance(names, str):
@@ -81,6 +82,7 @@ def viz_grads(writer, model, feature_maps, target_image, target_mean, module_nam
     images_to_writer(writer, grads_visualization, prefix, names, epoch)
 
 def viz_module_feature_maps(writer, module, input_image, module_name='base', epoch=0, mode='one', prefix='module_feature_maps'):
+    input_image = Variable(images.cuda())
     output_image = input_image
     feature_maps = []
 
