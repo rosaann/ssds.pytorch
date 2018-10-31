@@ -28,6 +28,7 @@ import torchvision
 import torchvision.transforms as transform
 import matplotlib.pyplot as plt
 import visdom
+import math
 
 class Solver(object):
     """
@@ -324,6 +325,10 @@ class Solver(object):
                 # some bugs in coco train2017. maybe the annonation bug.
                 if loss_l.data[0] == float("Inf"):
                     continue
+                if math.isnan(loss_l.data[0]):
+                    continue
+                if math.isnan(loss_c.data[0]):
+                    continue
 
                 loss = loss_l + loss_c
                 loss.backward()
@@ -373,9 +378,9 @@ class Solver(object):
                 # loss
                 loss_l, loss_c = criterion(out, targets)
                 
-                if loss_l.data[0] == float("nan"):
+                if loss_l.data[0] == float('nan'):
                     continue
-                if loss_c.data[0] == float("nan"):
+                if loss_c.data[0] == float('nan'):
                     continue
 
                 out = (out[0], model.softmax(out[1].view(-1, model.num_classes)))
