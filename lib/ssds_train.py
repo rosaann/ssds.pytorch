@@ -373,7 +373,9 @@ class Solver(object):
                 # loss
                 loss_l, loss_c = criterion(out, targets)
                 
-                if loss_l.data[0] == float("Inf"):
+                if loss_l.data[0] == float("nan"):
+                    continue
+                if loss_c.data[0] == float("nan"):
                     continue
 
                 out = (out[0], model.softmax(out[1].view(-1, model.num_classes)))
