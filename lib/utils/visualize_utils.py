@@ -182,6 +182,12 @@ def viz_prior_box(writer, prior_box, image=None, epoch=0):
         x = vutils.make_grid(image_show.cuda().data, normalize=True, scale_each=True)
         writer.add_image('example_prior_boxs/feature_map_{}'.format(k),x, epoch)
 
+def showTestResult(writer,image_show, bbx, score):
+        cv2.rectangle(image_show, (bbx[0], bbx[1]), (bbx[2], bbx[3]), (0, 255, 0), 1)
+        image_show = Image.fromarray(cv2.cvtColor(image_show,cv2.COLOR_BGR2RGB)) 
+        image_show = transform.ToTensor()(image_show)
+        x = vutils.make_grid(image_show.cuda().data, normalize=True, scale_each=True)
+        writer.add_image('test/score{}'.format(score),x)
 
 def add_pr_curve_raw(writer, tag, precision, recall, epoch=0):
     num_thresholds = len(precision)
