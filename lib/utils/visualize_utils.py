@@ -18,7 +18,7 @@ def images_to_writer(writer, images, prefix='image', names='image', epoch=0):
         image_show = Image.fromarray(cv2.cvtColor(image,cv2.COLOR_BGR2RGB))       
         image_show = transform.ToTensor()(image_show)
         x = vutils.make_grid(image_show.cuda().data, normalize=True, scale_each=True)
-        
+        print('x', x.shape)
         writer.add_image('{}/{}'.format(prefix, name), x, epoch)
         
 
@@ -71,7 +71,6 @@ def viz_feature_maps(writer, feature_maps, module_name='base', epoch=0, prefix='
         feature_map_heatmap.append(heatmap[..., ::-1])
         names.append('{}.{}'.format(module_name, i))
 
-    print('heatmap size ',feature_map_heatmap.shape)
     images_to_writer(writer, feature_map_heatmap, prefix, names, epoch)
 
 def viz_grads(writer, model, feature_maps, target_image, target_mean, module_name='base', epoch=0, prefix='module_grads'):
