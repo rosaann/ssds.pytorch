@@ -263,7 +263,7 @@ def nms(boxes, scores, overlap=0.5, top_k=200):
 
     keep = torch.Tensor(scores.size(0)).fill_(0).long()
     if boxes.numel() == 0:
-        return keep
+        return keep, 0
     x1 = boxes[:, 0]
     y1 = boxes[:, 1]
     x2 = boxes[:, 2]
