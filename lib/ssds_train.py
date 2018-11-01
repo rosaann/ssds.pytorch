@@ -473,10 +473,10 @@ class Solver(object):
                             box = np.append(box, score)
                             cls_dets.append(box)
                             if score > 0.3:
-                                #vis.images(this_img, win=1, opts={'title': 'Reals'})
+                                vis.images(this_img, win=1, opts={'title': 'Reals'})
                                 print('box ', box)
                                 print('score ', score)
-                                showTestResult(self.writer,this_img, box, score)
+                               # showTestResult(self.writer,this_img, box, score)
                                 if check_i == 0:
                                     return
                                 check_i += 1
