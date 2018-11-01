@@ -19,7 +19,7 @@ def images_to_writer(writer, images, prefix='image', names='image', epoch=0):
         image_show = transform.ToTensor()(image_show)
         x = vutils.make_grid(image_show.cuda().data, normalize=True, scale_each=True)
         s = x.size()
-        print(s)
+       # print(s)
         if len( list(s)) >= 2:
             writer.add_image('{}/{}'.format(prefix, name), x, epoch)
         
