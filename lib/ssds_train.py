@@ -477,7 +477,7 @@ class Solver(object):
                                 print('box ', box)
                                 print('score ', score)
                                # showTestResult(self.writer,this_img, box, score)
-                                if check_i == 0:
+                                if check_i == 2:
                                     return
                                 check_i += 1
                       if len(cls_dets) == 0:
