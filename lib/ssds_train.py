@@ -472,7 +472,7 @@ class Solver(object):
                             box *= scale
                             box = np.append(box, score)
                             cls_dets.append(box)
-                            if score > 0.4:
+                            if score > 0.3:
                                 #vis.images(this_img, win=1, opts={'title': 'Reals'})
                                 print('box ', box)
                                 print('score ', score)
