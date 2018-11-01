@@ -50,7 +50,7 @@ __C.MODEL.SSDS = 'ssd'
 __C.MODEL.HALF_PRECISION = True
 
 # image size for ssd
-__C.MODEL.IMAGE_SIZE = [768, 768]
+__C.MODEL.IMAGE_SIZE = [300, 300]
 
 # number of the class for the model
 __C.MODEL.NUM_CLASSES = 2
