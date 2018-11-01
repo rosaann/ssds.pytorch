@@ -18,7 +18,9 @@ def images_to_writer(writer, images, prefix='image', names='image', epoch=0):
         image_show = Image.fromarray(cv2.cvtColor(image,cv2.COLOR_BGR2RGB))       
         image_show = transform.ToTensor()(image_show)
         x = vutils.make_grid(image_show.cuda().data, normalize=True, scale_each=True)
-        if len( x.shape.as_list()) >= 2:
+        s = x.size()
+        print(s)
+        if len( list(s)) >= 2:
             writer.add_image('{}/{}'.format(prefix, name), x, epoch)
         
 
