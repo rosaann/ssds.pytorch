@@ -3,7 +3,7 @@ import cv2
 import numpy as np
 import math
 from itertools import product as product
-from PIL import Image  
+from PIL import Image,ImageDraw
 from torch.autograd import Variable
 import tensorflow as tf
 import torchvision.utils as vutils
@@ -182,9 +182,13 @@ def viz_prior_box(writer, prior_box, image=None, epoch=0):
         x = vutils.make_grid(image_show.cuda().data, normalize=True, scale_each=True)
         writer.add_image('example_prior_boxs/feature_map_{}'.format(k),x, epoch)
 
-def showTestResult(writer,image_show, bbx, score):
-        cv2.rectangle(image_show, (bbx[0], bbx[1]), (bbx[2], bbx[3]), (0, 255, 0), 1)
-        image_show = Image.fromarray(cv2.cvtColor(image_show,cv2.COLOR_BGR2RGB)) 
+def showTestResult(writer,image, bbx, score):
+        #image_show = image.copy()
+        #cv2.rectangle(image_show, (bbx[0], bbx[1]), (bbx[2], bbx[3]), (0, 255, 0), 1)
+        image_show = Image.fromarray(cv2.cvtColor(image,cv2.COLOR_BGR2RGB)) 
+        draw = ImageDraw.Draw(image_show)
+        draw.rectangle(bbx)
+        del draw
         image_show = transform.ToTensor()(image_show)
         x = vutils.make_grid(image_show.cuda().data, normalize=True, scale_each=True)
         writer.add_image('test/score{}'.format(score),x)
