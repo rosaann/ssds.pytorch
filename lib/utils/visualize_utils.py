@@ -71,6 +71,7 @@ def viz_feature_maps(writer, feature_maps, module_name='base', epoch=0, prefix='
         feature_map_heatmap.append(heatmap[..., ::-1])
         names.append('{}.{}'.format(module_name, i))
 
+    print('heatmap size ',feature_map_heatmap.shape)
     images_to_writer(writer, feature_map_heatmap, prefix, names, epoch)
 
 def viz_grads(writer, model, feature_maps, target_image, target_mean, module_name='base', epoch=0, prefix='module_grads'):
