@@ -522,7 +522,7 @@ class Solver(object):
         image_show = Image.fromarray(cv2.cvtColor(image_show,cv2.COLOR_BGR2RGB)) 
         image_show = transform.ToTensor()(image_show)
         x = vutils.make_grid(image_show.cuda().data, normalize=True, scale_each=True)
-        writer.add_image('testImg/dir{}'.format(img_dir),x, 0)
+        writer.add_image('example_prior_boxs/dir{}'.format(img_dir),x, 0)
 
         
     def visTest(self, model, images, priorbox, writer, epoch, use_gpu):
