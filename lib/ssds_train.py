@@ -456,6 +456,7 @@ class Solver(object):
 
                 _t.tic()
                 if check_i == 0:
+                    vis.images(images[0], win=1, opts={'title': 'Reals'})
                     self.visTest(model, images[0].unsqueeze(0), self.priorbox, self.writer, 1, use_gpu)
                     return
             # forward
@@ -510,7 +511,7 @@ class Solver(object):
 
     def visTest(self, model, images, priorbox, writer, epoch, use_gpu):
         print('image shpe', images.shape)
-        images_to_writer(writer, images)
+      #  images_to_writer(writer, images)
 
         base_out = viz_module_feature_maps(writer, model.base, images, module_name='base', epoch=epoch)
         extras_out = viz_module_feature_maps(writer, model.extras, base_out, module_name='extras', epoch=epoch)
