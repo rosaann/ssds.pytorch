@@ -466,13 +466,13 @@ class Solver(object):
                   for j in range(1, num_classes):
                       cls_dets = list()
                       for det in detections[im][j]:
-                        #  if det[0] > 0:
+                          if det[0] > 0.5:
                             d = det.cpu().numpy()
                             score, box = d[0], d[1:]
                             box *= scale
                             box = np.append(box, score)
                             cls_dets.append(box)
-                            if score >= 0.4:
+                            if score >= 0.5:
                                 vis.images(this_img, win=1, opts={'title': 'Reals'})
                                 print('box ', box)
                                 print('score ', score)
