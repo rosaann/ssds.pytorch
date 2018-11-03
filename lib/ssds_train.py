@@ -456,8 +456,8 @@ class Solver(object):
 
                 _t.tic()
                 if check_i == 4:
-                    vis.images(images[4], win=1, opts={'title': 'Reals'})
-                    self.visTest(model, images[4].unsqueeze(0), self.priorbox, self.writer, 1, use_gpu)
+                    vis.images(images[5], win=1, opts={'title': 'Reals'})
+                    self.visTest(model, images[5].unsqueeze(0), self.priorbox, self.writer, 1, use_gpu)
                     
             # forward
                 out = model(images, phase='eval')
@@ -471,7 +471,7 @@ class Solver(object):
                 
                 for im ,this_img in enumerate( images):
                   if check_i == 4:
-                      if im == 4:
+                      if im == 5:
                           print('de ', detections[im])
                           return
                   for j in range(1, num_classes):
