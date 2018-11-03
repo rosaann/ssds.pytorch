@@ -490,7 +490,7 @@ class Solver(object):
                                 vis.images(this_img, win=1, opts={'title': 'Reals'})
                                 #print('box ', box)
                                 print('score ', score)
-                      self.showTestResult(self.writer,img_dir, cls_dets)
+                      self.showTestResult(self.writer,img_dir, cls_dets,vis)
                       return
                                # if check_i == 1:
                           #      return
@@ -509,7 +509,7 @@ class Solver(object):
             print('Evaluating detections')
             data_loader.dataset.evaluate_detections(all_boxes, output_dir)
                     
-    def showTestResult(self,writer, img_dir, cls_dets):
+    def showTestResult(self,writer, img_dir, cls_dets,vis):
         image_show = cv2.imread(img_dir, cv2.IMREAD_COLOR)
         for box in cls_dets:
             dets =  box
@@ -517,12 +517,13 @@ class Solver(object):
             ys = dets[ 1]
             ws = dets[ 2] - xs + 1
             hs = dets[ 3] - ys + 1
-            cv2.rectangle(image_show, (int(xs), int(ys)), (int(xs + ws), int (ys + hs)), (0, 255, 0), 1)
+          #  cv2.rectangle(image_show, (int(xs), int(ys)), (int(xs + ws), int (ys + hs)), (0, 255, 0), 1)
             print(xs, ys, ws, hs)
-        image_show = Image.fromarray(cv2.cvtColor(image_show,cv2.COLOR_BGR2RGB)) 
-        image_show = transform.ToTensor()(image_show)
-        x = vutils.make_grid(image_show.cuda().data, normalize=True, scale_each=True)
-        writer.add_image('module_feature_maps/feature_extractors.{}'.format(img_dir),x, 67)
+            vis.line([(int(xs), int(ys)), (int(xs + ws), int (ys + hs))],win=1)
+       # image_show = Image.fromarray(cv2.cvtColor(image_show,cv2.COLOR_BGR2RGB)) 
+       # image_show = transform.ToTensor()(image_show)
+       # x = vutils.make_grid(image_show.cuda().data, normalize=True, scale_each=True)
+        #writer.add_image('module_feature_maps/feature_extractors.{}'.format(img_dir),x, 67)
 
         
     def visTest(self, model, images, priorbox, writer, epoch, use_gpu):
