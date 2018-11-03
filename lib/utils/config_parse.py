@@ -50,7 +50,7 @@ __C.MODEL.SSDS = 'ssd'
 __C.MODEL.HALF_PRECISION = True
 
 # image size for ssd
-__C.MODEL.IMAGE_SIZE = [768, 768]
+__C.MODEL.IMAGE_SIZE = [300, 300]
 
 # number of the class for the model
 __C.MODEL.NUM_CLASSES = 2
@@ -86,7 +86,7 @@ __C.TRAIN.CHECKPOINTS_EPOCHS = 5
 # The number of max iters
 __C.TRAIN.MAX_EPOCHS = 70
 # Minibatch size
-__C.TRAIN.BATCH_SIZE = 4
+__C.TRAIN.BATCH_SIZE = 30
 # trainable scope and resuming scope
 __C.TRAIN.TRAINABLE_SCOPE = 'base,extras,norm,loc,conf'
 __C.TRAIN.RESUME_SCOPE = ''
