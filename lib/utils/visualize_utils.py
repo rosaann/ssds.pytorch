@@ -69,7 +69,7 @@ def viz_feature_maps(writer, feature_maps, module_name='base', epoch=0, prefix='
     names, feature_map_heatmap = [], []
     for i, feature_map in enumerate(feature_map_visualization):
         feature_map = (feature_map * 255)
-        print('feature_map ', feature_map)
+      #  print('feature_map ', feature_map)
         heatmap = cv2.applyColorMap(feature_map.astype(np.uint8), cv2.COLORMAP_JET)
         feature_map_heatmap.append(heatmap[..., ::-1])
         names.append('{}.{}'.format(module_name, i))

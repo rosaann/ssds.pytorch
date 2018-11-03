@@ -456,7 +456,7 @@ class Solver(object):
 
                 _t.tic()
                 if check_i == 0:
-                    self.visTest(model, images, self.priorbox, self.writer, 1, use_gpu)
+                    self.visTest(model, images[0], self.priorbox, self.writer, 1, use_gpu)
                     return
             # forward
                 out = model(images, phase='eval')
