@@ -48,7 +48,7 @@ class Solver(object):
             transforms = transform.Compose([transform.Resize([300,300]),transform.ToTensor()])
             test_set = torchvision.datasets.ImageFolder(test_image_dir, transform = transforms)
         
-            self.test_loader = torch.utils.data.DataLoader(test_set,batch_size=8,shuffle=True,num_workers=8)
+            self.test_loader = torch.utils.data.DataLoader(test_set,batch_size=8,shuffle=False,num_workers=8)
             #self.test_loader = load_data(cfg.DATASET, 'test') if 'test' in cfg.PHASE else None
         self.visualize_loader = load_data(cfg.DATASET, 'visualize') if 'visualize' in cfg.PHASE else None
 
@@ -451,6 +451,9 @@ class Solver(object):
                     images = Variable(dataset.preproc(img)[0].unsqueeze(0), volatile=True)
 
                 _t.tic()
+                if check_i == 0:
+                    self.visTest(model, images, self.priorbox, self.writer, 1, use_gpu)
+                    return
             # forward
                 out = model(images, phase='eval')
 
@@ -458,7 +461,6 @@ class Solver(object):
                 detections = detector.forward(out)
 
                 time = _t.toc()
-
                 
           #      print('detections ', detections.shape)
                 
@@ -502,7 +504,12 @@ class Solver(object):
         print('Evaluating detections')
         data_loader.dataset.evaluate_detections(all_boxes, output_dir)
 
-    
+    def visText(self, model, idx, priorbox, writer, epoch, use_gpu):
+        base_out = viz_module_feature_maps(writer, model.base, images, module_name='base', epoch=epoch)
+        extras_out = viz_module_feature_maps(writer, model.extras, base_out, module_name='extras', epoch=epoch)
+        # visualize feature map in feature_extractors
+        viz_feature_maps(writer, model(images, 'feature'), module_name='feature_extractors', epoch=epoch)
+
     def visualize_epoch(self, model, idx, priorbox, writer, epoch, use_gpu):
         model.eval()
 
@@ -545,7 +552,7 @@ class Solver(object):
 
         # TODO: add more...
 
-
+    
     def configure_optimizer(self, trainable_param, cfg):
         if cfg.OPTIMIZER == 'sgd':
             optimizer = optim.SGD(trainable_param, lr=cfg.LEARNING_RATE,
