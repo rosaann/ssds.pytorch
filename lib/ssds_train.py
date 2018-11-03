@@ -431,7 +431,7 @@ class Solver(object):
                 
     def test_epoch_2(self, model, detector, output_dir, use_gpu):
         model.eval()
-        test_image_dir = os.path.join('./data/', 'ship_test_v2/data_test')
+        test_image_dir = os.path.join('./data/', 'ship_test_v2/data_test/')
 
         device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
         vis = visdom.Visdom(server="http://localhost", port=8888)
@@ -443,7 +443,7 @@ class Solver(object):
             empty_array = np.transpose(np.array([[],[],[],[],[]]),(1,0))
             for file in files:
                 if os.path.splitext(file)[1] == '.jpg':
-                    img = cv2.imread(file, cv2.IMREAD_COLOR)
+                    img = cv2.imread(test_image_dir + file, cv2.IMREAD_COLOR)
                     preproc_ = self.train_loader.dataset.preproc
                     #preproc_for_test(image, self.resize, self.means)
                     # preproc.add_writer(writer, epoch)
