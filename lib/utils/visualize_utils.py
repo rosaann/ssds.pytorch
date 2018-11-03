@@ -64,7 +64,7 @@ def viz_feature_maps(writer, feature_maps, module_name='base', epoch=0, prefix='
     for i in feature_maps:
         i = i.squeeze(0)
         temp = to_grayscale(i)
-        feature_map_visualization.append(temp.data.cuda().numpy())
+        feature_map_visualization.append(temp.data.cpu().numpy())
         
     names, feature_map_heatmap = [], []
     for i, feature_map in enumerate(feature_map_visualization):
