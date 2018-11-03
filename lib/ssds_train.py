@@ -458,7 +458,7 @@ class Solver(object):
                 if check_i == 1:
                     vis.images(images[0], win=1, opts={'title': 'Reals'})
                     self.visTest(model, images[0].unsqueeze(0), self.priorbox, self.writer, 1, use_gpu)
-                    return
+                    
             # forward
                 out = model(images, phase='eval')
 
@@ -473,6 +473,7 @@ class Solver(object):
                   if check_i == 1:
                       if im == 0:
                           print('de ', detections[im])
+                          return
                   for j in range(1, num_classes):
                       cls_dets = list()
                       for det in detections[im][j]:
