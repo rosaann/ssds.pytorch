@@ -451,7 +451,7 @@ class Solver(object):
 
                     # preproc image & visualize preprocess prograss
                     if preproc_ is not None:   
-                        img = preproc_for_test(img,preproc_.resize, preproc_.means)
+                        img = preproc_for_test(img,self.cfg.DATASET.IMAGE_SIZE, self.cfg.DATASET.PIXEL_MEANS)
                     scale = [img.shape[1], img.shape[0], img.shape[1], img.shape[0]]
                     if use_gpu:
                     #images = Variable(dataset.preproc(img)[0].unsqueeze(0).cuda(), volatile=True)
