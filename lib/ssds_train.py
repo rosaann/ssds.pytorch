@@ -489,7 +489,7 @@ class Solver(object):
                             if score >= 0.5:
                                 cls_dets.append(box)
                                 vis.images(this_img, win=1, opts={'title': 'Reals'})
-                                #print('box ', box)
+                                print('box ', box)
                                 print('score ', score)
                       self.showTestResult(self.writer,img_dir, cls_dets)
                       return
