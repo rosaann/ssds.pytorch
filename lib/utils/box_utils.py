@@ -249,7 +249,7 @@ def one_hot_embedding(labels, num_classes):
 # Original author: Francisco Massa:
 # https://github.com/fmassa/object-detection.torch
 # Ported to PyTorch by Max deGroot (02/01/2017)
-def nms(boxes, scores, overlap=0.1, top_k=200):
+def nms(boxes, scores, overlap=0.9, top_k=200):
     """Apply non-maximum suppression at test time to avoid detecting too many
     overlapping bounding boxes for a given object.
     Args:
