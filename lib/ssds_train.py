@@ -491,8 +491,9 @@ class Solver(object):
                                 vis.images(this_img, win=1, opts={'title': 'Reals'})
                                 print('box ', box)
                                 print('score ', score)
-                      self.showTestResult(self.writer,img_dir, cls_dets)
-                      return
+                      if check_i == 1:
+                          self.showTestResult(self.writer,img_dir, cls_dets)
+                          return
                                # if check_i == 1:
                           #      return
                     
