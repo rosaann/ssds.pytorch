@@ -517,7 +517,7 @@ class Solver(object):
             ys = dets[ 1]
             ws = dets[ 2] - xs + 1
             hs = dets[ 3] - ys + 1
-            cv2.rectangle(image_show, (xs, ys), (xs + ws, ys + hs), (0, 255, 0), 1)
+            cv2.rectangle(image_show, (int(xs), int(ys)), (int(xs + ws), int (ys + hs)), (0, 255, 0), 1)
         writer.add_image('testImg/dir{}'.format(img_dir),image_show, 0)
 
         
