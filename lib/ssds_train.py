@@ -445,6 +445,7 @@ class Solver(object):
             for file in files:
                 if os.path.splitext(file)[1] == '.jpg':
                     img = cv2.imread(test_image_dir + file, cv2.IMREAD_COLOR)
+                    vis.images(img, win=1, opts={'title': 'Reals'})
                     preproc_ = self.train_loader.dataset.preproc
                     #preproc_for_test(image, self.resize, self.means)
                     # preproc.add_writer(writer, epoch)
@@ -464,7 +465,7 @@ class Solver(object):
 
                 _t.tic()
                 if check_i == 0:
-                    vis.images(images[0], win=1, opts={'title': 'Reals'})
+                    vis.images(images[0], win=2, opts={'title': 'Reals'})
                     self.visTest(model, images[0].unsqueeze(0), self.priorbox, self.writer, 1, use_gpu)
                     
                 out = model(images, phase='eval')
