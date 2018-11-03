@@ -452,6 +452,7 @@ class Solver(object):
                     # preproc image & visualize preprocess prograss
                     if preproc_ is not None:   
                         img = preproc_for_test(img,self.cfg.DATASET.IMAGE_SIZE, self.cfg.DATASET.PIXEL_MEANS)
+                        img = torch.from_numpy(img)
                     scale = [img.shape[1], img.shape[0], img.shape[1], img.shape[0]]
                     img = Variable( img.unsqueeze(0), volatile=True)
                     if use_gpu:
