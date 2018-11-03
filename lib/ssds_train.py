@@ -444,12 +444,13 @@ class Solver(object):
                 if os.path.splitext(file)[1] == '.jpg':
                     img = cv2.imread(file, cv2.IMREAD_COLOR)
                     preproc_ = self.train_loader.dataset.preproc
+                    #preproc_for_test(image, self.resize, self.means)
                     # preproc.add_writer(writer, epoch)
                     # preproc.p = 0.6
 
                     # preproc image & visualize preprocess prograss
                     if preproc_ is not None:   
-                        img, target = preproc_(img)
+                        img = preproc_.preproc_for_test(img,preproc_.resize, preproc_.means)
                     scale = [img.shape[1], img.shape[0], img.shape[1], img.shape[0]]
                     if use_gpu:
                     #images = Variable(dataset.preproc(img)[0].unsqueeze(0).cuda(), volatile=True)
