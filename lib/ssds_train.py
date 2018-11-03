@@ -444,7 +444,8 @@ class Solver(object):
             empty_array = np.transpose(np.array([[],[],[],[],[]]),(1,0))
             for file in files:
                 if os.path.splitext(file)[1] == '.jpg':
-                    img = cv2.imread(test_image_dir + file, cv2.IMREAD_COLOR)
+                    img_dir = test_image_dir + file
+                    img = cv2.imread(img_dir, cv2.IMREAD_COLOR)
                  #   vis.images(img, win=1, opts={'title': 'Reals'})
                     preproc_ = self.train_loader.dataset.preproc
                     #preproc_for_test(image, self.resize, self.means)
@@ -464,7 +465,7 @@ class Solver(object):
                         images = Variable(dataset.preproc(img)[0].unsqueeze(0), volatile=True)
 
                 _t.tic()
-                if check_i == 1:
+                if check_i == 0:
                     vis.images(images[0], win=2, opts={'title': 'Reals'})
                     self.visTest(model, images[0].unsqueeze(0), self.priorbox, self.writer, 1, use_gpu)
                     
@@ -472,7 +473,7 @@ class Solver(object):
                 detections = detector.forward(out)
                 time = _t.toc()
                 for im ,this_img in enumerate( images):
-                  if check_i == 1:
+                  if check_i == 0:
                       if im == 0:
                           print('de ', detections[im])
                           return
@@ -485,11 +486,11 @@ class Solver(object):
                             box *= scale
                             box = np.append(box, score)
                             cls_dets.append(box)
-                          #  if score >= 0.4:
-                          #      vis.images(this_img, win=1, opts={'title': 'Reals'})
-                          #      print('box ', box)
-                          #      print('score ', score)
-                               # showTestResult(self.writer,this_img, box, score)
+                            if score >= 0.5:
+                                vis.images(this_img, win=1, opts={'title': 'Reals'})
+                                print('box ', box)
+                                print('score ', score)
+                      self.showTestResult(self.writer,img_dir, cls_dets)
                                # if check_i == 1:
                           #      return
                     
@@ -507,90 +508,18 @@ class Solver(object):
             print('Evaluating detections')
             data_loader.dataset.evaluate_detections(all_boxes, output_dir)
                     
-    def test_epoch(self, model, data_loader, detector, output_dir, use_gpu):
-        model.eval()
+    def showTestResult(writer, img_dir, cls_dets):
+        image_show = cv2.imread(img_dir, cv2.IMREAD_COLOR)
+        for box, score in cls_dets:
+            dets = 768 * box
+            xs = dets[ 0]
+            ys = dets[ 1]
+            ws = dets[ 2] - xs + 1
+            hs = dets[ 3] - ys + 1
+            cv2.rectangle(image_show, (xs, ys), (xs + ws, ys + hs), (0, 255, 0), 1)
+        writer.add_image('testImg/dir{}'.format(img_dir),image_show, 0)
 
-        dataset = data_loader.dataset
-        num_images = len(dataset)
-        num_classes = detector.num_classes
-        all_boxes = [[[] for _ in range(num_images)] for _ in range(num_classes)]
-        empty_array = np.transpose(np.array([[],[],[],[],[]]),(1,0))
-
-        _t = Timer()
-        i = 0
-        device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
-        vis = visdom.Visdom(server="http://localhost", port=8888)
         
-        check_i = 0;
-        for img, labels in data_loader:
-        #    for img in data_bench:
-              #  print('img shape ', img.shape)
-                scale = [img.shape[1], img.shape[0], img.shape[1], img.shape[0]]
-                if use_gpu:
-                    #images = Variable(dataset.preproc(img)[0].unsqueeze(0).cuda(), volatile=True)
-                    images = img.to(device)
-                else:
-                    images = Variable(dataset.preproc(img)[0].unsqueeze(0), volatile=True)
-
-                _t.tic()
-                if check_i == 0:
-                    vis.images(images[0], win=1, opts={'title': 'Reals'})
-                    self.visTest(model, images[0].unsqueeze(0), self.priorbox, self.writer, 1, use_gpu)
-                    
-            # forward
-                out = model(images, phase='eval')
-
-            # detect
-                detections = detector.forward(out)
-
-                time = _t.toc()
-                
-          #      print('detections ', detections.shape)
-                
-                for im ,this_img in enumerate( images):
-                  if check_i == 0:
-                      if im == 0:
-                          print('de ', detections[im])
-                          return
-                  for j in range(1, num_classes):
-                      cls_dets = list()
-                      for det in detections[im][j]:
-                        #  if det[0] > 0.5:
-                            d = det.cpu().numpy()
-                            score, box = d[0], d[1:]
-                            box *= scale
-                            box = np.append(box, score)
-                            cls_dets.append(box)
-                          #  if score >= 0.4:
-                          #      vis.images(this_img, win=1, opts={'title': 'Reals'})
-                          #      print('box ', box)
-                          #      print('score ', score)
-                               # showTestResult(self.writer,this_img, box, score)
-                               # if check_i == 1:
-                          #      return
-                    
-                      if len(cls_dets) == 0:
-                        cls_dets = empty_array
-                      all_boxes[j][i] = np.array(cls_dets)
-                    
-                  i += 1
-                check_i += 1
-            # log per iter
-                log = '\r==>Test: || {iters:d}/{epoch_size:d} in {time:.3f}s [{prograss}]\r'.format(
-                    prograss='#'*int(round(10*i/num_images)) + '-'*int(round(10*(1-i/num_images))), iters=i, epoch_size=num_images,
-                    time=time)
-                print(log)
-                sys.stdout.write(log)
-                sys.stdout.flush()
-
-        # write result to pkl
-        with open(os.path.join(output_dir, 'detections.pkl'), 'wb') as f:
-            pickle.dump(all_boxes, f, pickle.HIGHEST_PROTOCOL)
-
-        # currently the COCO dataset do not return the mean ap or ap 0.5:0.95 values
-        print('Evaluating detections')
-        data_loader.dataset.evaluate_detections(all_boxes, output_dir)
-
     def visTest(self, model, images, priorbox, writer, epoch, use_gpu):
         print('image shpe', images.shape)
       #  images_to_writer(writer, images)
