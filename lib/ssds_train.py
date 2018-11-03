@@ -453,9 +453,10 @@ class Solver(object):
                     if preproc_ is not None:   
                         img = preproc_for_test(img,self.cfg.DATASET.IMAGE_SIZE, self.cfg.DATASET.PIXEL_MEANS)
                     scale = [img.shape[1], img.shape[0], img.shape[1], img.shape[0]]
+                    img = Variable( img.unsqueeze(0), volatile=True)
                     if use_gpu:
                     #images = Variable(dataset.preproc(img)[0].unsqueeze(0).cuda(), volatile=True)
-                        images = img.to(device)
+                        images = img.cuda()
                     else:
                         images = Variable(dataset.preproc(img)[0].unsqueeze(0), volatile=True)
 
