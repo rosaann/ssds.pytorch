@@ -509,7 +509,7 @@ class Solver(object):
             print('Evaluating detections')
             data_loader.dataset.evaluate_detections(all_boxes, output_dir)
                     
-    def showTestResult(writer, img_dir, cls_dets):
+    def showTestResult(self,writer, img_dir, cls_dets):
         image_show = cv2.imread(img_dir, cv2.IMREAD_COLOR)
         for box, score in cls_dets:
             dets = 768 * box
