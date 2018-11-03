@@ -446,6 +446,8 @@ class Solver(object):
         #    for img in data_bench:
               #  print('img shape ', img.shape)
                 scale = [img.shape[1], img.shape[0], img.shape[1], img.shape[0]]
+                img = cv2.cvtColor(np.asarray(img),cv2.COLOR_RGB2BGR) 
+
                 if use_gpu:
                     #images = Variable(dataset.preproc(img)[0].unsqueeze(0).cuda(), volatile=True)
                     images = img.to(device)
@@ -507,7 +509,6 @@ class Solver(object):
         data_loader.dataset.evaluate_detections(all_boxes, output_dir)
 
     def visTest(self, model, images, priorbox, writer, epoch, use_gpu):
-        images = cv2.cvtColor(np.asarray(images),cv2.COLOR_RGB2BGR) 
         base_out = viz_module_feature_maps(writer, model.base, images, module_name='base', epoch=epoch)
         extras_out = viz_module_feature_maps(writer, model.extras, base_out, module_name='extras', epoch=epoch)
         # visualize feature map in feature_extractors
