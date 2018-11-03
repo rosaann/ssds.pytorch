@@ -483,7 +483,7 @@ class Solver(object):
                         #  if det[0] > 0.5:
                             d = det.cpu().numpy()
                             score, box = d[0], d[1:]
-                            box *= scale
+                           # box *= scale
                             box = np.append(box, score)
                             
                             if score >= 0.5:
