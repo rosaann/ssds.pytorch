@@ -30,6 +30,7 @@ import matplotlib.pyplot as plt
 import visdom
 import math
 import numpy as np
+from lib.utils.data_augment import preproc_for_test
 
 
 class Solver(object):
@@ -450,7 +451,7 @@ class Solver(object):
 
                     # preproc image & visualize preprocess prograss
                     if preproc_ is not None:   
-                        img = preproc_.preproc_for_test(img,preproc_.resize, preproc_.means)
+                        img = preproc_for_test(img,preproc_.resize, preproc_.means)
                     scale = [img.shape[1], img.shape[0], img.shape[1], img.shape[0]]
                     if use_gpu:
                     #images = Variable(dataset.preproc(img)[0].unsqueeze(0).cuda(), volatile=True)
