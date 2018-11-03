@@ -520,7 +520,7 @@ class Solver(object):
             x2s = dets[ 2] 
             y2s = dets[ 3]
             cv2.rectangle(image_show, (int(xs), int(ys)), (int(x2s), int (y2s)), (0, 255, 0), 1)
-            print(xs, ys, ws, hs)
+            print(xs, ys, x2s, y2s)
         cv2.imwrite(os.path.join('./data/','0.png'), image_show)
        # image_show = Image.fromarray(cv2.cvtColor(image_show,cv2.COLOR_BGR2RGB)) 
        # image_show = transform.ToTensor()(image_show)
