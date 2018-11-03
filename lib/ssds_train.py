@@ -47,7 +47,7 @@ class Solver(object):
             #self.eval_loader = load_data(cfg.DATASET, 'eval') if 'eval' in cfg.PHASE else None
         else:
             test_image_dir = os.path.join('./data/', 'ship_test_v2')
-            transforms = transform.Compose([transform.Resize([300,300]), transform.Lambda(lambda x: cv2.cvtColor(numpy.asarray(x),cv2.COLOR_RGB2BGR)),transform.ToTensor()])
+            transforms = transform.Compose([transform.Resize([300,300]), transform.Lambda(lambda x: cv2.cvtColor(np.asarray(x),cv2.COLOR_RGB2BGR)),transform.ToTensor()])
 
             test_set = torchvision.datasets.ImageFolder(test_image_dir, transform = transforms)
         
