@@ -47,8 +47,7 @@ class Solver(object):
             #self.eval_loader = load_data(cfg.DATASET, 'eval') if 'eval' in cfg.PHASE else None
         else:
             test_image_dir = os.path.join('./data/', 'ship_test_v2')
-            #transforms = transform.Compose([transform.Resize([300,300]),transform.ToTensor()])
-            transforms = transform.Compose([transform.Resize([300,300])])
+            transforms = transform.Compose([transform.Resize([300,300]),transform.ToTensor()])
 
             test_set = torchvision.datasets.ImageFolder(test_image_dir, transform = transforms)
         
@@ -448,7 +447,7 @@ class Solver(object):
         #    for img in data_bench:
               #  print('img shape ', img.shape)
                 scale = [img.shape[1], img.shape[0], img.shape[1], img.shape[0]]
-                img = cv2.cvtColor(np.asarray(img),cv2.COLOR_RGB2BGR) 
+                img = cv2.cvtColor(np.asarray(img.data()),cv2.COLOR_RGB2BGR) 
 
                 if use_gpu:
                     #images = Variable(dataset.preproc(img)[0].unsqueeze(0).cuda(), volatile=True)
