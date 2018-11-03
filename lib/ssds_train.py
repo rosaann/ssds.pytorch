@@ -465,7 +465,7 @@ class Solver(object):
                         images = Variable(dataset.preproc(img)[0].unsqueeze(0), volatile=True)
 
                 _t.tic()
-                if check_i == 1:
+                if check_i == 3:
                     vis.images(images[0], win=2, opts={'title': 'Reals'})
                     self.visTest(model, images[0].unsqueeze(0), self.priorbox, self.writer, 1, use_gpu)
                     
@@ -473,7 +473,7 @@ class Solver(object):
                 detections = detector.forward(out)
                 time = _t.toc()
                 for im ,this_img in enumerate( images):
-                  if check_i == 1:
+                  if check_i == 3:
                       if im == 0:
                           print('de ', detections[im])
                          # return
@@ -486,12 +486,12 @@ class Solver(object):
                            # box *= scale
                             box = np.append(box, score)
                             
-                            if score >= 0.45:
+                            if score >= 0.4:
                                 cls_dets.append(box)
                                 vis.images(this_img, win=1, opts={'title': 'Reals'})
                                 print('box ', box)
                                 print('score ', score)
-                      if check_i == 1:
+                      if check_i == 3:
                           self.showTestResult(self.writer,img_dir, cls_dets)
                           return
                                # if check_i == 1:
