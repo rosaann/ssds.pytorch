@@ -470,6 +470,9 @@ class Solver(object):
           #      print('detections ', detections.shape)
                 
                 for im ,this_img in enumerate( images):
+                  if check_i == 1:
+                      if im == 0:
+                          print('de ', detections[im])
                   for j in range(1, num_classes):
                       cls_dets = list()
                       for det in detections[im][j]:
@@ -479,13 +482,13 @@ class Solver(object):
                             box *= scale
                             box = np.append(box, score)
                             cls_dets.append(box)
-                            if score >= 0.4:
-                                vis.images(this_img, win=1, opts={'title': 'Reals'})
-                                print('box ', box)
-                                print('score ', score)
+                          #  if score >= 0.4:
+                          #      vis.images(this_img, win=1, opts={'title': 'Reals'})
+                          #      print('box ', box)
+                          #      print('score ', score)
                                # showTestResult(self.writer,this_img, box, score)
                                # if check_i == 1:
-                                return
+                          #      return
                     
                       if len(cls_dets) == 0:
                         cls_dets = empty_array
