@@ -272,7 +272,7 @@ class Solver(object):
                     #if 'eval' in cfg.PHASE:
                     #    self.eval_epoch(self.model, self.eval_loader, self.detector, self.criterion, self.writer, epoch, self.use_gpu)
                     #if 'test' in cfg.PHASE:
-                    self.test_epoch(self.model, self.test_loader, self.detector, self.output_dir , self.use_gpu)
+                    self.test_epoch_2(self.model, self.detector, self.output_dir , self.use_gpu)
                     if 'visualize' in cfg.PHASE:
                         self.visualize_epoch(self.model, self.visualize_loader, self.priorbox, self.writer, epoch,  self.use_gpu)
         else:
