@@ -522,7 +522,7 @@ class Solver(object):
         image_show = Image.fromarray(cv2.cvtColor(image_show,cv2.COLOR_BGR2RGB)) 
         image_show = transform.ToTensor()(image_show)
         x = vutils.make_grid(image_show.cuda().data, normalize=True, scale_each=True)
-        writer.add_image('test/feature_map_{}'.format(0),x, 67)
+        writer.add_image('module_feature_maps/feature_map_{}'.format(img_dir),x, 67)
 
         
     def visTest(self, model, images, priorbox, writer, epoch, use_gpu):
