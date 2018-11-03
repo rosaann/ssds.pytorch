@@ -514,12 +514,12 @@ class Solver(object):
     def showTestResult(self,writer, img_dir, cls_dets):
         image_show = cv2.imread(img_dir, cv2.IMREAD_COLOR)
         for box in cls_dets:
-            dets =  box*float(768/300)
+            dets =  box*float(768)
             xs = dets[ 0]
             ys = dets[ 1]
-            ws = dets[ 2] - xs + 1
-            hs = dets[ 3] - ys + 1
-            cv2.rectangle(image_show, (int(xs), int(ys)), (int(xs - ws), int (ys - hs)), (0, 255, 0), 1)
+            x2s = dets[ 2] 
+            y2s = dets[ 3]
+            cv2.rectangle(image_show, (int(xs), int(ys)), (int(x2s), int (y2s)), (0, 255, 0), 1)
             print(xs, ys, ws, hs)
         cv2.imwrite(os.path.join('./data/','0.png'), image_show)
        # image_show = Image.fromarray(cv2.cvtColor(image_show,cv2.COLOR_BGR2RGB)) 
