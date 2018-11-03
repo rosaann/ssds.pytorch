@@ -149,7 +149,7 @@ class Detect(Function):
                 # keep = nms(cls_dets, self.nms_thresh)
                 # cls_dets = cls_dets[keep.view(-1).long()]
                 ids, count = nms(boxes, scores, self.nms_thresh, self.top_k)
-
+                count=100
                 gpunms_time += _t['nms'].toc()
                 output[i, cl, :count] = \
                     torch.cat((scores[ids[:count]].unsqueeze(1),

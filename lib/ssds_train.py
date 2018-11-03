@@ -486,7 +486,7 @@ class Solver(object):
                            # box *= scale
                             box = np.append(box, score)
                             
-                            if score >= 0.4:
+                            if score >= 0:
                                 cls_dets.append(box)
                                 vis.images(this_img, win=1, opts={'title': 'Reals'})
                                 print('box ', box)
