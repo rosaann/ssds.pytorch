@@ -512,7 +512,7 @@ class Solver(object):
     def showTestResult(self,writer, img_dir, cls_dets):
         image_show = cv2.imread(img_dir, cv2.IMREAD_COLOR)
         for box in cls_dets:
-            dets = 768 * box
+            dets =  box
             xs = dets[ 0]
             ys = dets[ 1]
             ws = dets[ 2] - xs + 1
