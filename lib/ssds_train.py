@@ -47,11 +47,11 @@ class Solver(object):
             #self.eval_loader = load_data(cfg.DATASET, 'eval') if 'eval' in cfg.PHASE else None
         else:
             test_image_dir = os.path.join('./data/', 'ship_test_v2')
-            transforms = transform.Compose([transform.Lambda(lambda x: cv2.cvtColor(np.asarray(x),cv2.COLOR_RGB2BGR)),transform.Resize([300,300]), transform.ToTensor()])
+          #  transforms = transform.Compose([transform.Lambda(lambda x: cv2.cvtColor(np.asarray(x),cv2.COLOR_RGB2BGR)),transform.Resize([300,300]), transform.ToTensor()])
 
-            test_set = torchvision.datasets.ImageFolder(test_image_dir, transform = transforms)
+          #  test_set = torchvision.datasets.ImageFolder(test_image_dir, transform = transforms)
         
-            self.test_loader = torch.utils.data.DataLoader(test_set,batch_size=8,shuffle=False,num_workers=8)
+          #  self.test_loader = torch.utils.data.DataLoader(test_set,batch_size=8,shuffle=False,num_workers=8)
             self.train_loader = load_data(cfg.DATASET, 'train') if 'train' in cfg.PHASE else None
             #self.test_loader = load_data(cfg.DATASET, 'test') if 'test' in cfg.PHASE else None
         self.visualize_loader = load_data(cfg.DATASET, 'visualize') if 'visualize' in cfg.PHASE else None
