@@ -472,19 +472,20 @@ class Solver(object):
                             box *= scale
                             box = np.append(box, score)
                             cls_dets.append(box)
-                            if score >= 0.2:
+                            if score >= 0.5:
                                 vis.images(this_img, win=1, opts={'title': 'Reals'})
                                 print('box ', box)
                                 print('score ', score)
                                # showTestResult(self.writer,this_img, box, score)
-                                if check_i == 2:
+                                if check_i == 1:
                                     return
-                                check_i += 1
+                    
                       if len(cls_dets) == 0:
                         cls_dets = empty_array
                       all_boxes[j][i] = np.array(cls_dets)
                     
                   i += 1
+                check_i += 1
             # log per iter
                 log = '\r==>Test: || {iters:d}/{epoch_size:d} in {time:.3f}s [{prograss}]\r'.format(
                     prograss='#'*int(round(10*i/num_images)) + '-'*int(round(10*(1-i/num_images))), iters=i, epoch_size=num_images,
