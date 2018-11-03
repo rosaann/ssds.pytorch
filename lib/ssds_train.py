@@ -52,6 +52,7 @@ class Solver(object):
             test_set = torchvision.datasets.ImageFolder(test_image_dir, transform = transforms)
         
             self.test_loader = torch.utils.data.DataLoader(test_set,batch_size=8,shuffle=False,num_workers=8)
+            self.train_loader = load_data(cfg.DATASET, 'train') if 'train' in cfg.PHASE else None
             #self.test_loader = load_data(cfg.DATASET, 'test') if 'test' in cfg.PHASE else None
         self.visualize_loader = load_data(cfg.DATASET, 'visualize') if 'visualize' in cfg.PHASE else None
 
@@ -280,7 +281,7 @@ class Solver(object):
             #if 'eval' in cfg.PHASE:
             #    self.eval_epoch(self.model, self.eval_loader, self.detector, self.criterion, self.writer, 0, self.use_gpu)
             #if 'test' in cfg.PHASE:
-            self.test_epoch(self.model, self.test_loader, self.detector, self.output_dir , self.use_gpu)
+            self.test_epoch_2(self.model, self.detector, self.output_dir , self.use_gpu)
             if 'visualize' in cfg.PHASE:
                 self.visualize_epoch(self.model, self.visualize_loader, self.priorbox, self.writer, 0,  self.use_gpu)
 
@@ -427,7 +428,79 @@ class Solver(object):
                     viz_archor_strategy(writer, size, gt_label, epoch)
                     
                 
-    
+    def test_epoch_2(self, model, detector, output_dir, use_gpu):
+        model.eval()
+        test_image_dir = os.path.join('./data/', 'ship_test_v2/data_test')
+
+        device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+        vis = visdom.Visdom(server="http://localhost", port=8888)
+        
+        for root, dirs, files in os.walk(test_image_dir):
+            num_images = len(files)
+            num_classes = detector.num_classes
+            all_boxes = [[[] for _ in range(num_images)] for _ in range(num_classes)]
+            empty_array = np.transpose(np.array([[],[],[],[],[]]),(1,0))
+            for file in files:
+                if os.path.splitext(file)[1] == '.jpg':
+                    img = cv2.imread(file, cv2.IMREAD_COLOR)
+                    preproc_ = self.train_loader.dataset.preproc
+                    # preproc.add_writer(writer, epoch)
+                    # preproc.p = 0.6
+
+                    # preproc image & visualize preprocess prograss
+                    if preproc_ is not None:   
+                        img, target = preproc_(img)
+                    scale = [img.shape[1], img.shape[0], img.shape[1], img.shape[0]]
+                    if use_gpu:
+                    #images = Variable(dataset.preproc(img)[0].unsqueeze(0).cuda(), volatile=True)
+                        images = img.to(device)
+                    else:
+                        images = Variable(dataset.preproc(img)[0].unsqueeze(0), volatile=True)
+
+                _t.tic()
+                if check_i == 0:
+                    vis.images(images[0], win=1, opts={'title': 'Reals'})
+                    self.visTest(model, images[0].unsqueeze(0), self.priorbox, self.writer, 1, use_gpu)
+                    
+                out = model(images, phase='eval')
+                detections = detector.forward(out)
+                time = _t.toc()
+                for im ,this_img in enumerate( images):
+                  if check_i == 0:
+                      if im == 0:
+                          print('de ', detections[im])
+                          return
+                  for j in range(1, num_classes):
+                      cls_dets = list()
+                      for det in detections[im][j]:
+                        #  if det[0] > 0.5:
+                            d = det.cpu().numpy()
+                            score, box = d[0], d[1:]
+                            box *= scale
+                            box = np.append(box, score)
+                            cls_dets.append(box)
+                          #  if score >= 0.4:
+                          #      vis.images(this_img, win=1, opts={'title': 'Reals'})
+                          #      print('box ', box)
+                          #      print('score ', score)
+                               # showTestResult(self.writer,this_img, box, score)
+                               # if check_i == 1:
+                          #      return
+                    
+                      if len(cls_dets) == 0:
+                        cls_dets = empty_array
+                      all_boxes[j][i] = np.array(cls_dets)
+                    
+                  i += 1
+                check_i += 1  
+                
+            with open(os.path.join(output_dir, 'detections.pkl'), 'wb') as f:
+            pickle.dump(all_boxes, f, pickle.HIGHEST_PROTOCOL)
+
+            # currently the COCO dataset do not return the mean ap or ap 0.5:0.95 values
+            print('Evaluating detections')
+            data_loader.dataset.evaluate_detections(all_boxes, output_dir)
+                    
     def test_epoch(self, model, data_loader, detector, output_dir, use_gpu):
         model.eval()
 
