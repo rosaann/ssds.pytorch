@@ -488,7 +488,7 @@ class Solver(object):
                             cls_dets.append(box)
                             if score >= 0.5:
                                 vis.images(this_img, win=1, opts={'title': 'Reals'})
-                                print('box ', box)
+                                #print('box ', box)
                                 print('score ', score)
                       self.showTestResult(self.writer,img_dir, cls_dets)
                       return
@@ -518,7 +518,7 @@ class Solver(object):
             ws = dets[ 2] - xs + 1
             hs = dets[ 3] - ys + 1
             cv2.rectangle(image_show, (int(xs), int(ys)), (int(xs + ws), int (ys + hs)), (0, 255, 0), 1)
-            
+            print(xs, ys, ws, hs)
         image_show = Image.fromarray(cv2.cvtColor(image_show,cv2.COLOR_BGR2RGB)) 
         image_show = transform.ToTensor()(image_show)
         x = vutils.make_grid(image_show.cuda().data, normalize=True, scale_each=True)
