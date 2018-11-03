@@ -476,7 +476,7 @@ class Solver(object):
                   if check_i == 0:
                       if im == 0:
                           print('de ', detections[im])
-                          return
+                         # return
                   for j in range(1, num_classes):
                       cls_dets = list()
                       for det in detections[im][j]:
@@ -491,6 +491,7 @@ class Solver(object):
                                 print('box ', box)
                                 print('score ', score)
                       self.showTestResult(self.writer,img_dir, cls_dets)
+                      return
                                # if check_i == 1:
                           #      return
                     
