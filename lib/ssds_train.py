@@ -504,7 +504,7 @@ class Solver(object):
         print('Evaluating detections')
         data_loader.dataset.evaluate_detections(all_boxes, output_dir)
 
-    def visText(self, model, idx, priorbox, writer, epoch, use_gpu):
+    def visTest(self, model, idx, priorbox, writer, epoch, use_gpu):
         base_out = viz_module_feature_maps(writer, model.base, images, module_name='base', epoch=epoch)
         extras_out = viz_module_feature_maps(writer, model.extras, base_out, module_name='extras', epoch=epoch)
         # visualize feature map in feature_extractors
