@@ -436,6 +436,7 @@ class Solver(object):
         device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
         vis = visdom.Visdom(server="http://localhost", port=8888)
         check_i = 0;
+        _t = Timer()
         for root, dirs, files in os.walk(test_image_dir):
             num_images = len(files)
             num_classes = detector.num_classes
