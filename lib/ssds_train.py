@@ -510,6 +510,7 @@ class Solver(object):
 
     def visTest(self, model, images, priorbox, writer, epoch, use_gpu):
         print('image shpe', images.shape)
+        images_to_writer(writer, images)
 
         base_out = viz_module_feature_maps(writer, model.base, images, module_name='base', epoch=epoch)
         extras_out = viz_module_feature_maps(writer, model.extras, base_out, module_name='extras', epoch=epoch)
