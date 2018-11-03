@@ -179,6 +179,7 @@ def _elastic(image, p, alpha=None, sigma=None, random_state=None):
 
 
 def preproc_for_test(image, insize, mean):
+    print('insize ', insize)
     interp_methods = [cv2.INTER_LINEAR, cv2.INTER_CUBIC, cv2.INTER_AREA, cv2.INTER_NEAREST, cv2.INTER_LANCZOS4]
     interp_method = interp_methods[random.randrange(5)]
     image = cv2.resize(image, (insize[0], insize[1]),interpolation=interp_method)
