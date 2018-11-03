@@ -45,7 +45,7 @@ class Solver(object):
             #self.eval_loader = load_data(cfg.DATASET, 'eval') if 'eval' in cfg.PHASE else None
         else:
             test_image_dir = os.path.join('./data/', 'ship_test_v2')
-            transforms = transform.Compose([transform.ToTensor(),transform.Resize([300,300])])
+            transforms = transform.Compose([transform.Resize([300,300]),transform.ToTensor()])
             test_set = torchvision.datasets.ImageFolder(test_image_dir, transform = transforms)
         
             self.test_loader = torch.utils.data.DataLoader(test_set,batch_size=8,shuffle=True,num_workers=8)
