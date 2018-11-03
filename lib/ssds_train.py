@@ -445,7 +445,7 @@ class Solver(object):
             for file in files:
                 if os.path.splitext(file)[1] == '.jpg':
                     img = cv2.imread(test_image_dir + file, cv2.IMREAD_COLOR)
-                    vis.images(img, win=1, opts={'title': 'Reals'})
+                 #   vis.images(img, win=1, opts={'title': 'Reals'})
                     preproc_ = self.train_loader.dataset.preproc
                     #preproc_for_test(image, self.resize, self.means)
                     # preproc.add_writer(writer, epoch)
