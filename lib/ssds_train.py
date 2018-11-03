@@ -434,7 +434,7 @@ class Solver(object):
 
         device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
         vis = visdom.Visdom(server="http://localhost", port=8888)
-        
+        check_i = 0;
         for root, dirs, files in os.walk(test_image_dir):
             num_images = len(files)
             num_classes = detector.num_classes
@@ -495,7 +495,7 @@ class Solver(object):
                 check_i += 1  
                 
             with open(os.path.join(output_dir, 'detections.pkl'), 'wb') as f:
-            pickle.dump(all_boxes, f, pickle.HIGHEST_PROTOCOL)
+                pickle.dump(all_boxes, f, pickle.HIGHEST_PROTOCOL)
 
             # currently the COCO dataset do not return the mean ap or ap 0.5:0.95 values
             print('Evaluating detections')
