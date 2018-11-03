@@ -518,7 +518,7 @@ class Solver(object):
             ys = dets[ 1]
             ws = dets[ 2] - xs + 1
             hs = dets[ 3] - ys + 1
-          #  cv2.rectangle(image_show, (int(xs), int(ys)), (int(xs + ws), int (ys + hs)), (0, 255, 0), 1)
+            cv2.rectangle(image_show, (int(xs), int(ys)), (int(xs + ws), int (ys + hs)), (0, 255, 0), 1)
             print(xs, ys, ws, hs)
         cv2.imwrite(os.path.join('./data/','0.png'), image_show)
        # image_show = Image.fromarray(cv2.cvtColor(image_show,cv2.COLOR_BGR2RGB)) 
