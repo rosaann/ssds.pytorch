@@ -447,7 +447,7 @@ class Solver(object):
         #    for img in data_bench:
               #  print('img shape ', img.shape)
                 scale = [img.shape[1], img.shape[0], img.shape[1], img.shape[0]]
-
+                img = img.convert('RGB')
                 if use_gpu:
                     #images = Variable(dataset.preproc(img)[0].unsqueeze(0).cuda(), volatile=True)
                     images = img.to(device)
