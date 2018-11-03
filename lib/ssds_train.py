@@ -495,7 +495,7 @@ class Solver(object):
                     
                       if len(cls_dets) == 0:
                         cls_dets = empty_array
-                      all_boxes[j][i] = np.array(cls_dets)
+                      all_boxes[j][0] = np.array(cls_dets)
                     
                   i += 1
                 check_i += 1  
