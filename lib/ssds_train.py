@@ -455,9 +455,9 @@ class Solver(object):
                     images = Variable(dataset.preproc(img)[0].unsqueeze(0), volatile=True)
 
                 _t.tic()
-                if check_i == 0:
-                    vis.images(images[7], win=1, opts={'title': 'Reals'})
-                    self.visTest(model, images[7].unsqueeze(0), self.priorbox, self.writer, 1, use_gpu)
+                if check_i == 1:
+                    vis.images(images[0], win=1, opts={'title': 'Reals'})
+                    self.visTest(model, images[0].unsqueeze(0), self.priorbox, self.writer, 1, use_gpu)
                     return
             # forward
                 out = model(images, phase='eval')
