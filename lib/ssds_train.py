@@ -465,7 +465,7 @@ class Solver(object):
                         images = Variable(dataset.preproc(img)[0].unsqueeze(0), volatile=True)
 
                 _t.tic()
-                if check_i == 1:
+                if check_i == 3:
                     vis.images(images[0], win=2, opts={'title': 'Reals'})
                     self.visTest(model, images[0].unsqueeze(0), self.priorbox, self.writer, 1, use_gpu)
                     
