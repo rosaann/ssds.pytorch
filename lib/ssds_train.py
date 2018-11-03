@@ -497,7 +497,7 @@ class Solver(object):
                         cls_dets = empty_array
                       all_boxes[j][0] = np.array(cls_dets)
                     
-                  i += 1
+                  
                 check_i += 1  
                 
             with open(os.path.join(output_dir, 'detections.pkl'), 'wb') as f:
