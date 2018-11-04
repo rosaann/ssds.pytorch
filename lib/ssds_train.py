@@ -539,7 +539,7 @@ class Solver(object):
        # x = vutils.make_grid(image_show.cuda().data, normalize=True, scale_each=True)
         #writer.add_image('module_feature_maps/feature_extractors.{}'.format(img_dir),x, 67)
 
-    def get_overlap_boxes(self,boxes):
+    def get_overlap_boxes(self, boxes):
         out_boxes = []
         for box in boxes:
             if_has_overlop = False
@@ -553,7 +553,7 @@ class Solver(object):
                     if_has_overlop = True
             if if_has_overlop == False:
                 out_boxes.append(box)
-         return out_boxes           
+        return out_boxes           
         
     def visTest(self, model, images, priorbox, writer, epoch, use_gpu):
         print('image shpe', images.shape)
