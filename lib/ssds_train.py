@@ -513,21 +513,47 @@ class Solver(object):
                     
     def showTestResult(self,writer, img_dir, cls_dets):
         image_show = cv2.imread(img_dir, cv2.IMREAD_COLOR)
-        cls_dets *= 768
+        real_box = []
         for box in cls_dets:
-            dets =  box
+            dets =  box * 768
+            real_box.append(dets)
             xs = dets[ 0]
             ys = dets[ 1]
             x2s = dets[ 2] 
             y2s = dets[ 3]
             cv2.rectangle(image_show, (int(xs), int(ys)), (int(x2s), int (y2s)), (0, 255, 0), 1)
             print(xs, ys, x2s, y2s)
+                    
         cv2.imwrite(os.path.join('./data/','0.png'), image_show)
+        
+        ovlap_boxes = self.get_overlap_boxes(real_box)
+        img2 = cv2.imread(img_dir, cv2.IMREAD_COLOR)
+        for ovlap_box in ovlap_boxes:
+            cv2.rectangle(img2, (int(ovlap_box[0]), int(ovlap_box[1])), (int(ovlap_box[2]), int (ovlap_box[3])), (0, 255, 255), 1)
+
+        cv2.imwrite(os.path.join('./data/','1.png'), img2)
+
        # image_show = Image.fromarray(cv2.cvtColor(image_show,cv2.COLOR_BGR2RGB)) 
        # image_show = transform.ToTensor()(image_show)
        # x = vutils.make_grid(image_show.cuda().data, normalize=True, scale_each=True)
         #writer.add_image('module_feature_maps/feature_extractors.{}'.format(img_dir),x, 67)
+from lib.utils.box_utils import jaccard
 
+    def get_overlap_boxes(self,boxes):
+        out_boxes = []
+        for box in boxes:
+            if_has_overlop = False
+            for o_i, out_box in enumerate( out_boxes):
+                if jaccard(box, out_box) > 0:
+                    x = min(box[0], out_box[0])
+                    y = min(box[1], out_box[1])
+                    x2 = max(box[2], out_box[2])
+                    y2 = max(box[3], out_box[3])
+                    out_box[o_i] = [x, y, x2, y2]
+                    if_has_overlop = True
+            if if_has_overlop == False:
+                out_boxes.append(box)
+         return out_boxes           
         
     def visTest(self, model, images, priorbox, writer, epoch, use_gpu):
         print('image shpe', images.shape)
