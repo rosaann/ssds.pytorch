@@ -31,6 +31,7 @@ import visdom
 import math
 import numpy as np
 from lib.utils.data_augment import preproc_for_test
+from lib.utils.box_utils import jaccard
 
 
 class Solver(object):
@@ -537,7 +538,6 @@ class Solver(object):
        # image_show = transform.ToTensor()(image_show)
        # x = vutils.make_grid(image_show.cuda().data, normalize=True, scale_each=True)
         #writer.add_image('module_feature_maps/feature_extractors.{}'.format(img_dir),x, 67)
-from lib.utils.box_utils import jaccard
 
     def get_overlap_boxes(self,boxes):
         out_boxes = []
