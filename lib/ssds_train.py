@@ -545,7 +545,7 @@ class Solver(object):
            ret2,th2 = cv2.threshold(gray,0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)
            img_bk = image_for_cut.copy()
            img_bk[0:767, 0:767] = 0
-           
+           img_bk[int (ovlap_box[1]):int (ovlap_box[3]), int(ovlap_box[0]):int(ovlap_box[2])] = th2[0:int (ovlap_box[3]) - int (ovlap_box[1]),0 : int (ovlap_box[2]) - int (ovlap_box[1])]
            
            if i == 5:
              cv2.imwrite(os.path.join('./data/','2.png'), img_cut)
