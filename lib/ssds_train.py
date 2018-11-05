@@ -33,6 +33,7 @@ import numpy as np
 from lib.utils.data_augment import preproc_for_test
 from lib.utils.box_utils import jaccard
 from lib.utils.box_utils import *
+import pandas as pd
 
 class Solver(object):
     """
@@ -438,6 +439,8 @@ class Solver(object):
         vis = visdom.Visdom(server="http://localhost", port=8888)
         check_i = 0;
         _t = Timer()
+        df = pd.read_csv("sample_submission_test.csv")
+        df.append( "ImageId,EncodedPixels")
         for root, dirs, files in os.walk(test_image_dir):
             num_images = len(files)
             num_classes = detector.num_classes
@@ -489,12 +492,12 @@ class Solver(object):
                             
                             if score >= 0.45:
                                 cls_dets.append(box)
-                                vis.images(this_img, win=1, opts={'title': 'Reals'})
-                                print('box ', box)
-                                print('score ', score)
-                      if check_i == 3:
-                          self.showTestResult(self.writer,img_dir, cls_dets)
-                          return
+                               # vis.images(this_img, win=1, opts={'title': 'Reals'})
+                               # print('box ', box)
+                               # print('score ', score)
+                     # if check_i == 3:
+                      self.showTestResult(self.writer,img_dir, cls_dets, df)
+                     #     return
                                # if check_i == 1:
                           #      return
                     
@@ -504,15 +507,20 @@ class Solver(object):
                     
                   
                 check_i += 1  
-                
-            with open(os.path.join(output_dir, 'detections.pkl'), 'wb') as f:
-                pickle.dump(all_boxes, f, pickle.HIGHEST_PROTOCOL)
+            df.to_csv('pred.csv', index=None)
+            df.head(10)    
+         #   with open(os.path.join(output_dir, 'detections.pkl'), 'wb') as f:
+        #        pickle.dump(all_boxes, f, pickle.HIGHEST_PROTOCOL)
 
             # currently the COCO dataset do not return the mean ap or ap 0.5:0.95 values
             print('Evaluating detections')
-            data_loader.dataset.evaluate_detections(all_boxes, output_dir)
+          #  data_loader.dataset.evaluate_detections(all_boxes, output_dir)
                     
-    def showTestResult(self,writer, img_dir, cls_dets):
+    def showTestResult(self,writer, img_dir, cls_dets, df):
+        fileName = img_dir.split('/')[-1]
+        if len(cls_dets) == 0:
+            df.append(fileName + ',')
+            return
         image_show = cv2.imread(img_dir, cv2.IMREAD_COLOR)
         real_box = []
         for box in cls_dets:
@@ -523,7 +531,7 @@ class Solver(object):
             x2s = dets[ 2] 
             y2s = dets[ 3]
             cv2.rectangle(image_show, (int(xs), int(ys)), (int(x2s), int (y2s)), (0, 255, 0), 1)
-            print(xs, ys, x2s, y2s)
+            #print(xs, ys, x2s, y2s)
                     
         cv2.imwrite(os.path.join('./data/','0.png'), image_show)
         
@@ -538,6 +546,9 @@ class Solver(object):
         
         image_for_cut = cv2.imread(img_dir, cv2.IMREAD_COLOR)
         i = 0
+        if len(ovlap_boxes) == 0:
+            df.append(fileName + ',')
+            return
         for ovlap_box in ovlap_boxes:
            
            img_cut = image_for_cut[int (ovlap_box[1]):int (ovlap_box[3]), int(ovlap_box[0]):int(ovlap_box[2])] 
@@ -548,13 +559,16 @@ class Solver(object):
            img_bk[0:767, 0:767] = 0
            img_bk[int (ovlap_box[1]):int (ovlap_box[3]), int(ovlap_box[0]):int(ovlap_box[2])] = th2[0:int (ovlap_box[3]) - int (ovlap_box[1]),0 : int (ovlap_box[2]) - int (ovlap_box[0])]
            encodeStr = rle_encode(img_bk)
-           if i == 5:
-             cv2.imwrite(os.path.join('./data/','2.png'), img_cut)
-             cv2.imwrite(os.path.join('./data/','3.png'), th2)
-             cv2.imwrite(os.path.join('./data/','4.png'), img_bk)
-             print('encodeStr ', encodeStr)
-             #return
-           i += 1
+           df.append(fileName + ',' + encodeStr)
+           
+
+         #  if i == -1:
+         #    cv2.imwrite(os.path.join('./data/','2.png'), img_cut)
+         #    cv2.imwrite(os.path.join('./data/','3.png'), th2)
+         #    cv2.imwrite(os.path.join('./data/','4.png'), img_bk)
+         #    print('encodeStr ', encodeStr)
+         #    #return
+         #  i += 1
              
         
     def visTest(self, model, images, priorbox, writer, epoch, use_gpu):
