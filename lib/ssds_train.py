@@ -553,7 +553,7 @@ class Solver(object):
              cv2.imwrite(os.path.join('./data/','3.png'), th2)
              cv2.imwrite(os.path.join('./data/','4.png'), img_bk)
              print('encodeStr ', encodeStr)
-             return
+             #return
            i += 1
              
         
