@@ -440,7 +440,7 @@ class Solver(object):
         check_i = 0;
         _t = Timer()
         df = pd.DataFrame()
-        df.append(pd.DataFrame( {"ImageId,EncodedPixels"}))
+        df.append(pd.DataFrame( ["ImageId,EncodedPixels"]))
         for root, dirs, files in os.walk(test_image_dir):
             num_images = len(files)
             num_classes = detector.num_classes
