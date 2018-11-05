@@ -519,7 +519,8 @@ class Solver(object):
     def showTestResult(self,writer, img_dir, cls_dets, df):
         fileName = img_dir.split('/')[-1]
         if len(cls_dets) == 0:
-            df.append(pd.DataFrame(fileName + ','))
+            df.append(pd.DataFrame( [fileName + ',']))
+
             return
         image_show = cv2.imread(img_dir, cv2.IMREAD_COLOR)
         real_box = []
@@ -558,9 +559,14 @@ class Solver(object):
            img_bk = cv2.cvtColor(image_for_cut,cv2.COLOR_BGR2GRAY)
            img_bk[0:767, 0:767] = 0
            img_bk[int (ovlap_box[1]):int (ovlap_box[3]), int(ovlap_box[0]):int(ovlap_box[2])] = th2[0:int (ovlap_box[3]) - int (ovlap_box[1]),0 : int (ovlap_box[2]) - int (ovlap_box[0])]
+           
+           cv2.imwrite(os.path.join('./data/','2.png'), img_cut)
+           cv2.imwrite(os.path.join('./data/','3.png'), th2)
+           cv2.imwrite(os.path.join('./data/','4.png'), img_bk)
            encodeStr = rle_encode(img_bk)
            df.append(fileName + ',' + encodeStr)
-           
+           df.append(pd.DataFrame( [fileName + ',' + encodeStr]))
+
 
          #  if i == -1:
          #    cv2.imwrite(os.path.join('./data/','2.png'), img_cut)
