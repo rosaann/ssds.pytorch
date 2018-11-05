@@ -539,6 +539,7 @@ class Solver(object):
         image_for_cut = cv2.imread(img_dir, cv2.IMREAD_COLOR)
         i = 0
         for ovlap_box in ovlap_boxes:
+           print(ovlap_box[0])
            img_cut = image_for_cut[ovlap_box[0]:ovlap_box[2], ovlap_box[1]:ovlap_box[3]] 
            if i == 0:
              cv2.imwrite(os.path.join('./data/','2.png'), img_cut)
