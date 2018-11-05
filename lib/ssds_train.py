@@ -528,7 +528,7 @@ class Solver(object):
         cv2.imwrite(os.path.join('./data/','0.png'), image_show)
         
         ovlap_boxes = self.get_overlap_boxes(real_box)
-        ovlap_boxes = self.get_overlap_boxes(ovlap_boxes)
+
         img2 = cv2.imread(img_dir, cv2.IMREAD_COLOR)
         for ovlap_box in ovlap_boxes:
             cv2.rectangle(img2, (int(ovlap_box[0]), int(ovlap_box[1])), (int(ovlap_box[2]), int (ovlap_box[3])), (0, 255, 255), 1)
@@ -542,8 +542,15 @@ class Solver(object):
     def if_overlap(self, box1, box2):
         box1_point_1 = [box1[0], box1[1]]
         box1_point_2 = [box1[2], box1[3]]
+        
+        box1_point_3 = [box1[0], box1[3]]
+        box1_point_4 = [box1[2], box1[1]]
+        
+
+        
         box2_point_1 = [box2[0], box2[1]]
         box2_point_2 = [box2[2], box2[3]]
+        
         
         if (box1_point_1[0] - box2_point_1[0]) * (box2_point_2[0] - box1_point_1[0]) > 0:
             if(box1_point_1[1] - box2_point_1[1]) * (box2_point_2[1] - box1_point_1[1]) > 0:
@@ -551,7 +558,12 @@ class Solver(object):
         if (box1_point_2[0] - box2_point_1[0]) * (box2_point_2[0] - box1_point_2[0]) > 0:
             if(box1_point_2[1] - box2_point_1[1]) * (box2_point_2[1] - box1_point_2[1]) > 0:
                 return True
-        
+        if (box1_point_3[0] - box2_point_1[0]) * (box2_point_2[0] - box1_point_3[0]) > 0:
+            if(box1_point_3[1] - box2_point_1[1]) * (box2_point_2[1] - box1_point_3[1]) > 0:
+                return True
+        if (box1_point_4[0] - box2_point_1[0]) * (box2_point_2[0] - box1_point_4[0]) > 0:
+            if(box1_point_4[1] - box2_point_1[1]) * (box2_point_2[1] - box1_point_4[1]) > 0:
+                return True
         return False
     def get_overlap_boxes(self, boxes):
         out_boxes = []
