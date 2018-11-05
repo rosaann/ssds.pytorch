@@ -249,6 +249,80 @@ def one_hot_embedding(labels, num_classes):
 # Original author: Francisco Massa:
 # https://github.com/fmassa/object-detection.torch
 # Ported to PyTorch by Max deGroot (02/01/2017)
+    
+def rle_encode(img):
+        '''
+        img: numpy array, 1 - mask, 0 - background
+        Returns run length as string formated
+        '''
+        np.set_printoptions(threshold=20)
+        pixels = img.T.flatten()
+        #  print('pixels 0:', pixels.shape)
+        pixels = np.concatenate([[0], pixels, [0]])
+        print('pixels 1:', pixels)
+        runs = np.where(pixels[1:] != pixels[:-1])[0] + 1
+        print('runs :',runs)
+        runs[1::2] -= runs[::2]
+        return ' '.join(str(x) for x in runs)    
+    
+def if_overlap( box1, box2):
+        box1_point_1 = [box1[0], box1[1]]
+        box1_point_2 = [box1[2], box1[3]]
+        
+        box1_point_3 = [box1[0], box1[3]]
+        box1_point_4 = [box1[2], box1[1]]
+        
+
+        
+        box2_point_1 = [box2[0], box2[1]]
+        box2_point_2 = [box2[2], box2[3]]
+        box2_point_3 = [box2[0], box2[3]]
+        box2_point_4 = [box2[2], box2[1]]
+        
+        if (box2_point_1[0] <= box1_point_1[0] ) and ( box1_point_1[0] < box2_point_2[0] ):
+            if(box2_point_1[1] <= box1_point_1[1] ) and (box1_point_1[1] < box2_point_2[1] ) :
+                return True
+        if (box2_point_1[0] <= box1_point_2[0] ) and ( box1_point_2[0] < box2_point_2[0] ):
+            if(box2_point_1[1] <= box1_point_1[1] ) and (box1_point_2[1] < box2_point_2[1] ) :
+                return True
+        if (box2_point_1[0] <= box1_point_3[0] ) and ( box1_point_3[0] < box2_point_2[0] ):
+            if(box2_point_1[1] <= box1_point_3[1] ) and (box1_point_3[1] < box2_point_2[1] ) :
+                return True
+        if (box2_point_1[0] <= box1_point_4[0] ) and ( box1_point_4[0] < box2_point_2[0] ):
+            if(box2_point_1[1] <= box1_point_4[1] ) and (box1_point_4[1] < box2_point_2[1] ) :
+                return True
+        
+        if (box1_point_1[0] <= box2_point_1[0] ) and ( box2_point_1[0] < box1_point_2[0] ):
+            if(box1_point_1[1] <= box2_point_1[1] ) and (box2_point_1[1] < box1_point_2[1] ) :
+                return True
+        if (box1_point_1[0] <= box2_point_2[0] ) and ( box2_point_2[0] < box1_point_2[0] ):
+            if(box1_point_1[1] <= box2_point_1[1] ) and (box2_point_2[1] < box1_point_2[1] ) :
+                return True
+        if (box1_point_1[0] <= box2_point_3[0] ) and ( box2_point_3[0] < box1_point_2[0] ):
+            if(box1_point_1[1] <= box2_point_3[1] ) and (box2_point_3[1] < box1_point_2[1] ) :
+                return True
+        if (box1_point_1[0] <= box2_point_4[0] ) and ( box2_point_4[0] < box1_point_2[0] ):
+            if(box1_point_1[1] <= box2_point_4[1] ) and (box2_point_4[1] < box1_point_2[1] ) :
+                return True
+        
+         
+       
+        return False
+def get_overlap_boxes( boxes):
+        out_boxes = []
+        for box in boxes:
+            if_has_overlop = False
+            for o_i, out_box in enumerate( out_boxes):
+                if if_overlap(box, out_box):
+                    x = min(box[0], out_box[0])
+                    y = min(box[1], out_box[1])
+                    x2 = max(box[2], out_box[2])
+                    y2 = max(box[3], out_box[3])
+                    out_boxes[o_i] = [x, y, x2, y2]
+                    if_has_overlop = True
+            if if_has_overlop == False:
+                out_boxes.append(box)
+        return out_boxes  
 def nms(boxes, scores, overlap=0.001, top_k=200):
     """Apply non-maximum suppression at test time to avoid detecting too many
     overlapping bounding boxes for a given object.
