@@ -520,7 +520,6 @@ class Solver(object):
         fileName = img_dir.split('/')[-1]
         if len(cls_dets) == 0:
             df.append(pd.DataFrame( [fileName + ',']))
-
             return
         image_show = cv2.imread(img_dir, cv2.IMREAD_COLOR)
         real_box = []
@@ -550,6 +549,7 @@ class Solver(object):
         if len(ovlap_boxes) == 0:
             df.append(fileName + ',')
             return
+        ifhasShip = False
         for ovlap_box in ovlap_boxes:
            
            img_cut = image_for_cut[int (ovlap_box[1]):int (ovlap_box[3]), int(ovlap_box[0]):int(ovlap_box[2])] 
@@ -564,9 +564,9 @@ class Solver(object):
            cv2.imwrite(os.path.join('./data/','3.png'), th2)
            cv2.imwrite(os.path.join('./data/','4.png'), img_bk)
            encodeStr = rle_encode(img_bk)
-           df.append(fileName + ',' + encodeStr)
-           df.append(pd.DataFrame( [fileName + ',' + encodeStr]))
-
+           if len(encodeStr) > 10:
+                df.append(pd.DataFrame( [fileName + ',' + encodeStr]))
+                ifhasShip = True
 
          #  if i == -1:
          #    cv2.imwrite(os.path.join('./data/','2.png'), img_cut)
@@ -575,7 +575,9 @@ class Solver(object):
          #    print('encodeStr ', encodeStr)
          #    #return
          #  i += 1
-             
+         if ifhasShip == False:
+            df.append(pd.DataFrame( [fileName + ',']))
+
         
     def visTest(self, model, images, priorbox, writer, epoch, use_gpu):
         print('image shpe', images.shape)
