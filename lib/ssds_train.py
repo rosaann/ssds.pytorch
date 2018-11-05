@@ -439,7 +439,7 @@ class Solver(object):
         vis = visdom.Visdom(server="http://localhost", port=8888)
         check_i = 0;
         _t = Timer()
-        df = pd.read_csv("sample_submission_test.csv")
+        df = pd.DataFrame()
         df.append( "ImageId,EncodedPixels")
         for root, dirs, files in os.walk(test_image_dir):
             num_images = len(files)
