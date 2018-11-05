@@ -541,8 +541,11 @@ class Solver(object):
         for ovlap_box in ovlap_boxes:
            
            img_cut = image_for_cut[int (ovlap_box[1]):int (ovlap_box[3]), int(ovlap_box[0]):int(ovlap_box[2])] 
+           gray = cv2.cvtColor(img_cut,cv2.COLOR_BGR2GRAY)
+           ret2,th2 = cv2.threshold(gray,0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)
            if i == 5:
              cv2.imwrite(os.path.join('./data/','2.png'), img_cut)
+             cv2.imwrite(os.path.join('./data/','3.png'), th2)
            i += 1
         
     def if_overlap(self, box1, box2):
