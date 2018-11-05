@@ -518,7 +518,8 @@ class Solver(object):
     def showTestResult(self,writer, img_dir, cls_dets, df):
         fileName = img_dir.split('/')[-1]
         if len(cls_dets) == 0:
-            df.append(pd.DataFrame( [fileName + ','],columns = ["ImageId,EncodedPixels"]))
+           # df.append(pd.DataFrame( [fileName + ','],columns = ["ImageId,EncodedPixels"]))
+            df.set_value(df.idxmax(),'ImageId,EncodedPixels', fileName + ',')
             return
         image_show = cv2.imread(img_dir, cv2.IMREAD_COLOR)
         real_box = []
@@ -564,8 +565,9 @@ class Solver(object):
            cv2.imwrite(os.path.join('./data/','4.png'), img_bk)
            encodeStr = rle_encode(img_bk)
            if len(encodeStr) > 10:
-                df.append(pd.DataFrame( [fileName + ',' + encodeStr]))
-                df.append(pd.DataFrame( [fileName + ',' + encodeStr],columns = ["ImageId,EncodedPixels"]))
+               # df.append(pd.DataFrame( [fileName + ',' + encodeStr]))
+               # df.append(pd.DataFrame( [fileName + ',' + encodeStr],columns = ["ImageId,EncodedPixels"]))
+                df.set_value(df.idxmax(),'ImageId,EncodedPixels',fileName + ',' + encodeStr)
 
                 ifhasShip = True
 
@@ -577,7 +579,8 @@ class Solver(object):
          #    #return
          #  i += 1
         if ifhasShip == False:
-            df.append(pd.DataFrame( [fileName + ','],columns = ["ImageId,EncodedPixels"]))
+            #df.append(pd.DataFrame( [fileName + ','],columns = ["ImageId,EncodedPixels"]))
+            df.set_value(df.idxmax(),'ImageId,EncodedPixels' , fileName + ',')
 
         
     def visTest(self, model, images, priorbox, writer, epoch, use_gpu):
