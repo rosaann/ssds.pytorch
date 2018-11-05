@@ -543,7 +543,8 @@ class Solver(object):
            img_cut = image_for_cut[int (ovlap_box[1]):int (ovlap_box[3]), int(ovlap_box[0]):int(ovlap_box[2])] 
            gray = cv2.cvtColor(img_cut,cv2.COLOR_BGR2GRAY)
            ret2,th2 = cv2.threshold(gray,0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)
-           img_bk = np.zeros(768 * 768, dtype=np.uint8)
+           img_bk = image_for_cut.copy()
+           img_bk[0:767, 0:767] = 0
            
            
            if i == 5:
