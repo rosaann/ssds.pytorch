@@ -575,7 +575,7 @@ class Solver(object):
          #    print('encodeStr ', encodeStr)
          #    #return
          #  i += 1
-         if ifhasShip == False:
+        if ifhasShip == False:
             df.append(pd.DataFrame( [fileName + ',']))
 
         
