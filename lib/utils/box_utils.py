@@ -264,9 +264,9 @@ def rle_encode(img):
         if len(runs) %2 != 0:
             if len(runs) > 0:
                 runs = np.delete(runs, -1)
-        print('runs :',runs.shape)
-        print('r1 ', runs[1::2].shape)
-        print('r2 ', runs[::2].shape)
+        #print('runs :',runs.shape)
+        #print('r1 ', runs[1::2].shape)
+        #print('r2 ', runs[::2].shape)
         runs[1::2] -= runs[::2]
         return ' '.join(str(x) for x in runs)    
     
