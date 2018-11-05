@@ -535,11 +535,15 @@ class Solver(object):
             cv2.rectangle(img2, (int(ovlap_box[0]), int(ovlap_box[1])), (int(ovlap_box[2]), int (ovlap_box[3])), (0, 255, 255), 1)
 
         cv2.imwrite(os.path.join('./data/','1.png'), img2)
-
-       # image_show = Image.fromarray(cv2.cvtColor(image_show,cv2.COLOR_BGR2RGB)) 
-       # image_show = transform.ToTensor()(image_show)
-       # x = vutils.make_grid(image_show.cuda().data, normalize=True, scale_each=True)
-        #writer.add_image('module_feature_maps/feature_extractors.{}'.format(img_dir),x, 67)
+        
+        image_for_cut = cv2.imread(img_dir, cv2.IMREAD_COLOR)
+        i = 0
+        for ovlap_box in ovlap_boxes:
+           img_cut = image_for_cut[ovlap_box[0]:ovlap_box[2], ovlap_box[1]:ovlap_box[3]] 
+           if i == 0:
+             cv2.imwrite(os.path.join('./data/','2.png'), img_cut)
+           i += 1
+        
     def if_overlap(self, box1, box2):
         box1_point_1 = [box1[0], box1[1]]
         box1_point_2 = [box1[2], box1[3]]
