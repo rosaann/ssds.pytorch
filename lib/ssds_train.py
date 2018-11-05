@@ -527,8 +527,8 @@ class Solver(object):
                     
         cv2.imwrite(os.path.join('./data/','0.png'), image_show)
         
-        ovlap_boxes = self.get_overlap_boxes(real_box)
-        ovlap_boxes = self.get_overlap_boxes(ovlap_boxes)
+        ovlap_boxes = get_overlap_boxes(real_box)
+        ovlap_boxes = get_overlap_boxes(ovlap_boxes)
 
         img2 = cv2.imread(img_dir, cv2.IMREAD_COLOR)
         for ovlap_box in ovlap_boxes:
@@ -547,14 +547,30 @@ class Solver(object):
            img_bk = cv2.cvtColor(image_for_cut,cv2.COLOR_BGR2GRAY)
            img_bk[0:767, 0:767] = 0
            img_bk[int (ovlap_box[1]):int (ovlap_box[3]), int(ovlap_box[0]):int(ovlap_box[2])] = th2[0:int (ovlap_box[3]) - int (ovlap_box[1]),0 : int (ovlap_box[2]) - int (ovlap_box[0])]
-           
+           encodeStr = rle_encode(img_bk)
            if i == 5:
              cv2.imwrite(os.path.join('./data/','2.png'), img_cut)
              cv2.imwrite(os.path.join('./data/','3.png'), th2)
              cv2.imwrite(os.path.join('./data/','4.png'), img_bk)
+             print('encodeStr ', encodeStr)
+             return
            i += 1
-        
-    def if_overlap(self, box1, box2):
+    def rle_encode(img):
+        '''
+        img: numpy array, 1 - mask, 0 - background
+        Returns run length as string formated
+        '''
+        np.set_printoptions(threshold=20)
+        pixels = img.T.flatten()
+        #  print('pixels 0:', pixels.shape)
+        pixels = np.concatenate([[0], pixels, [0]])
+        print('pixels 1:', pixels)
+        runs = np.where(pixels[1:] != pixels[:-1])[0] + 1
+        print('runs :',runs)
+        runs[1::2] -= runs[::2]
+        return ' '.join(str(x) for x in runs)    
+    
+    def if_overlap( box1, box2):
         box1_point_1 = [box1[0], box1[1]]
         box1_point_2 = [box1[2], box1[3]]
         
@@ -597,12 +613,12 @@ class Solver(object):
          
        
         return False
-    def get_overlap_boxes(self, boxes):
+    def get_overlap_boxes( boxes):
         out_boxes = []
         for box in boxes:
             if_has_overlop = False
             for o_i, out_box in enumerate( out_boxes):
-                if self.if_overlap(box, out_box):
+                if if_overlap(box, out_box):
                     x = min(box[0], out_box[0])
                     y = min(box[1], out_box[1])
                     x2 = max(box[2], out_box[2])
