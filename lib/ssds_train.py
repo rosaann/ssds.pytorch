@@ -538,13 +538,26 @@ class Solver(object):
        # image_show = transform.ToTensor()(image_show)
        # x = vutils.make_grid(image_show.cuda().data, normalize=True, scale_each=True)
         #writer.add_image('module_feature_maps/feature_extractors.{}'.format(img_dir),x, 67)
-
+    def if_overlap(self, box1, box2):
+        box1_point_1 = [box1[0], box1[1]]
+        box1_point_2 = [box1[2], box1[3]]
+        box2_point_1 = [box2[0], box2[1]]
+        box2_point_2 = [box2[2], box2[3]]
+        
+        if (box1_point_1[0] - box2_point_1[0]) * (box2_point_2[0] - box1_point_1[0]) < 0:
+            if(box1_point_1[1] - box2_point_1[1]) * (box2_point_2[1] - box1_point_1[1]):
+                return True
+        if (box1_point_2[0] - box2_point_1[0]) * (box2_point_2[0] - box1_point_2[0]) < 0:
+            if(box1_point_2[1] - box2_point_1[1]) * (box2_point_2[1] - box1_point_2[1]):
+                return True
+        
+        return False
     def get_overlap_boxes(self, boxes):
         out_boxes = []
         for box in boxes:
             if_has_overlop = False
             for o_i, out_box in enumerate( out_boxes):
-                if jaccard(box, out_box) > 0:
+                if self.if_overlap(box, out_box):
                     x = min(box[0], out_box[0])
                     y = min(box[1], out_box[1])
                     x2 = max(box[2], out_box[2])
