@@ -562,7 +562,7 @@ class Solver(object):
                     y = min(box[1], out_box[1])
                     x2 = max(box[2], out_box[2])
                     y2 = max(box[3], out_box[3])
-                    out_box[o_i] = [x, y, x2, y2]
+                    out_boxes[o_i] = [x, y, x2, y2]
                     if_has_overlop = True
             if if_has_overlop == False:
                 out_boxes.append(box)
