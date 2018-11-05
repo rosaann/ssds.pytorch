@@ -528,6 +528,7 @@ class Solver(object):
         cv2.imwrite(os.path.join('./data/','0.png'), image_show)
         
         ovlap_boxes = self.get_overlap_boxes(real_box)
+        ovlap_boxes = self.get_overlap_boxes(ovlap_boxes)
 
         img2 = cv2.imread(img_dir, cv2.IMREAD_COLOR)
         for ovlap_box in ovlap_boxes:
