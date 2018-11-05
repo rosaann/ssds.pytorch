@@ -32,7 +32,7 @@ import math
 import numpy as np
 from lib.utils.data_augment import preproc_for_test
 from lib.utils.box_utils import jaccard
-
+from lib.utils.box_utils import *
 
 class Solver(object):
     """
