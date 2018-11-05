@@ -544,11 +544,11 @@ class Solver(object):
         box2_point_1 = [box2[0], box2[1]]
         box2_point_2 = [box2[2], box2[3]]
         
-        if (box1_point_1[0] - box2_point_1[0]) * (box2_point_2[0] - box1_point_1[0]) >= 0:
-            if(box1_point_1[1] - box2_point_1[1]) * (box2_point_2[1] - box1_point_1[1]) >= 0:
+        if (box1_point_1[0] - box2_point_1[0]) * (box2_point_2[0] - box1_point_1[0]) > 0:
+            if(box1_point_1[1] - box2_point_1[1]) * (box2_point_2[1] - box1_point_1[1]) > 0:
                 return True
-        if (box1_point_2[0] - box2_point_1[0]) * (box2_point_2[0] - box1_point_2[0]) >= 0:
-            if(box1_point_2[1] - box2_point_1[1]) * (box2_point_2[1] - box1_point_2[1]) >= 0:
+        if (box1_point_2[0] - box2_point_1[0]) * (box2_point_2[0] - box1_point_2[0]) > 0:
+            if(box1_point_2[1] - box2_point_1[1]) * (box2_point_2[1] - box1_point_2[1]) > 0:
                 return True
         
         return False
