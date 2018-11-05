@@ -440,7 +440,7 @@ class Solver(object):
         check_i = 0;
         _t = Timer()
         df = pd.DataFrame()
-        df.append( "ImageId,EncodedPixels")
+        df.append(pd.DataFrame( "ImageId,EncodedPixels"))
         for root, dirs, files in os.walk(test_image_dir):
             num_images = len(files)
             num_classes = detector.num_classes
@@ -519,7 +519,7 @@ class Solver(object):
     def showTestResult(self,writer, img_dir, cls_dets, df):
         fileName = img_dir.split('/')[-1]
         if len(cls_dets) == 0:
-            df.append(fileName + ',')
+            df.append(pd.DataFrame(fileName + ','))
             return
         image_show = cv2.imread(img_dir, cv2.IMREAD_COLOR)
         real_box = []
