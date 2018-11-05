@@ -439,8 +439,7 @@ class Solver(object):
         vis = visdom.Visdom(server="http://localhost", port=8888)
         check_i = 0;
         _t = Timer()
-        df = pd.DataFrame()
-        df.append(pd.DataFrame( ["ImageId,EncodedPixels"]))
+        df = pd.DataFrame(columns = ["ImageId,EncodedPixels"])
         for root, dirs, files in os.walk(test_image_dir):
             num_images = len(files)
             num_classes = detector.num_classes
@@ -519,7 +518,7 @@ class Solver(object):
     def showTestResult(self,writer, img_dir, cls_dets, df):
         fileName = img_dir.split('/')[-1]
         if len(cls_dets) == 0:
-            df.append(pd.DataFrame( [fileName + ',']))
+            df.append(pd.DataFrame( [fileName + ','],columns = ["ImageId,EncodedPixels"]))
             return
         image_show = cv2.imread(img_dir, cv2.IMREAD_COLOR)
         real_box = []
@@ -566,6 +565,8 @@ class Solver(object):
            encodeStr = rle_encode(img_bk)
            if len(encodeStr) > 10:
                 df.append(pd.DataFrame( [fileName + ',' + encodeStr]))
+                df.append(pd.DataFrame( [fileName + ',' + encodeStr],columns = ["ImageId,EncodedPixels"]))
+
                 ifhasShip = True
 
          #  if i == -1:
@@ -576,7 +577,7 @@ class Solver(object):
          #    #return
          #  i += 1
         if ifhasShip == False:
-            df.append(pd.DataFrame( [fileName + ',']))
+            df.append(pd.DataFrame( [fileName + ','],columns = ["ImageId,EncodedPixels"]))
 
         
     def visTest(self, model, images, priorbox, writer, epoch, use_gpu):
