@@ -261,7 +261,10 @@ def rle_encode(img):
         pixels = np.concatenate([[0], pixels, [0]])
         print('pixels 1:', pixels.shape)
         runs = np.where(pixels[1:] != pixels[:-1])[0] + 1
+        
         print('runs :',runs.shape)
+        print('r1 ', runs[1::2].shape)
+        print('r2 ', runs[::2].shape)
         runs[1::2] -= runs[::2]
         return ' '.join(str(x) for x in runs)    
     
