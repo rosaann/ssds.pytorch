@@ -440,6 +440,7 @@ class Solver(object):
         check_i = 0;
         _t = Timer()
         df = pd.DataFrame(columns = ["ImageId,EncodedPixels"])
+        self.idx_df = 0
         for root, dirs, files in os.walk(test_image_dir):
             num_images = len(files)
             num_classes = detector.num_classes
@@ -519,7 +520,8 @@ class Solver(object):
         fileName = img_dir.split('/')[-1]
         if len(cls_dets) == 0:
            # df.append(pd.DataFrame( [fileName + ','],columns = ["ImageId,EncodedPixels"]))
-            df.set_value(df.idxmax(),'ImageId,EncodedPixels', fileName + ',')
+            df.set_value(self.idx_df,'ImageId,EncodedPixels', fileName + ',')
+            self.idx_df += 1
             return
         image_show = cv2.imread(img_dir, cv2.IMREAD_COLOR)
         real_box = []
@@ -567,8 +569,8 @@ class Solver(object):
            if len(encodeStr) > 10:
                # df.append(pd.DataFrame( [fileName + ',' + encodeStr]))
                # df.append(pd.DataFrame( [fileName + ',' + encodeStr],columns = ["ImageId,EncodedPixels"]))
-                df.set_value(df.idxmax(),'ImageId,EncodedPixels',fileName + ',' + encodeStr)
-
+                df.set_value(self.idx_df,'ImageId,EncodedPixels',fileName + ',' + encodeStr)
+                self.idx_df += 1
                 ifhasShip = True
 
          #  if i == -1:
@@ -580,8 +582,8 @@ class Solver(object):
          #  i += 1
         if ifhasShip == False:
             #df.append(pd.DataFrame( [fileName + ','],columns = ["ImageId,EncodedPixels"]))
-            df.set_value(df.idxmax(),'ImageId,EncodedPixels' , fileName + ',')
-
+            df.set_value(self.idx_df,'ImageId,EncodedPixels' , fileName + ',')
+            self.idx_df += 1
         
     def visTest(self, model, images, priorbox, writer, epoch, use_gpu):
         print('image shpe', images.shape)
