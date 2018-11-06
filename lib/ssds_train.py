@@ -440,7 +440,7 @@ class Solver(object):
         vis = visdom.Visdom(server="http://localhost", port=8888)
         check_i = 0;
         _t = Timer()
-        df = pd.DataFrame(columns = ["ImageId,EncodedPixels"])
+        df = pd.DataFrame(columns = ["ImageId", ",EncodedPixels"])
         self.idx_df = 0
         for root, dirs, files in os.walk(test_image_dir):
             
@@ -517,7 +517,8 @@ class Solver(object):
         fileName = img_dir.split('/')[-1]
         if len(cls_dets) == 0:
            # df.append(pd.DataFrame( [fileName + ','],columns = ["ImageId,EncodedPixels"]))
-            df.set_value(self.idx_df,'ImageId,EncodedPixels', fileName + ',')
+            df.set_value(self.idx_df,'ImageId', fileName )
+            df.set_value(self.idx_df,'EncodedPixels', '')
             self.idx_df += 1
             return
         image_show = cv2.imread(img_dir, cv2.IMREAD_COLOR)
@@ -548,7 +549,8 @@ class Solver(object):
         image_for_cut = cv2.imread(img_dir, cv2.IMREAD_COLOR)
         i = 0
         if len(ovlap_boxes) == 0:
-            df.append(fileName + ',')
+            df.set_value(self.idx_df,'ImageId', fileName )
+            df.set_value(self.idx_df,'EncodedPixels', '')
             return
         ifhasShip = False
         
@@ -576,7 +578,8 @@ class Solver(object):
            if len(encodeStr) < 10:
                continue
               
-           df.set_value(self.idx_df,'ImageId,EncodedPixels',fileName + ',' + encodeStr)
+           df.set_value(self.idx_df,'ImageId',fileName )
+           df.set_value(self.idx_df,'EncodedPixels', encodeStr)
            self.idx_df += 1
            ifhasShip = True
 
@@ -589,7 +592,8 @@ class Solver(object):
            i += 1
         if ifhasShip == False:
             #df.append(pd.DataFrame( [fileName + ','],columns = ["ImageId,EncodedPixels"]))
-            df.set_value(self.idx_df,'ImageId,EncodedPixels' , fileName + ',')
+            df.set_value(self.idx_df,'ImageId', fileName )
+            df.set_value(self.idx_df,'EncodedPixels', '')
             self.idx_df += 1
         
     def visTest(self, model, images, priorbox, writer, epoch, use_gpu):
