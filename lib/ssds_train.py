@@ -554,6 +554,7 @@ class Solver(object):
             return
         ifhasShip = False
         
+        encode_str_list = []
         for ovlap_box in ovlap_boxes:
            print('ovlap box ', ovlap_box)
            img_cut = image_for_cut[ int (ovlap_box[1]):int (ovlap_box[3]), int(ovlap_box[0]):int(ovlap_box[2])] 
@@ -574,10 +575,23 @@ class Solver(object):
            
      #      cv2.imwrite(os.path.join('./data/','{}_3.png'.format(i)), th2)
      #      cv2.imwrite(os.path.join('./data/','{}_4.png'.format(i)), img_bk)
+           
            encodeStr = rle_encode(img_bk)
            if len(encodeStr) < 10:
                continue
-              
+           
+           if_encode_overlap = False
+           for pre_encode_str in encode_str_list:
+               for i ,pre_run in enumerate(pre_encode_str):
+                   if i %2 == 0 :
+                       for this_i, this_run in enumerate( encodeStr):
+                           if this_i %2 == 0:
+                               if this_run == pre_run:
+                                   if_encode_overlap = True
+           if if_encode_overlap == False:
+               continue 
+           
+           encode_str_list.append(encodeStr)   
            df.set_value(self.idx_df,'ImageId',fileName )
            df.set_value(self.idx_df,'EncodedPixels', encodeStr)
            self.idx_df += 1
