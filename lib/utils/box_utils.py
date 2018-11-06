@@ -268,6 +268,9 @@ def rle_encode(img):
         #print('r1 ', runs[1::2].shape)
         #print('r2 ', runs[::2].shape)
         runs[1::2] -= runs[::2]
+        for i ,run in enumerate(runs):
+            if i < 20:
+              print ('run ', run)
         return ' '.join(str(x) for x in runs)    
     
 def if_overlap( box1, box2):
