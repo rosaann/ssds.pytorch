@@ -548,11 +548,14 @@ class Solver(object):
             df.append(fileName + ',')
             return
         ifhasShip = False
+        
         for ovlap_box in ovlap_boxes:
            print('ovlap box ', ovlap_box)
            img_cut = image_for_cut[int (ovlap_box[1]):int (ovlap_box[3]), int(ovlap_box[0]):int(ovlap_box[2])] 
            gray = cv2.cvtColor(img_cut,cv2.COLOR_BGR2GRAY)
            ret2,th2 = cv2.threshold(gray,0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)
+           if ret2 < 50:
+               continue
            print('ret ', ret2)
            img_bk = cv2.cvtColor(image_for_cut,cv2.COLOR_BGR2GRAY)
            img_bk[0:767, 0:767] = 0
@@ -562,12 +565,12 @@ class Solver(object):
            cv2.imwrite(os.path.join('./data/','{}_3.png'.format(i)), th2)
            cv2.imwrite(os.path.join('./data/','{}_4.png'.format(i)), img_bk)
            encodeStr = rle_encode(img_bk)
-           if len(encodeStr) > 10:
-               # df.append(pd.DataFrame( [fileName + ',' + encodeStr]))
-               # df.append(pd.DataFrame( [fileName + ',' + encodeStr],columns = ["ImageId,EncodedPixels"]))
-                df.set_value(self.idx_df,'ImageId,EncodedPixels',fileName + ',' + encodeStr)
-                self.idx_df += 1
-                ifhasShip = True
+           if len(encodeStr) < 10:
+               continue
+              
+           df.set_value(self.idx_df,'ImageId,EncodedPixels',fileName + ',' + encodeStr)
+           self.idx_df += 1
+           ifhasShip = True
 
          #  if i == -1:
          #    cv2.imwrite(os.path.join('./data/','2.png'), img_cut)
