@@ -320,13 +320,13 @@ def get_overlap_boxes( boxes):
             box[0] = max(box[0], 0)
             box[1] = max(box[1], 0)
             box[2] = max(box[2], 0)
-            box[3] = max(box[4], 0)
+            box[3] = max(box[3], 0)
             for o_i, out_box in enumerate( out_boxes):
                 if if_overlap(box, out_box):
-                    x = max( min(box[0], out_box[0]), 0)
-                    y = max( min(box[1], out_box[1]), 0)
-                    x2 = max(box[2], out_box[2], 0)
-                    y2 = max(box[3], out_box[3], 0)
+                    x =  min(box[0], out_box[0])
+                    y =  min(box[1], out_box[1])
+                    x2 = max(box[2], out_box[2])
+                    y2 = max(box[3], out_box[3])
                     out_boxes[o_i] = [x, y, x2, y2]
                     if_has_overlop = True
             if if_has_overlop == False:
