@@ -541,7 +541,7 @@ class Solver(object):
 
         img2 = cv2.imread(img_dir, cv2.IMREAD_COLOR)
         for ovlap_box in ovlap_boxes:
-            cv2.rectangle(img2, (max(int(ovlap_box[0]), 0),max( int(ovlap_box[1]), 0)), (max( int(ovlap_box[2]), 0), max( int (ovlap_box[3]), 0)), (0, 255, 255), 1)
+            cv2.rectangle(img2, (int(ovlap_box[0]), int(ovlap_box[1])), ( int(ovlap_box[2]),  int (ovlap_box[3])), (0, 255, 255), 1)
 
      #   cv2.imwrite(os.path.join('./data/','1.png'), img2)
         
@@ -554,7 +554,7 @@ class Solver(object):
         
         for ovlap_box in ovlap_boxes:
            print('ovlap box ', ovlap_box)
-           img_cut = image_for_cut[int (ovlap_box[1]):int (ovlap_box[3]), int(ovlap_box[0]):int(ovlap_box[2])] 
+           img_cut = image_for_cut[ int (ovlap_box[1]):int (ovlap_box[3]), int(ovlap_box[0]):int(ovlap_box[2])] 
            gray = cv2.cvtColor(img_cut,cv2.COLOR_BGR2GRAY)
            ret2,th2 = cv2.threshold(gray,0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)
            if ret2 < 50:

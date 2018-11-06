@@ -317,6 +317,10 @@ def get_overlap_boxes( boxes):
         out_boxes = []
         for box in boxes:
             if_has_overlop = False
+            box[0] = max(box[0], 0)
+            box[1] = max(box[1], 0)
+            box[2] = max(box[2], 0)
+            box[3] = max(box[4], 0)
             for o_i, out_box in enumerate( out_boxes):
                 if if_overlap(box, out_box):
                     x = max( min(box[0], out_box[0]), 0)
