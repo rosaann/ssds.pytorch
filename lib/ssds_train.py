@@ -432,7 +432,7 @@ class Solver(object):
                     
                 
     def test_epoch_2(self, model, detector, output_dir, use_gpu):
-        print('test_epoch _2')
+        
         model.eval()
         test_image_dir = os.path.join('./data/', 'ship_test_v2/data_test/')
 
@@ -443,6 +443,7 @@ class Solver(object):
         df = pd.DataFrame(columns = ["ImageId,EncodedPixels"])
         self.idx_df = 0
         for root, dirs, files in os.walk(test_image_dir):
+            print('os ')
             num_images = len(files)
             num_classes = detector.num_classes
             all_boxes = [[[] for _ in range(num_images)] for _ in range(num_classes)]
