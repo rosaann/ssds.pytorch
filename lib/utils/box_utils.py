@@ -284,30 +284,30 @@ def if_overlap( box1, box2):
         box2_point_3 = [box2[0], box2[3]]
         box2_point_4 = [box2[2], box2[1]]
         
-        if (box2_point_1[0] <= box1_point_1[0] ) and ( box1_point_1[0] < box2_point_2[0] ):
-            if(box2_point_1[1] <= box1_point_1[1] ) and (box1_point_1[1] < box2_point_2[1] ) :
+        if (box2_point_1[0] <= box1_point_1[0] ) and ( box1_point_1[0] <= box2_point_2[0] ):
+            if(box2_point_1[1] <= box1_point_1[1] ) and (box1_point_1[1] <= box2_point_2[1] ) :
                 return True
-        if (box2_point_1[0] <= box1_point_2[0] ) and ( box1_point_2[0] < box2_point_2[0] ):
-            if(box2_point_1[1] <= box1_point_1[1] ) and (box1_point_2[1] < box2_point_2[1] ) :
+        if (box2_point_1[0] <= box1_point_2[0] ) and ( box1_point_2[0] <= box2_point_2[0] ):
+            if(box2_point_1[1] <= box1_point_1[1] ) and (box1_point_2[1] <= box2_point_2[1] ) :
                 return True
-        if (box2_point_1[0] <= box1_point_3[0] ) and ( box1_point_3[0] < box2_point_2[0] ):
-            if(box2_point_1[1] <= box1_point_3[1] ) and (box1_point_3[1] < box2_point_2[1] ) :
+        if (box2_point_1[0] <= box1_point_3[0] ) and ( box1_point_3[0] <= box2_point_2[0] ):
+            if(box2_point_1[1] <= box1_point_3[1] ) and (box1_point_3[1] <= box2_point_2[1] ) :
                 return True
-        if (box2_point_1[0] <= box1_point_4[0] ) and ( box1_point_4[0] < box2_point_2[0] ):
-            if(box2_point_1[1] <= box1_point_4[1] ) and (box1_point_4[1] < box2_point_2[1] ) :
+        if (box2_point_1[0] <= box1_point_4[0] ) and ( box1_point_4[0] <= box2_point_2[0] ):
+            if(box2_point_1[1] <= box1_point_4[1] ) and (box1_point_4[1] <= box2_point_2[1] ) :
                 return True
         
-        if (box1_point_1[0] <= box2_point_1[0] ) and ( box2_point_1[0] < box1_point_2[0] ):
-            if(box1_point_1[1] <= box2_point_1[1] ) and (box2_point_1[1] < box1_point_2[1] ) :
+        if (box1_point_1[0] <= box2_point_1[0] ) and ( box2_point_1[0] <= box1_point_2[0] ):
+            if(box1_point_1[1] <= box2_point_1[1] ) and (box2_point_1[1] <= box1_point_2[1] ) :
                 return True
-        if (box1_point_1[0] <= box2_point_2[0] ) and ( box2_point_2[0] < box1_point_2[0] ):
-            if(box1_point_1[1] <= box2_point_1[1] ) and (box2_point_2[1] < box1_point_2[1] ) :
+        if (box1_point_1[0] <= box2_point_2[0] ) and ( box2_point_2[0] <= box1_point_2[0] ):
+            if(box1_point_1[1] <= box2_point_1[1] ) and (box2_point_2[1] <= box1_point_2[1] ) :
                 return True
-        if (box1_point_1[0] <= box2_point_3[0] ) and ( box2_point_3[0] < box1_point_2[0] ):
-            if(box1_point_1[1] <= box2_point_3[1] ) and (box2_point_3[1] < box1_point_2[1] ) :
+        if (box1_point_1[0] <= box2_point_3[0] ) and ( box2_point_3[0] <= box1_point_2[0] ):
+            if(box1_point_1[1] <= box2_point_3[1] ) and (box2_point_3[1] <= box1_point_2[1] ) :
                 return True
-        if (box1_point_1[0] <= box2_point_4[0] ) and ( box2_point_4[0] < box1_point_2[0] ):
-            if(box1_point_1[1] <= box2_point_4[1] ) and (box2_point_4[1] < box1_point_2[1] ) :
+        if (box1_point_1[0] <= box2_point_4[0] ) and ( box2_point_4[0] <= box1_point_2[0] ):
+            if(box1_point_1[1] <= box2_point_4[1] ) and (box2_point_4[1] <= box1_point_2[1] ) :
                 return True
         
          
