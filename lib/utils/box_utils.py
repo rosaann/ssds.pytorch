@@ -319,9 +319,21 @@ def if_overlap( box1, box2):
             if(box1_point_1[1] <= box2_point_4[1] ) and (box2_point_4[1] <= box1_point_2[1] ) :
                 return True
             
+        if(box1_point_1[0] < box2_point_1[0]) and (box1_point_4[0] > box2_point_4[0]):
+            if( box1_point_1[1] > box2_point_1[1]) and (box1_point_1[1] < box2_point_3[1]):
+                  return True
+            if( box1_point_3[1] > box2_point_1[1]) and (box1_point_3[1] < box2_point_3[1]):
+                  return True 
+            if( box1_point_1[1] < box2_point_1[1]) and (box1_point_3[1] < box2_point_3[1]):
+                  return True 
         
-        
-         
+        if(box2_point_1[0] < box1_point_1[0]) and (box2_point_4[0] > box1_point_4[0]):
+            if( box2_point_1[1] > box1_point_1[1]) and (box2_point_1[1] < box1_point_3[1]):
+                  return True
+            if( box2_point_3[1] > box1_point_1[1]) and (box2_point_3[1] < box1_point_3[1]):
+                  return True 
+            if( box2_point_1[1] < box1_point_1[1]) and (box2_point_3[1] < box1_point_3[1]):
+                  return True
        
         return False
 def get_overlap_boxes( boxes):

@@ -491,7 +491,7 @@ class Solver(object):
                            # box *= scale
                             box = np.append(box, score)
                             
-                            if score >= 0.55:
+                            if score >= 0.51:
                                 cls_dets.append(box)
                                # vis.images(this_img, win=1, opts={'title': 'Reals'})
                                # print('box ', box)
@@ -598,7 +598,7 @@ class Solver(object):
            df.set_value(self.idx_df,'EncodedPixels', encodeStr)
            self.idx_df += 1
            ifhasShip = True
-           break
+      #     break
          #  if i == -1:
          #    cv2.imwrite(os.path.join('./data/','2.png'), img_cut)
          #    cv2.imwrite(os.path.join('./data/','3.png'), th2)
