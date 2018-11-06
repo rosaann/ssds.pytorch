@@ -495,11 +495,7 @@ class Solver(object):
                                # vis.images(this_img, win=1, opts={'title': 'Reals'})
                                # print('box ', box)
                                # print('score ', score)
-                     # if check_i == 3:
                       self.showTestResult(self.writer,img_dir, cls_dets, df)
-                     #     return
-                               # if check_i == 1:
-                          #      return
                     
                       if len(cls_dets) == 0:
                         cls_dets = empty_array
@@ -553,7 +549,7 @@ class Solver(object):
             return
         ifhasShip = False
         for ovlap_box in ovlap_boxes:
-           
+           print('ovlap box ', ovlap_box)
            img_cut = image_for_cut[int (ovlap_box[1]):int (ovlap_box[3]), int(ovlap_box[0]):int(ovlap_box[2])] 
            gray = cv2.cvtColor(img_cut,cv2.COLOR_BGR2GRAY)
            ret2,th2 = cv2.threshold(gray,0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)
