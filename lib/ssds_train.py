@@ -302,7 +302,7 @@ class Solver(object):
         loc_loss_v = 0
         conf_loss_v = 0
 
-        train_end = int( epoch_size * 0.8);
+        train_end = int( epoch_size * 0.9);
         ###
         label = [list() for _ in range(model.num_classes)]
         gt_label = [list() for _ in range(model.num_classes)]
