@@ -553,14 +553,14 @@ class Solver(object):
            img_cut = image_for_cut[int (ovlap_box[1]):int (ovlap_box[3]), int(ovlap_box[0]):int(ovlap_box[2])] 
            gray = cv2.cvtColor(img_cut,cv2.COLOR_BGR2GRAY)
            ret2,th2 = cv2.threshold(gray,0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)
-           
+           print('ret ', ret2)
            img_bk = cv2.cvtColor(image_for_cut,cv2.COLOR_BGR2GRAY)
            img_bk[0:767, 0:767] = 0
            img_bk[int (ovlap_box[1]):int (ovlap_box[3]), int(ovlap_box[0]):int(ovlap_box[2])] = th2[0:int (ovlap_box[3]) - int (ovlap_box[1]),0 : int (ovlap_box[2]) - int (ovlap_box[0])]
            
-           cv2.imwrite(os.path.join('./data/','2.png'), img_cut)
-           cv2.imwrite(os.path.join('./data/','3.png'), th2)
-           cv2.imwrite(os.path.join('./data/','4.png'), img_bk)
+           cv2.imwrite(os.path.join('./data/','{}_2.png'.format(i)), img_cut)
+           cv2.imwrite(os.path.join('./data/','{}_3.png'.format(i)), th2)
+           cv2.imwrite(os.path.join('./data/','{}_4.png'.format(i)), img_bk)
            encodeStr = rle_encode(img_bk)
            if len(encodeStr) > 10:
                # df.append(pd.DataFrame( [fileName + ',' + encodeStr]))
@@ -575,7 +575,7 @@ class Solver(object):
          #    cv2.imwrite(os.path.join('./data/','4.png'), img_bk)
          #    print('encodeStr ', encodeStr)
          #    #return
-         #  i += 1
+           i += 1
         if ifhasShip == False:
             #df.append(pd.DataFrame( [fileName + ','],columns = ["ImageId,EncodedPixels"]))
             df.set_value(self.idx_df,'ImageId,EncodedPixels' , fileName + ',')
