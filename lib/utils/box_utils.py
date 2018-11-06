@@ -274,8 +274,8 @@ def rle_encode(img):
                 out_runs.append(runs[i - 1])
                 out_runs.append(runs[i])
                 
-        for i, out_run in enumerate(out_runs):
-            if i < 20:
+       # for i, out_run in enumerate(out_runs):
+       #     if i < 20:
              #   print('out_run ', out_run)
         return ' '.join(str(x) for x in out_runs)    
     
