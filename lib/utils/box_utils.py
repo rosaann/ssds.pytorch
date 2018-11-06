@@ -270,7 +270,7 @@ def rle_encode(img):
         runs[1::2] -= runs[::2]
         out_runs = []
         for i ,run in enumerate(runs):
-            if i %2 == 0 and run > 1 and i >= 1:
+            if i %2 != 0 and run > 1 and i >= 1:
                 out_runs.append(runs[i - 1])
                 out_runs.append(runs[i])
                 
