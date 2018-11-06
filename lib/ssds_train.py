@@ -541,10 +541,24 @@ class Solver(object):
     #    cv2.imwrite(os.path.join('./data/','0.png'), image_show)
         
         ovlap_boxes = get_overlap_boxes(real_box)
+        if len(ovlap_boxes) > 10:
+            df.set_value(self.idx_df,'ImageId', fileName )
+            df.set_value(self.idx_df,'EncodedPixels', '')
+            return
      #   print('ov_len_1',len(ovlap_boxes))
         ovlap_boxes = get_overlap_boxes(ovlap_boxes)
         ovlap_boxes = get_overlap_boxes(ovlap_boxes)
         ovlap_boxes = get_overlap_boxes(ovlap_boxes)
+        ovlap_boxes = get_overlap_boxes(ovlap_boxes)
+
+        ovlap_boxes = get_overlap_boxes(ovlap_boxes)
+        ovlap_boxes = get_overlap_boxes(ovlap_boxes)
+        ovlap_boxes = get_overlap_boxes(ovlap_boxes)
+        ovlap_boxes = get_overlap_boxes(ovlap_boxes)
+        ovlap_boxes = get_overlap_boxes(ovlap_boxes)
+        ovlap_boxes = get_overlap_boxes(ovlap_boxes)
+
+
      #   print('ov_len_2',len(ovlap_boxes))
 
         img2 = cv2.imread(img_dir, cv2.IMREAD_COLOR)
