@@ -541,7 +541,7 @@ class Solver(object):
 
         img2 = cv2.imread(img_dir, cv2.IMREAD_COLOR)
         for ovlap_box in ovlap_boxes:
-            cv2.rectangle(img2, (int(ovlap_box[0]), int(ovlap_box[1])), (int(ovlap_box[2]), int (ovlap_box[3])), (0, 255, 255), 1)
+            cv2.rectangle(img2, (max(int(ovlap_box[0]), 0),max( int(ovlap_box[1]), 0)), (max( int(ovlap_box[2]), 0), max( int (ovlap_box[3]), 0)), (0, 255, 255), 1)
 
      #   cv2.imwrite(os.path.join('./data/','1.png'), img2)
         
