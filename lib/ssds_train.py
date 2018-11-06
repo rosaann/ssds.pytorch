@@ -432,6 +432,7 @@ class Solver(object):
                     
                 
     def test_epoch_2(self, model, detector, output_dir, use_gpu):
+        print('test_epoch _2')
         model.eval()
         test_image_dir = os.path.join('./data/', 'ship_test_v2/data_test/')
 
@@ -447,7 +448,7 @@ class Solver(object):
             all_boxes = [[[] for _ in range(num_images)] for _ in range(num_classes)]
             empty_array = np.transpose(np.array([[],[],[],[],[]]),(1,0))
             for file in files:
-                print('file ', file)
+                
                 if os.path.splitext(file)[1] == '.jpg':
                     img_dir = test_image_dir + file
                     img = cv2.imread(img_dir, cv2.IMREAD_COLOR)
