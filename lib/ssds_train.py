@@ -440,7 +440,7 @@ class Solver(object):
         vis = visdom.Visdom(server="http://localhost", port=8888)
         check_i = 0;
         _t = Timer()
-        df = pd.DataFrame(columns = ["ImageId", ",EncodedPixels"])
+        df = pd.DataFrame(columns = ["ImageId", "EncodedPixels"])
         self.idx_df = 0
         for root, dirs, files in os.walk(test_image_dir):
             
