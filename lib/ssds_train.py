@@ -566,7 +566,7 @@ class Solver(object):
            img_bk = cv2.cvtColor(image_for_cut,cv2.COLOR_BGR2GRAY)
            img_bk[0:767, 0:767] = 0
           # img_bk[int (ovlap_box[1]):int (ovlap_box[3]), int(ovlap_box[0]):int(ovlap_box[2])] = th2[0:int (ovlap_box[3]) - int (ovlap_box[1]),0 : int (ovlap_box[2]) - int (ovlap_box[0])]
-           contours, hierarchy = cv2.findContours(th2,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
+           contours = cv2.findContours(th2,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
            cv2.drawContours(img_bk, contours, -1, 1, 3)
            
            cv2.imwrite(os.path.join('./data/','{}_3.png'.format(i)), th2)
