@@ -559,7 +559,7 @@ class Solver(object):
            img_cut = image_for_cut[ int (ovlap_box[1]):int (ovlap_box[3]), int(ovlap_box[0]):int(ovlap_box[2])] 
            gray = cv2.cvtColor(img_cut,cv2.COLOR_BGR2GRAY)
            ret2,th2 = cv2.threshold(gray,0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)
-           if ret2 < 50:
+           if ret2 < 70:
                continue
    #        print('ret ', ret2)
    #        cv2.imwrite(os.path.join('./data/','{}_2.png'.format(i)), img_cut)
