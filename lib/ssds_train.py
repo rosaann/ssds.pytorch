@@ -443,13 +443,14 @@ class Solver(object):
         df = pd.DataFrame(columns = ["ImageId,EncodedPixels"])
         self.idx_df = 0
         for root, dirs, files in os.walk(test_image_dir):
-            print('os ')
+            
             num_images = len(files)
             num_classes = detector.num_classes
             all_boxes = [[[] for _ in range(num_images)] for _ in range(num_classes)]
             empty_array = np.transpose(np.array([[],[],[],[],[]]),(1,0))
             for file in files:
-                
+                if os.path.splitext(file)[1] != '.jpg':
+                    continue
                 if os.path.splitext(file)[1] == '.jpg':
                     img_dir = test_image_dir + file
                     img = cv2.imread(img_dir, cv2.IMREAD_COLOR)
