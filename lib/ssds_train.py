@@ -588,7 +588,7 @@ class Solver(object):
                            if this_i %2 == 0:
                                if this_run == pre_run:
                                    if_encode_overlap = True
-           if if_encode_overlap == False:
+           if if_encode_overlap == True:
                continue 
            
            encode_str_list.append(encodeStr)   
