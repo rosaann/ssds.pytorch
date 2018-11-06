@@ -447,6 +447,7 @@ class Solver(object):
             all_boxes = [[[] for _ in range(num_images)] for _ in range(num_classes)]
             empty_array = np.transpose(np.array([[],[],[],[],[]]),(1,0))
             for file in files:
+                print('file ', file)
                 if os.path.splitext(file)[1] == '.jpg':
                     img_dir = test_image_dir + file
                     img = cv2.imread(img_dir, cv2.IMREAD_COLOR)
@@ -477,7 +478,7 @@ class Solver(object):
                 detections = detector.forward(out)
                 time = _t.toc()
                 for im ,this_img in enumerate( images):
-                  print('im ', im)
+                 
                   for j in range(1, num_classes):
                       cls_dets = list()
                       for det in detections[im][j]:
