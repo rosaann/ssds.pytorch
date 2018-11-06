@@ -276,7 +276,7 @@ def rle_encode(img):
                 
         for i, out_run in enumerate(out_runs):
             if i < 20:
-                print('out_run ', out_run)
+             #   print('out_run ', out_run)
         return ' '.join(str(x) for x in out_runs)    
     
 def if_overlap( box1, box2):

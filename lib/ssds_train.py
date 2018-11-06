@@ -533,7 +533,7 @@ class Solver(object):
             cv2.rectangle(image_show, (int(xs), int(ys)), (int(x2s), int (y2s)), (0, 255, 0), 1)
             #print(xs, ys, x2s, y2s)
                     
-        cv2.imwrite(os.path.join('./data/','0.png'), image_show)
+    #    cv2.imwrite(os.path.join('./data/','0.png'), image_show)
         
         ovlap_boxes = get_overlap_boxes(real_box)
      #   print('ov_len_1',len(ovlap_boxes))
@@ -544,7 +544,7 @@ class Solver(object):
         for ovlap_box in ovlap_boxes:
             cv2.rectangle(img2, (int(ovlap_box[0]), int(ovlap_box[1])), ( int(ovlap_box[2]),  int (ovlap_box[3])), (0, 255, 255), 1)
 
-        cv2.imwrite(os.path.join('./data/','1.png'), img2)
+    #    cv2.imwrite(os.path.join('./data/','1.png'), img2)
         
         image_for_cut = cv2.imread(img_dir, cv2.IMREAD_COLOR)
         i = 0
@@ -562,7 +562,7 @@ class Solver(object):
            if ret2 < 50:
                continue
    #        print('ret ', ret2)
-           cv2.imwrite(os.path.join('./data/','{}_2.png'.format(i)), img_cut)
+   #        cv2.imwrite(os.path.join('./data/','{}_2.png'.format(i)), img_cut)
            
            
            img_bk = cv2.cvtColor(image_for_cut,cv2.COLOR_BGR2GRAY)
@@ -572,8 +572,8 @@ class Solver(object):
          #  print('cont ',contours)
           # cv2.drawContours(img_bk, contours[0], -1, 255, 3)
            
-           cv2.imwrite(os.path.join('./data/','{}_3.png'.format(i)), th2)
-           cv2.imwrite(os.path.join('./data/','{}_4.png'.format(i)), img_bk)
+     #      cv2.imwrite(os.path.join('./data/','{}_3.png'.format(i)), th2)
+     #      cv2.imwrite(os.path.join('./data/','{}_4.png'.format(i)), img_bk)
            encodeStr = rle_encode(img_bk)
            if len(encodeStr) < 10:
                continue
