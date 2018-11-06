@@ -298,6 +298,9 @@ class Solver(object):
         loc_loss = 0
         conf_loss = 0
         _t = Timer()
+        
+        loc_loss_v = 0
+        conf_loss_v = 0
 
         train_end = int( epoch_size * 0.8);
         ###
@@ -401,8 +404,8 @@ class Solver(object):
                 label, score, npos, gt_label = cal_tp_fp(detections, targets, label, score, npos, gt_label)
                 size = cal_size(detections, targets, size)
                 
-                loc_loss += loss_l.data[0]
-                conf_loss += loss_c.data[0]
+                loc_loss_v += loss_l.data[0]
+                conf_loss_v += loss_c.data[0]
 
                 # log per iter
                 log = '\r==>Eval: || {iters:d}/{epoch_size:d} in {time:.3f}s [{prograss}] || loc_loss: {loc_loss:.4f} cls_loss: {cls_loss:.4f}\r'.format(
@@ -411,6 +414,8 @@ class Solver(object):
                 #print(log)
                 sys.stdout.write(log)
                 sys.stdout.flush()
+                writer.add_scalar('Eval/loc_loss', loc_loss_v/epoch_size, epoch)
+                writer.add_scalar('Eval/conf_loss', conf_loss_v/epoch_size, epoch)
                 if train_end == (epoch_size - 1):
                     # eval mAP
                     prec, rec, ap = cal_pr(label, score, npos)
@@ -424,8 +429,8 @@ class Solver(object):
                     sys.stdout.flush()
                     print(log)
                     # log for tensorboard
-                    writer.add_scalar('Eval/loc_loss', loc_loss/epoch_size, epoch)
-                    writer.add_scalar('Eval/conf_loss', conf_loss/epoch_size, epoch)
+                    writer.add_scalar('Eval/loc_loss', loc_loss_v/epoch_size, epoch)
+                    writer.add_scalar('Eval/conf_loss', conf_loss_v/epoch_size, epoch)
                     writer.add_scalar('Eval/mAP', ap, epoch)
                     viz_pr_curve(writer, prec, rec, epoch)
                     viz_archor_strategy(writer, size, gt_label, epoch)
