@@ -598,7 +598,7 @@ class Solver(object):
            df.set_value(self.idx_df,'EncodedPixels', encodeStr)
            self.idx_df += 1
            ifhasShip = True
-
+           break
          #  if i == -1:
          #    cv2.imwrite(os.path.join('./data/','2.png'), img_cut)
          #    cv2.imwrite(os.path.join('./data/','3.png'), th2)
