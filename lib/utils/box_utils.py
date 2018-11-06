@@ -259,7 +259,7 @@ def rle_encode(img):
         pixels = img.T.flatten()
         #  print('pixels 0:', pixels.shape)
         pixels = np.concatenate([[0], pixels, [0]])
-        print('pixels 1:', pixels.shape)
+     #   print('pixels 1:', pixels.shape)
         runs = np.where(pixels[1:] != pixels[:-1])[0] + 1
         if len(runs) %2 != 0:
             if len(runs) > 0:
