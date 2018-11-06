@@ -582,16 +582,16 @@ class Solver(object):
            if len(encodeStr) < 10:
                continue
            
-           if_encode_overlap = False
-           for pre_encode_str in encode_str_list:
-               for i ,pre_run in enumerate(pre_encode_str):
-                   if i %2 == 0 :
-                       for this_i, this_run in enumerate( encodeStr):
-                           if this_i %2 == 0:
-                               if this_run == pre_run:
-                                   if_encode_overlap = True
-           if if_encode_overlap == True:
-               continue 
+        #   if_encode_overlap = False
+        #   for pre_encode_str in encode_str_list:
+        #       for i ,pre_run in enumerate(pre_encode_str):
+        #           if i %2 == 0 :
+        #               for this_i, this_run in enumerate( encodeStr):
+        #                   if this_i %2 == 0:
+        #                       if this_run == pre_run:
+        #                           if_encode_overlap = True
+        #   if if_encode_overlap == True:
+        #       continue 
            
            encode_str_list.append(encodeStr)   
            df.set_value(self.idx_df,'ImageId',fileName )
