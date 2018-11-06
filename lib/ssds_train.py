@@ -477,12 +477,10 @@ class Solver(object):
                 detections = detector.forward(out)
                 time = _t.toc()
                 for im ,this_img in enumerate( images):
-                  if check_i == 3:
-                      if im == 0:
-                          print('de ', detections[im])
-                         # return
+                  
                   for j in range(1, num_classes):
                       cls_dets = list()
+                      print('j ', j)
                       for det in detections[im][j]:
                         #  if det[0] > 0.5:
                             d = det.cpu().numpy()
