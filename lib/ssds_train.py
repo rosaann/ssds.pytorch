@@ -496,7 +496,7 @@ class Solver(object):
                            # box *= scale
                             box = np.append(box, score)
                             
-                            if score >= 0.51:
+                            if score >= 0.61:
                                 cls_dets.append(box)
                                # vis.images(this_img, win=1, opts={'title': 'Reals'})
                                # print('box ', box)
@@ -554,9 +554,7 @@ class Solver(object):
         ovlap_boxes = get_overlap_boxes(ovlap_boxes)
         ovlap_boxes = get_overlap_boxes(ovlap_boxes)
         ovlap_boxes = get_overlap_boxes(ovlap_boxes)
-        ovlap_boxes = get_overlap_boxes(ovlap_boxes)
-        ovlap_boxes = get_overlap_boxes(ovlap_boxes)
-        ovlap_boxes = get_overlap_boxes(ovlap_boxes)
+
 
 
      #   print('ov_len_2',len(ovlap_boxes))
